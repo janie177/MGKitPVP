@@ -104,6 +104,7 @@ public class MGPlayer extends MGPlayerModel {
 		setKillstreak(0);
 		this.hero = hero;
 		hero.onSelect(getPlayer());
+		hero.applyInventory(getPlayer().getInventory());
 	}
 
 	public Hero getActiveHero()

@@ -17,6 +17,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.FurnaceExtractEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.List;
@@ -134,6 +135,7 @@ public class GlobalListener implements Listener {
 	@EventHandler
 	public void onPassiveKill(EntityDamageEvent e)
 	{
+		if(e instanceof EntityDamageByEntityEvent) return;
 		if(e.getEntity() instanceof Player && ((Player) e.getEntity()).getHealth() - e.getFinalDamage() <= 0)
 		{
 			e.setCancelled(true);
@@ -147,11 +149,16 @@ public class GlobalListener implements Listener {
 		}
 	}
 
-	//Stop players from dropping anything on death
+	//Stop players from dropping anything on death. Also call onDeath when a player somehow does die.
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent e)
 	{
 		e.getDrops().clear();
+		MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getEntity());
+		if(mgp.isPlaying())
+		{
+			mgp.onDeath();
+		}
 	}
 
 	//Allowed spawn reasons
@@ -275,6 +282,21 @@ public class GlobalListener implements Listener {
 		}
 	}
 
+	//Stop players from using projectiles and stuff.
+	@EventHandler
+	public void onUseItem(ProjectileLaunchEvent e)
+	{
+		if(e.getEntity().getShooter() instanceof Player)
+		{
+			MGPlayer mgp = Main.getSaveManager().getMGPlayer((Player) e.getEntity().getShooter());
+			if(!mgp.isPlaying())
+			{
+				e.setCancelled(true);
+			}
+		}
+	}
+
+	//Stop NPC's from burning
 	@EventHandler
 	public void onCombust(EntityCombustEvent e)
 	{

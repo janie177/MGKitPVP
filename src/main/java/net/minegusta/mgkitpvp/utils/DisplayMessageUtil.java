@@ -101,6 +101,7 @@ public class DisplayMessageUtil {
 	{
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
 		{
+			if(!player.isOnline()) return;
 			final int divide = tickets > 30 ? 30 : tickets > 20 ? 20 : 10;
 			int step = tickets / divide;
 			int total = 0;
@@ -112,7 +113,7 @@ public class DisplayMessageUtil {
 				final int k = i;
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
 				{
-
+					if(!player.isOnline()) return;
 					Title title = TitleUtil.createTitle(ChatColor.GREEN + "" + ChatColor.BOLD + "+" + display + " " + ChatColor.GOLD + "" + ChatColor.BOLD + " Tickets", "", 0, k >= divide ? 80 : 6, 0,true);
 					TitleUtil.sendTitle(title, player);
 					EffectUtil.playSound(player, Sound.BLOCK_LEVER_CLICK);
