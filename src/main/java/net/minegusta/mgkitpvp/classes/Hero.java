@@ -90,7 +90,12 @@ public enum Hero {
 		return hero.getDescription();
 	}
 
-	public void applyInventort(PlayerInventory inv)
+	public void onSelect(Player player)
+	{
+		hero.onSelect(player);
+	}
+
+	public void applyInventory(PlayerInventory inv)
 	{
 		hero.applyInventory(inv);
 	}

@@ -6,7 +6,6 @@ import net.minegusta.mgkitpvp.classes.Hero;
 import net.minegusta.mgkitpvp.mapmanager.SpawnManager;
 import net.minegusta.mgkitpvp.scoreboards.ScoreBoardManager;
 import net.minegusta.mgkitpvp.utils.DisplayMessageUtil;
-import net.minegusta.mglib.bossbars.BossBarUtil;
 import net.minegusta.mglib.saving.mgplayer.MGPlayerModel;
 import net.minegusta.mglib.scoreboards.MGScore;
 import net.minegusta.mglib.utils.EffectUtil;
@@ -57,7 +56,7 @@ public class MGPlayer extends MGPlayerModel {
 			}
 		}
 		ScoreBoardManager.getTicketBoard().updatePlayer(getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", tickets));
-
+		setActiveHero(hero);
 	}
 
 	@Override
@@ -102,6 +101,7 @@ public class MGPlayer extends MGPlayerModel {
 		setPower(0);
 		setKillstreak(0);
 		this.hero = hero;
+		hero.onSelect(getPlayer());
 	}
 
 	public Hero getActiveHero()
@@ -371,7 +371,7 @@ public class MGPlayer extends MGPlayerModel {
 
 	public void applyInventory()
 	{
-		hero.applyInventort(getPlayer().getInventory());
+		hero.applyInventory(getPlayer().getInventory());
 	}
 
 	public boolean isPlaying() {

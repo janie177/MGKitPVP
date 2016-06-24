@@ -40,6 +40,11 @@ public class Default implements IHero {
 	}
 
 	@Override
+	public void onSelect(Player player) {
+
+	}
+
+	@Override
 	public int powerPerKill() {
 		return 25;
 	}

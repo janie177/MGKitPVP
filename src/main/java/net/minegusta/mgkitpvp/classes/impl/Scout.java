@@ -41,6 +41,11 @@ public class Scout implements IHero {
 	}
 
 	@Override
+	public void onSelect(Player player) {
+		player.setAllowFlight(true);
+	}
+
+	@Override
 	public int powerPerKill() {
 		return 100;
 	}

@@ -5,7 +5,10 @@ import net.minegusta.mgkitpvp.classes.Hero;
 import net.minegusta.mgkitpvp.main.Main;
 import net.minegusta.mgkitpvp.saving.MGPlayer;
 import net.minegusta.mglib.utils.CooldownUtil;
+import net.minegusta.mglib.utils.EffectUtil;
+import org.bukkit.Effect;
 import org.bukkit.GameMode;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -44,17 +47,25 @@ public class HeroListener implements Listener {
 		if (player.getGameMode() != GameMode.SURVIVAL) {
 			return;
 		}
+
+		e.setCancelled(true);
+		player.setAllowFlight(false);
+		player.setFlying(false);
+
 		MGPlayer mgp = Main.getSaveManager().getMGPlayer(player);
 		String uuid = player.getUniqueId().toString();
-		if (mgp.getActiveHero() == Hero.SCOUT && CooldownUtil.isCooledDown("jumpscout", uuid))
+		if(mgp.getActiveHero() == Hero.SCOUT)
 		{
-			e.setCancelled(true);
-			player.setAllowFlight(false);
-			player.setFlying(false);
-			player.setVelocity(player.getLocation().getDirection().multiply(2.0).setY(1));
-			CooldownUtil.newCoolDown("jumpscout",  uuid, 2);
-
+			player.setAllowFlight(true);
+			if (CooldownUtil.isCooledDown("jumpscout", uuid))
+			{
+				player.setVelocity(player.getLocation().getDirection().multiply(1.1).setY(1));
+				CooldownUtil.newCoolDown("jumpscout",  uuid, 2);
+				EffectUtil.playSound(player.getLocation(), Sound.BLOCK_SLIME_FALL);
+				EffectUtil.playParticle(player, Effect.TILE_DUST);
+			}
 		}
+
 	}
 
 }
