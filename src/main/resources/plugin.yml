@@ -1,6 +1,6 @@
-name: MGKitPVP
+name: HeroPvP
 version: ${project.version}
-main: net.minegusta.mgkitpvp.main.Main
+main: net.minegusta.heropvp.main.Main
 author: janie177
 depend: [MGLib]
 commands:

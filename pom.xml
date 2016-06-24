@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.minegusta</groupId>
-    <artifactId>mgkitpvp</artifactId>
+    <artifactId>heropvp</artifactId>
     <version>0.1.0.0</version>
 
     <properties> <!-- It is important to keep up to date manually. -->
@@ -38,7 +38,7 @@
     </dependencies>
 
     <build>
-        <finalName>MGkitPVP</finalName>
+        <finalName>HeroPvP</finalName>
         <defaultGoal>clean install</defaultGoal>
         <sourceDirectory>${basedir}/src/main/java/</sourceDirectory>
         <resources>
