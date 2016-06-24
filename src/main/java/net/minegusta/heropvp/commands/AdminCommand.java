@@ -1,10 +1,12 @@
 package net.minegusta.heropvp.commands;
 
 import com.google.common.collect.Lists;
+import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.mapmanager.SpawnManager;
 import net.minegusta.heropvp.npcs.NPCConfiguration;
 import net.minegusta.heropvp.npcs.NPCManager;
 import net.minegusta.heropvp.npcs.NPCType;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,10 +17,23 @@ import java.util.List;
 
 public class AdminCommand implements CommandExecutor {
 
-	private static List<String> help = Lists.newArrayList("/heropvp help - Show this menu.", "/heropvp addspawn <name> - Add current location as a spawn.", "/heropvp deletespawn <name> - Remove given location as spawn.", "/heropvp list - List all spawns.", "/heropvp addNPC <name> <shop/spawn/selector> - Spawn an NPC with the given role.", "/heropvp npclist - List all NPC's.", "/heropvp removeNPC <name> - Remove the given NPC.", "/heropvp resetNPCS - Reset all NPC's.");
+	private static List<String> help = Lists.newArrayList("/heropvp help - Show this menu.", "/heropvp addspawn <name> - Add current location as a spawn.", "/heropvp deletespawn <name> - Remove given location as spawn.", "/heropvp list - List all spawns.", "/heropvp addNPC <name> <shop/spawn/selector> - Spawn an NPC with the given role.", "/heropvp npclist - List all NPC's.", "/heropvp removeNPC <name> - Remove the given NPC.", "/heropvp resetNPCS - Reset all NPC's.", "/heropvp addtickets <name> <amount> - Add tickets to someone.");
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+		if(args.length > 2 && args[0].equalsIgnoreCase("addtickets"))
+		{
+			try {
+				Player player = Bukkit.getPlayer(args[1]);
+				int amount = Integer.valueOf(args[2]);
+
+				if(amount < 10) amount = 10;
+
+				Main.getSaveManager().getMGPlayer(player).addTickets(amount, 20);
+			} catch (Exception ignored) {}
+			return true;
+		}
 
 		if(!(sender instanceof Player)) return true;
 
