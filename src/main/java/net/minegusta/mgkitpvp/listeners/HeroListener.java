@@ -57,7 +57,7 @@ public class HeroListener implements Listener {
 		String uuid = player.getUniqueId().toString();
 		if(mgp.getActiveHero() == Hero.SCOUT)
 		{
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()-> player.setAllowFlight(true), 20);
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()-> player.setAllowFlight(true), 30);
 			if (CooldownUtil.isCooledDown("jumpscout", uuid))
 			{
 				player.setVelocity(player.getLocation().getDirection().multiply(0.8).setY(1));
