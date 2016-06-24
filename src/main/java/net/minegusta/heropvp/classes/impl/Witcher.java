@@ -122,7 +122,7 @@ public class Witcher implements IHero {
 
 	@Override
 	public int getCost() {
-		return 250;
+		return 300;
 	}
 
 	@Override

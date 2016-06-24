@@ -163,7 +163,7 @@ public class Assassin implements IHero {
 
 	@Override
 	public int getCost() {
-		return 250;
+		return 380;
 	}
 
 	@Override
