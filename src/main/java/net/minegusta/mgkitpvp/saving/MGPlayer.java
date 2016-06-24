@@ -228,7 +228,7 @@ public class MGPlayer extends MGPlayerModel {
 		int ticketsToAdd = killstreak * 10 + (killstreak * (killstreak / 2));
 		if(ticketsToAdd > 0)
 		{
-			addTickets(ticketsToAdd, 80);
+			addTickets(ticketsToAdd, 5);
 		}
 		damagers.clear();
 		setKillstreak(0);
