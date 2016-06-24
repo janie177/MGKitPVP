@@ -72,6 +72,7 @@ public class MGPlayer extends MGPlayerModel {
 		{
 			if(!heroes.contains(h.name())) heroes.add(h.name());
 		}
+		fileConfiguration.set("unlocked-heroes", heroes);
 	}
 
 	public Player getPlayer()
