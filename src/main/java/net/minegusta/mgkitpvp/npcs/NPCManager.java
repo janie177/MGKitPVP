@@ -57,6 +57,7 @@ public class NPCManager {
 		shopNPC.setGravity(false);
 		shopNPC.setAI(false);
 		shopNPC.setMetadata("heropvpnpc", new FixedMetadataValue(Main.getPlugin(), true));
+		shopNPC.setSilent(true);
 	}
 
 	public static void spawnClassSelectorNPC(Location location)
@@ -76,6 +77,7 @@ public class NPCManager {
 		selectClassNPC.setInvulnerable(true);
 		selectClassNPC.setAI(false);
 		selectClassNPC.setMetadata("heropvpnpc", new FixedMetadataValue(Main.getPlugin(), true));
+		selectClassNPC.setSilent(true);
 	}
 
 	public static void spawnGameStartNPC(Location location)
@@ -99,6 +101,7 @@ public class NPCManager {
 		startGameNPC.setGravity(false);
 		startGameNPC.setAI(false);
 		startGameNPC.setMetadata("heropvpnpc", new FixedMetadataValue(Main.getPlugin(), true));
+		startGameNPC.setSilent(true);
 	}
 
 	public static ConfigurationFileManager<NPCConfiguration> getNpcConfig() {

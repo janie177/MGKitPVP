@@ -61,7 +61,7 @@ public class Scout implements IHero {
 		return "Scout";
 	}
 
-	private static String[] desc = new String[]{"The scout is fast.", "They can double jump too!", "Ultimate gives extra speed."};
+	private static String[] desc = new String[]{"The scout is fast.", "They can double jump too!", "Ultimate gives extra speed.", "All fall damage is removed."};
 
 	@Override
 	public String[] getDescription() {

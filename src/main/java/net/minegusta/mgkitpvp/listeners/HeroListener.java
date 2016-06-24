@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.TippedArrow;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
@@ -60,13 +61,25 @@ public class HeroListener implements Listener {
 			if (CooldownUtil.isCooledDown("jumpscout", uuid))
 			{
 				player.setVelocity(player.getLocation().getDirection().multiply(0.8).setY(1));
-				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()-> player.setFallDistance(0), 15);
 				CooldownUtil.newCoolDown("jumpscout",  uuid, 1);
 				EffectUtil.playSound(player.getLocation(), Sound.BLOCK_SLIME_FALL);
 				EffectUtil.playParticle(player, Effect.TILE_DUST);
 			}
 		}
+	}
 
+	@EventHandler
+	public void onFallDamage(EntityDamageEvent e)
+	{
+		if(e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.FALL)
+		{
+			MGPlayer mgp = Main.getSaveManager().getMGPlayer((Player) e.getEntity());
+			if(mgp.getActiveHero() == Hero.SCOUT)
+			{
+				e.setCancelled(true);
+			}
+
+		}
 	}
 
 	//Bow shoot event
