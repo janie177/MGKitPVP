@@ -37,7 +37,6 @@ public class Scout implements IHero {
 
 	@Override
 	public void applyPermanentPassives(Player player) {
-		Bukkit.getLogger().info("boopboop");
 		PotionUtil.updatePotion(player, PotionEffectType.SPEED, 0, 5);
 	}
 

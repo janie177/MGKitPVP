@@ -118,7 +118,7 @@ public class DisplayMessageUtil {
 					EffectUtil.playSound(player, Sound.BLOCK_LEVER_CLICK);
 				}, interval * i);
 				total += step;
-				if(i == divide)
+				if(i == divide-1)
 				{
 					total = tickets;
 				}
