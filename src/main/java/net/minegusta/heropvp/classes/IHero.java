@@ -20,6 +20,8 @@ public interface IHero {
 
 	void applyPermanentPassives(Player player);
 
+	void onKill(Player player);
+
 	void onSelect(Player player);
 
 	int powerPerKill();

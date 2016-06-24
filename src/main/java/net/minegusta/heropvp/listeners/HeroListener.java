@@ -1,30 +1,41 @@
 package net.minegusta.heropvp.listeners;
 
+import com.google.common.collect.Lists;
 import net.minegusta.heropvp.classes.Hero;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
 import net.minegusta.mglib.utils.CooldownUtil;
 import net.minegusta.mglib.utils.EffectUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.GameMode;
-import org.bukkit.Sound;
+import net.minegusta.mglib.utils.Title;
+import net.minegusta.mglib.utils.TitleUtil;
+import org.bukkit.*;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TippedArrow;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
+
+import java.util.List;
 
 public class HeroListener implements Listener {
 
 	/**
 	 * Listen for ultimate and passive abilities
 	 */
+
+	private static List<Hero> activateOnCrouch = Lists.newArrayList(Hero.SCOUT, Hero.WITCHER, Hero.DEFAULT);
 
 	//Activate abilities using crouch.
 	@EventHandler
@@ -35,7 +46,53 @@ public class HeroListener implements Listener {
 		MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
 		if(mgp.isUltimateReady())
 		{
-			mgp.activateUltimate();
+			if(activateOnCrouch.contains(mgp.getActiveHero()))
+			{
+				mgp.activateUltimate();
+				mgp.onUltimate(e.getPlayer());
+			}
+		}
+	}
+
+	//On interact
+	@EventHandler
+	public void onInteract(PlayerInteractEntityEvent e)
+	{
+		//Activate assassin
+		MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
+		if(e.getRightClicked() instanceof Player)
+		{
+			Player target = (Player) e.getRightClicked();
+			if(mgp.isUltimateReady() && mgp.getActiveHero() == Hero.ASSASSIN)
+			{
+				mgp.activateUltimate();
+				mgp.onUltimate(target);
+				Title t = TitleUtil.createTitle("", ChatColor.RED + "You marked " + target.getName() + " for death.", 5, 30, 5, true);
+				t.send(e.getPlayer());
+			}
+		}
+	}
+
+	//On data
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onPvpDamage(EntityDamageByEntityEvent e)
+	{
+		if(e.getEntity() instanceof  Player && e.getDamager() instanceof Player && !e.isCancelled())
+		{
+			Player attacker = (Player) e.getDamager();
+			Player victim = (Player) e.getEntity();
+
+			MGPlayer mgp = Main.getSaveManager().getMGPlayer(attacker);
+			//Assassin extra damage on backstab
+			if(mgp.getActiveHero() == Hero.ASSASSIN)
+			{
+				if(Math.abs(attacker.getLocation().getYaw() - victim.getLocation().getYaw()) < 40)
+				{
+					TitleUtil.createTitle("", ChatColor.RED + "" + ChatColor.ITALIC + "Backstab! " + ChatColor.DARK_PURPLE + "1.5x damage dealt", 5, 15, 5, true).send(attacker);
+					TitleUtil.createTitle("", ChatColor.RED + "" + ChatColor.ITALIC + "You got backstabbed!", 5, 10, 5, true).send(attacker);
+					e.setDamage(e.getDamage() * 1.5);
+				}
+			}
 		}
 	}
 
@@ -73,7 +130,7 @@ public class HeroListener implements Listener {
 		if(e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.FALL)
 		{
 			MGPlayer mgp = Main.getSaveManager().getMGPlayer((Player) e.getEntity());
-			if(mgp.getActiveHero() == Hero.SCOUT)
+			if(mgp.getActiveHero() == Hero.SCOUT || mgp.getActiveHero() == Hero.ASSASSIN)
 			{
 				e.setCancelled(true);
 			}
@@ -104,5 +161,27 @@ public class HeroListener implements Listener {
 		}
 	}
 
+	//Elven lord arrow spam
+	@EventHandler
+	public void interact(PlayerInteractEvent e)
+	{
+		if(e.getHand() == EquipmentSlot.HAND && e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
+		{
+			MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
+			if(mgp.isUltimateActive() && mgp.getActiveHero() == Hero.ELVENLORD && e.getPlayer().getInventory().getItemInMainHand().getType() == Material.BOW)
+			{
+				final Player player = e.getPlayer();
+				e.setCancelled(true);
+				for(int i = 1; i <= 3; i+=2)
+				{
+					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
+					{
+						if(!player.isOnline()) return;
+						player.getWorld().spawnArrow(player.getLocation().add(player.getLocation().getDirection().normalize()).add(0, 1.4F, 0), player.getLocation().getDirection(), 2.2F, 0.1F);
 
+					}, i);
+				}
+			}
+		}
+	}
 }

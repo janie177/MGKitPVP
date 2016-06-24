@@ -22,10 +22,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="HeroPvP" />
         <module name="MGKitPVP" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="HeroPvP" target="1.8" />
       <module name="MGKitPVP" target="1.8" />
     </bytecodeTargetLevel>
   </component>

@@ -1,8 +1,6 @@
 package net.minegusta.heropvp.classes;
 
-import net.minegusta.heropvp.classes.impl.Artemiz;
-import net.minegusta.heropvp.classes.impl.Default;
-import net.minegusta.heropvp.classes.impl.Scout;
+import net.minegusta.heropvp.classes.impl.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.boss.BarColor;
@@ -14,6 +12,9 @@ import org.bukkit.inventory.PlayerInventory;
 public enum Hero {
 	DEFAULT(new Default()),
 	ARTEMIZ(new Artemiz()),
+	WITCHER(new Witcher()),
+	ASSASSIN(new Assassin()),
+	ELVENLORD(new ElvenLord()),
 	SCOUT(new Scout());
 
 	private IHero hero;
@@ -44,7 +45,7 @@ public enum Hero {
 
 	public String getTag()
 	{
-		return hero.getTag();
+		return hero.getColor() + hero.getTag();
 	}
 
 	public void doUltimate(Event event)
@@ -95,6 +96,11 @@ public enum Hero {
 	public void onSelect(Player player)
 	{
 		hero.onSelect(player);
+	}
+
+	public void onKill(Player player)
+	{
+		hero.onKill(player);
 	}
 
 	public void applyInventory(PlayerInventory inv)

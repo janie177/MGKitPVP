@@ -25,8 +25,6 @@ public class SpawnConfiguration extends ConfigurationModel {
 			{
 				Bukkit.getLogger().info("Error while loading a spawn location.");
 			}
-
-
 		}
 	}
 

@@ -39,6 +39,11 @@ public class Artemiz implements IHero {
 	}
 
 	@Override
+	public void onKill(Player player) {
+
+	}
+
+	@Override
 	public void onSelect(Player player) {
 
 	}
