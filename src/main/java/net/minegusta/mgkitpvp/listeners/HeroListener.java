@@ -60,7 +60,7 @@ public class HeroListener implements Listener {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()-> player.setAllowFlight(true), 30);
 			if (CooldownUtil.isCooledDown("jumpscout", uuid))
 			{
-				player.setVelocity(player.getLocation().getDirection().multiply(0.8).setY(1));
+				player.setVelocity(player.getLocation().getDirection().multiply(0.6).setY(1));
 				player.setFallDistance(0.0F);
 				CooldownUtil.newCoolDown("jumpscout",  uuid, 1);
 				EffectUtil.playSound(player.getLocation(), Sound.BLOCK_SLIME_FALL);
