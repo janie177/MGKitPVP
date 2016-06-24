@@ -7,6 +7,7 @@ import net.minegusta.mgkitpvp.gui.TicketShop;
 import net.minegusta.mgkitpvp.listeners.GlobalListener;
 import net.minegusta.mgkitpvp.listeners.HeroListener;
 import net.minegusta.mgkitpvp.mapmanager.SpawnManager;
+import net.minegusta.mgkitpvp.npcs.NPCManager;
 import net.minegusta.mgkitpvp.saving.MGPlayer;
 import net.minegusta.mgkitpvp.scoreboards.ScoreBoardManager;
 import net.minegusta.mgkitpvp.utils.DisplayMessageUtil;
@@ -15,6 +16,8 @@ import net.minegusta.mglib.saving.mgplayer.PlayerSaveManager;
 import net.minegusta.mglib.tasks.Task;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -32,6 +35,9 @@ public class Main extends JavaPlugin {
 	{
 		//Init the plugin variable.
 		plugin = this;
+
+		//Despawn all entities on load
+		Bukkit.getWorlds().stream().forEach(world -> world.getLivingEntities().stream().filter(ent -> !(ent instanceof Player)).forEach(LivingEntity::remove));
 
 		//Init the spawns configuration
 		SpawnManager.init();
@@ -63,12 +69,19 @@ public class Main extends JavaPlugin {
 
 		//Load the bar for announcements in the display util.
 		DisplayMessageUtil.initBar();
+
+		//Init NPC config
+		NPCManager.initConfig();
+
+		//Load all the NPCs
+		NPCManager.spawnNPCS();
 	}
 
 	@Override
 	public void onDisable()
 	{
-
+		//Despawn all entities on shutdown
+		Bukkit.getWorlds().stream().forEach(world -> world.getLivingEntities().stream().filter(ent -> !(ent instanceof Player)).forEach(LivingEntity::remove));
 	}
 
 	public static Plugin getPlugin()

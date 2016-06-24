@@ -2,7 +2,9 @@ package net.minegusta.mgkitpvp.commands;
 
 import com.google.common.collect.Lists;
 import net.minegusta.mgkitpvp.mapmanager.SpawnManager;
+import net.minegusta.mgkitpvp.npcs.NPCConfiguration;
 import net.minegusta.mgkitpvp.npcs.NPCManager;
+import net.minegusta.mgkitpvp.npcs.NPCType;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,7 +15,7 @@ import java.util.List;
 
 public class AdminCommand implements CommandExecutor {
 
-	private static List<String> help = Lists.newArrayList("/heropvp help - Show this menu", "/heropvp addspawn <name> - Add current location as a spawn.", "/heropvp deletespawn <name> - Remove given location as spawn.", "/heropvp list - List all spawns.", "/heropvp spawn <shop/start/selector> - Spawn an NPC with the given role.");
+	private static List<String> help = Lists.newArrayList("/heropvp help - Show this menu", "/heropvp addspawn <name> - Add current location as a spawn.", "/heropvp deletespawn <name> - Remove given location as spawn.", "/heropvp list - List all spawns.", "/heropvp addNPC <name> <shop/spawn/selector> - Spawn an NPC with the given role.", "/heropvp npclist - List all NPC's", "/heropvp removeNPC <name> - Remove the given NPC.", "/heropvp resetNPCS");
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -41,36 +43,61 @@ public class AdminCommand implements CommandExecutor {
 			return true;
 		}
 
+		if(args[0].equalsIgnoreCase("npclist"))
+		{
+			p.sendMessage(ChatColor.DARK_GRAY + "Current NPC's");
+			for(String s : NPCConfiguration.getNPCNames())
+			{
+				p.sendMessage(ChatColor.YELLOW + " - " + s);
+			}
+			return true;
+		}
+
+		if(args[0].equalsIgnoreCase("resetnpcs"))
+		{
+			NPCConfiguration.resetNPCS();
+			return true;
+		}
+
+
 		if(args.length < 2)
 		{
 			sendHelp(p);
 			return true;
 		}
 
-		if(args[0].equalsIgnoreCase("spawn"))
+		if(args[0].equalsIgnoreCase("addNPC") && args.length > 2)
 		{
-			String type = args[1].toLowerCase();
+			String name = args[1].toLowerCase();
+			String type = args[2].toLowerCase();
 			switch (type)
 			{
 				case "spawn":
 				{
 					p.sendMessage(ChatColor.GREEN + "You spawned a game start NPC.");
-					NPCManager.spawnGameStartNPC(p);
+					NPCConfiguration.addNPC(name, p.getLocation(), NPCType.SPAWN);
 				}
 				break;
 				case "selector":
 				{
 					p.sendMessage(ChatColor.GREEN + "You spawned a hero selector NPC.");
-					NPCManager.spawnClassSelectorNPC(p);
+					NPCConfiguration.addNPC(name, p.getLocation(), NPCType.SELECTOR);
 				}
 				break;
 				case "shop":
 				{
 					p.sendMessage(ChatColor.GREEN + "You spawned a shop NPC.");
-					NPCManager.spawnShopNPC(p);
+					NPCConfiguration.addNPC(name, p.getLocation(), NPCType.SHOP);
 				}
 				break;
 			}
+			return true;
+		}
+
+		if(args[0].equalsIgnoreCase("removeNPC"))
+		{
+			String name = args[1].toLowerCase();
+			NPCConfiguration.removeNPC(name);
 			return true;
 		}
 
