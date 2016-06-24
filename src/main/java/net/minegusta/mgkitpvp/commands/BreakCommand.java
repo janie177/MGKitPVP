@@ -16,7 +16,7 @@ public class BreakCommand implements CommandExecutor {
 			MGPlayer mgp = Main.getSaveManager().getMGPlayer(player);
 			if(mgp.isPlaying())
 			{
-				mgp.onDeath();
+				mgp.resetOnMapChange();
 			}
 		}
 		return true;
