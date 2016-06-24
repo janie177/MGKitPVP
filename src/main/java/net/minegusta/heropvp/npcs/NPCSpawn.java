@@ -6,12 +6,16 @@ public class NPCSpawn {
 	private Location location;
 	private NPCType type;
 	private String name;
+	private float pitch;
+	private float yaw;
 
-	public NPCSpawn(String name, Location location, NPCType npcType)
+	public NPCSpawn(String name, Location location, NPCType npcType, float pitch, float yaw)
 	{
 		this.name = name;
 		this.location = location;
 		this.type = npcType;
+		this.pitch = pitch;
+		this.yaw = yaw;
 	}
 
 	public Location getLocation() {
@@ -26,4 +30,11 @@ public class NPCSpawn {
 		return name;
 	}
 
+	public float getPitch() {
+		return pitch;
+	}
+
+	public float getYaw() {
+		return yaw;
+	}
 }

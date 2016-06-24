@@ -44,6 +44,7 @@ public class NPCManager {
 	public static void spawnShopNPC(Location location)
 	{
 		Villager shopNPC = (Villager) location.getWorld().spawnEntity(location, EntityType.VILLAGER);
+		shopNPC.teleport(location);
 		shopNPC.setCustomNameVisible(true);
 		shopNPC.setRemoveWhenFarAway(false);
 		shopNPC.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "" + "Hero Shop");

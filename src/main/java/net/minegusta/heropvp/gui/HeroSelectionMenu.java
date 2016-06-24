@@ -49,7 +49,7 @@ public class HeroSelectionMenu extends InventoryGUI {
 	@Override
 	public Inventory buildInventory(Player player, int i, InventoryHolder inventoryHolder, String s) {
 		MGPlayer mgp = Main.getSaveManager().getMGPlayer(player);
-		Inventory inv = Bukkit.createInventory(inventoryHolder, i , ChatColor.YELLOW+ "Tickets: " + ChatColor.BOLD + "" + ChatColor.LIGHT_PURPLE + mgp.getTickets());
+		Inventory inv = Bukkit.createInventory(inventoryHolder, i , ChatColor.GOLD + "Choose your " + ChatColor.BOLD + "" + ChatColor.LIGHT_PURPLE + "Hero");
 		Map<Integer, Hero> indexes = Maps.newHashMap();
 		int index = 0;
 
