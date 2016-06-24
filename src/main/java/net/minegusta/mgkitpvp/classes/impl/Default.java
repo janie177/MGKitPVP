@@ -59,7 +59,7 @@ public class Default implements IHero {
 		return "Noobington";
 	}
 
-	private static String[] desc = new String[]{"The default hero!", "Gain tickets to unlock more."};
+	private static String[] desc = new String[]{"The default hero!", "Gain tickets to unlock more.", "Ultimate heals you."};
 
 	@Override
 	public String[] getDescription() {
