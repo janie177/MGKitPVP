@@ -35,7 +35,7 @@ public class HeroListener implements Listener {
 	 * Listen for ultimate and passive abilities
 	 */
 
-	private static List<Hero> activateOnCrouch = Lists.newArrayList(Hero.SCOUT, Hero.WITCHER, Hero.DEFAULT);
+	private static List<Hero> activateOnCrouch = Lists.newArrayList(Hero.SCOUT, Hero.WITCHER, Hero.DEFAULT, Hero.ELVENLORD);
 
 	//Activate abilities using crouch.
 	@EventHandler

@@ -2,11 +2,13 @@ package net.minegusta.heropvp.classes.impl;
 
 import net.minegusta.heropvp.classes.IHero;
 import net.minegusta.heropvp.inventories.HeroInventory;
+import net.minegusta.mglib.particles.ParticleUtil;
 import net.minegusta.mglib.utils.PotionUtil;
 import net.minegusta.mglib.utils.Title;
 import net.minegusta.mglib.utils.TitleUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -25,6 +27,8 @@ public class Assassin implements IHero {
 		title.send(player);
 		PotionUtil.updatePotion(player, PotionEffectType.WEAKNESS, 0, ultimateDuration());
 		player.setHealth(player.getHealth() / 3);
+
+		ParticleUtil.createNewTargetingParticle(ultimateDuration(), Effect.WITCH_MAGIC, player.getLocation(), 12.0, player, false, false, Effect.MAGIC_CRIT);
 	}
 
 	@Override
@@ -59,7 +63,7 @@ public class Assassin implements IHero {
 
 	@Override
 	public int powerPerKill() {
-		return 50;
+		return 40;
 	}
 
 	@Override
@@ -184,6 +188,6 @@ public class Assassin implements IHero {
 
 	@Override
 	public String ultimateBarMessage() {
-		return "You have marked your target. Strike now!";
+		return ChatColor.RED + "You have marked your target. Strike now!";
 	}
 }
