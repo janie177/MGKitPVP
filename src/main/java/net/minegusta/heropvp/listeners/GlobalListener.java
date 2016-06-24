@@ -1,11 +1,13 @@
 package net.minegusta.heropvp.listeners;
 
 import com.google.common.collect.Lists;
+import net.minegusta.heropvp.classes.Hero;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
 import net.minegusta.heropvp.scoreboards.ScoreBoardManager;
 import net.minegusta.heropvp.utils.DisplayMessageUtil;
 import net.minegusta.mglib.scoreboards.MGScore;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
@@ -86,6 +88,7 @@ public class GlobalListener implements Listener {
 					{
 						damagerMGP.onKillPlayer(target.getName());
 					}
+					targetMGP.onDeath();
 				}
 				//On normal damage that does not result in death
 				else
@@ -101,11 +104,11 @@ public class GlobalListener implements Listener {
 				/**
 				 * Projectile damage
 				 */
+				if(!damager.getUniqueId().toString().equalsIgnoreCase(target.getUniqueId().toString())) targetMGP.addDamage(damager, e.getFinalDamage());
 
 				//On death
 				if(target.getHealth() - e.getFinalDamage() <= 0)
 				{
-					targetMGP.addDamage(damager, e.getFinalDamage());
 					e.setCancelled(true);
 					Optional<Player> p = targetMGP.getMostDamage();
 					if(p.isPresent())
@@ -115,16 +118,13 @@ public class GlobalListener implements Listener {
 						{
 							DisplayMessageUtil.onAssist(damager, target.getName());
 						}
+
 					}
 					else
 					{
 						damagerMGP.onKillPlayer(target.getName());
 					}
-				}
-				//On normal damage that does not result in death
-				else
-				{
-					targetMGP.addDamage(damager, e.getFinalDamage());
+					targetMGP.onDeath();
 				}
 			}
 		}

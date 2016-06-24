@@ -172,7 +172,7 @@ public class MGPlayer extends MGPlayerModel {
 
 	public void addKillStreakKill()
 	{
-		setKills(getKillstreak() + 1);
+		setKillstreak(getKillstreak() + 1);
 	}
 
 	public int getTickets() {

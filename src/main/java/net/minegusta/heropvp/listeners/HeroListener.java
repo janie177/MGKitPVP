@@ -89,7 +89,7 @@ public class HeroListener implements Listener {
 				if(Math.abs(attacker.getLocation().getYaw() - victim.getLocation().getYaw()) < 40)
 				{
 					TitleUtil.createTitle("", ChatColor.RED + "" + ChatColor.ITALIC + "Backstab! " + ChatColor.DARK_PURPLE + "1.5x damage dealt", 5, 15, 5, true).send(attacker);
-					TitleUtil.createTitle("", ChatColor.RED + "" + ChatColor.ITALIC + "You got backstabbed!", 5, 10, 5, true).send(attacker);
+					TitleUtil.createTitle("", ChatColor.RED + "" + ChatColor.ITALIC + "You got backstabbed!", 5, 10, 5, true).send(victim);
 					e.setDamage(e.getDamage() * 1.5);
 				}
 			}
