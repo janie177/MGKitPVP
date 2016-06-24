@@ -269,4 +269,13 @@ public class GlobalListener implements Listener {
 			}
 		}
 	}
+
+	@EventHandler
+	public void onCombust(EntityCombustEvent e)
+	{
+		if(e.getEntity().hasMetadata("heropvpnpc"))
+		{
+			e.setCancelled(true);
+		}
+	}
 }

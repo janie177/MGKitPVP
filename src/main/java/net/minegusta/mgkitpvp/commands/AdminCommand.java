@@ -77,15 +77,9 @@ public class AdminCommand implements CommandExecutor {
 		if(args[0].equalsIgnoreCase("addspawn"))
 		{
 			String spawnName = args[1].toLowerCase();
-			if(SpawnManager.isSpawnLocation(spawnName))
-			{
-				SpawnManager.addSpawnLocation(spawnName, p.getLocation());
-				p.sendMessage(ChatColor.GREEN + "You added a spawn.");
-			}
-			else
-			{
-				p.sendMessage(ChatColor.RED + "That spawn could not be found.");
-			}
+			SpawnManager.addSpawnLocation(spawnName, p.getLocation());
+			p.sendMessage(ChatColor.GREEN + "You added a spawn.");
+
 			return true;
 		}
 		else if(args[0].equalsIgnoreCase("removespawn"))

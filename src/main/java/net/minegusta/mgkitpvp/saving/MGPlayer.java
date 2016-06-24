@@ -56,8 +56,6 @@ public class MGPlayer extends MGPlayerModel {
 				} catch (Exception ignored){}
 			}
 		}
-
-		ScoreBoardManager.getHeroTagsBoard().addPlayer(getPlayer(), hero.name());
 		ScoreBoardManager.getTicketBoard().updatePlayer(getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", tickets));
 
 	}
@@ -101,7 +99,6 @@ public class MGPlayer extends MGPlayerModel {
 	public void setActiveHero(Hero hero)
 	{
 		DisplayMessageUtil.selectHero(getPlayer(), hero);
-		ScoreBoardManager.getHeroTagsBoard().addPlayer(getPlayer(), hero.name());
 		setPower(0);
 		setKillstreak(0);
 		this.hero = hero;
@@ -198,6 +195,7 @@ public class MGPlayer extends MGPlayerModel {
 
 	public void onDeath()
 	{
+		ScoreBoardManager.getTicketBoard().updatePlayer(getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", tickets));
 		setPlaying(false);
 		EffectUtil.playParticle(getPlayer().getLocation(), Effect.CLOUD, 1, 1, 1, 0.1F, 40, 40);
 		setPower(0);
@@ -213,12 +211,12 @@ public class MGPlayer extends MGPlayerModel {
 		damagers.clear();
 		setKillstreak(0);
 		getPlayer().getActivePotionEffects().clear();
-
 		getPlayer().getInventory().clear();
 	}
 
 	public void resetOnMapChange()
 	{
+		ScoreBoardManager.getTicketBoard().updatePlayer(getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", tickets));
 		setPlaying(false);
 		EffectUtil.playParticle(getPlayer().getLocation(), Effect.CLOUD, 1, 1, 1, 0.1F, 40, 40);
 		setPower(0);
@@ -247,6 +245,7 @@ public class MGPlayer extends MGPlayerModel {
 		applyInventory();
 		getPlayer().getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 64));
 		DisplayMessageUtil.onSpawn(getPlayer(), hero);
+		ScoreBoardManager.getHeroTagsBoard().addPlayer(getPlayer(), hero.name());
 	}
 
 	public void onKillPlayer(String killedName)

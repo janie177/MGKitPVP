@@ -1,5 +1,6 @@
 package net.minegusta.mgkitpvp.inventories;
 
+import com.google.common.collect.Lists;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
@@ -7,8 +8,8 @@ import java.util.List;
 
 public class HeroInventory {
 
-	List<ItemStack> stacks;
-	List<Integer> indices;
+	List<ItemStack> stacks = Lists.newArrayList();
+	List<Integer> indices = Lists.newArrayList();
 
 	public void addItem(int slot, ItemStack item)
 	{

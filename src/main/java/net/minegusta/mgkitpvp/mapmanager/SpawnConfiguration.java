@@ -33,7 +33,7 @@ public class SpawnConfiguration extends ConfigurationModel {
 	@Override
 	public void onSave(FileConfiguration fileConfiguration) {
 
-		if(fileConfiguration.isSet("spawn")) fileConfiguration.set("spawn.", null);
+		if(fileConfiguration.isSet("spawn")) fileConfiguration.set("spawn", null);
 
 		for(String s : SpawnManager.getLocations().keySet())
 		{
