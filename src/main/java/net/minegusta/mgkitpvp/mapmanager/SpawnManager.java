@@ -56,7 +56,7 @@ public class SpawnManager {
 			}, 20 * 60);
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
 			{
-				Title t = TitleUtil.createTitle(ChatColor.YELLOW + "The map is changing in 10 seconds.", ChatColor.GRAY + "You will be teleported to the spawn.", 10, 100, 0, false);
+				Title t = TitleUtil.createTitle(ChatColor.YELLOW + "The map is changing in 10 seconds.", ChatColor.GRAY + "You will be teleported to the spawn.", 10, 100, 0, true);
 				Bukkit.getOnlinePlayers().stream().forEach(t::send);
 
 				Bukkit.broadcastMessage(ChatColor.GOLD +   "------------------------------------");

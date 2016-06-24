@@ -65,6 +65,8 @@ public class HeroSelectionMenu extends InventoryGUI {
 					{
 						lore.add(ChatColor.GRAY + s);
 					}
+					meta.setLore(lore);
+					setItemMeta(meta);
 				}
 			});
 			indexes.put(index, h);

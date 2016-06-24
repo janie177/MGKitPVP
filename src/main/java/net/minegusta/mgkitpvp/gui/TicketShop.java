@@ -71,6 +71,8 @@ public class TicketShop extends InventoryGUI {
 							lore.add(ChatColor.GRAY + s);
 						}
 						lore.add(ChatColor.BOLD + "" + ChatColor.YELLOW + "Cost: " + (mgp.getTickets() >= h.getCost() ? ChatColor.GREEN : ChatColor.RED) + h.getCost() + " Tickets.");
+						meta.setLore(lore);
+						setItemMeta(meta);
 					}
 				});
 				indexes.put(index, h);

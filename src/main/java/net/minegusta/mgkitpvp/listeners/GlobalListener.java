@@ -204,18 +204,21 @@ public class GlobalListener implements Listener {
 				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.GREEN + "" + ChatColor.BOLD + "" + "Play Now!"))
 				{
 					Main.getSaveManager().getMGPlayer(e.getPlayer()).onSpawn();
+					e.setCancelled(true);
 					return;
 				}
 				//Open shop
 				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.GOLD + "" + ChatColor.BOLD + "" + "Hero Shop"))
 				{
 					Main.getTicketShop().openInventory(e.getPlayer());
+					e.setCancelled(true);
 					return;
 				}
 				//Open selection interface
 				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "" + "Select Hero"))
 				{
 					Main.getHeroSelectionMenu().openInventory(e.getPlayer());
+					e.setCancelled(true);
 					return;
 				}
 			}
@@ -244,18 +247,21 @@ public class GlobalListener implements Listener {
 				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.GREEN + "" + ChatColor.BOLD + "" + "Play Now!"))
 				{
 					Main.getSaveManager().getMGPlayer(player).onSpawn();
+					e.setCancelled(true);
 					return;
 				}
 				//Open shop
 				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.GOLD + "" + ChatColor.BOLD + "" + "Hero Shop"))
 				{
 					Main.getTicketShop().openInventory(player);
+					e.setCancelled(true);
 					return;
 				}
 				//Open selection interface
 				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "" + "Select Hero"))
 				{
 					Main.getHeroSelectionMenu().openInventory(player);
+					e.setCancelled(true);
 					return;
 				}
 			}

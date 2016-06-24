@@ -12,6 +12,8 @@ public class SpawnConfiguration extends ConfigurationModel {
 	public void onLoad(FileConfiguration fileConfiguration) {
 		SpawnManager.getLocations().clear();
 
+		if(!fileConfiguration.isSet("spawn")) return;
+
 		for(String s : fileConfiguration.getConfigurationSection("spawn").getKeys(false))
 		{
 			try {

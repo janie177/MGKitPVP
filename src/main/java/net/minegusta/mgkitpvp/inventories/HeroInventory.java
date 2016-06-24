@@ -21,6 +21,8 @@ public class HeroInventory {
 		//Clear the inventory
 		inv.clear();
 
+		if(stacks.isEmpty()) return;
+
 		//Add the items.
 		for(int i = 0; i < stacks.size(); i++)
 		{

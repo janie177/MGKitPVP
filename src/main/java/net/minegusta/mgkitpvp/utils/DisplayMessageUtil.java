@@ -72,27 +72,27 @@ public class DisplayMessageUtil {
 			announcementBar.setTitle(ChatColor.YELLOW + player.getName() + " " + ChatColor.LIGHT_PURPLE + "just reached " + title + ChatColor.LIGHT_PURPLE + " by killing " + ChatColor.RED + killedName);
 		}
 
-		Title t = TitleUtil.createTitle(title, subtitle, 6, staytime, 6, false);
+		Title t = TitleUtil.createTitle(title, subtitle, 6, staytime, 6,true);
 		TitleUtil.sendTitle(t, player);
 	}
 
 	public static void unlockHero(Player player, Hero hero)
 	{
-		Title title = TitleUtil.createTitle(hero.getColor() + "" + ChatColor.BOLD + hero.getName() + ChatColor.YELLOW + " " + ChatColor.BOLD + "Unlocked!", "", 6, 20, 6, false);
+		Title title = TitleUtil.createTitle(hero.getColor() + "" + ChatColor.BOLD + hero.getName() + ChatColor.YELLOW + " " + ChatColor.BOLD + "Unlocked!", "", 6, 20, 6,true);
 		TitleUtil.sendTitle(title, player);
 		EffectUtil.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_TOUCH);
 	}
 
 	public static void onAssist(Player player, String assistName)
 	{
-		Title title = TitleUtil.createTitle("", ChatColor.RED + "Assist!", 6, 14, 6, false);
+		Title title = TitleUtil.createTitle("", ChatColor.RED + "Assist!", 6, 14, 6,true);
 		TitleUtil.sendTitle(title, player);
 		EffectUtil.playSound(player, Sound.BLOCK_LEVER_CLICK);
 	}
 
 	public static void onDeath(Player player, int kills)
 	{
-		Title title = TitleUtil.createTitle(ChatColor.DARK_RED + "" + ChatColor.BOLD + "WASTED", ChatColor.GRAY + "Your kill streak was " + kills, 40, 60, 5, false);
+		Title title = TitleUtil.createTitle(ChatColor.DARK_RED + "" + ChatColor.BOLD + "WASTED", ChatColor.GRAY + "Your kill streak was " + kills, 40, 60, 5,true);
 		TitleUtil.sendTitle(title, player);
 		EffectUtil.playSound(player, Sound.ENTITY_GENERIC_DEATH);
 	}
@@ -113,7 +113,7 @@ public class DisplayMessageUtil {
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
 				{
 
-					Title title = TitleUtil.createTitle(ChatColor.GREEN + "" + ChatColor.BOLD + "+" + display + " " + ChatColor.GOLD + "" + ChatColor.BOLD + " Tickets", "", 0, k >= divide ? 80 : 3, 0, false);
+					Title title = TitleUtil.createTitle(ChatColor.GREEN + "" + ChatColor.BOLD + "+" + display + " " + ChatColor.GOLD + "" + ChatColor.BOLD + " Tickets", "", 0, k >= divide ? 80 : 3, 0,true);
 					TitleUtil.sendTitle(title, player);
 					EffectUtil.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
 				}, interval);
@@ -126,7 +126,7 @@ public class DisplayMessageUtil {
 	{
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
 		{
-			Title title = TitleUtil.createTitle(ChatColor.DARK_RED + "" + ChatColor.BOLD + "-" + tickets + " " + ChatColor.GOLD + "" + ChatColor.BOLD + " Tickets", "", 10, 60, 0, false);
+			Title title = TitleUtil.createTitle(ChatColor.DARK_RED + "" + ChatColor.BOLD + "-" + tickets + " " + ChatColor.GOLD + "" + ChatColor.BOLD + " Tickets", "", 10, 60, 0,true);
 			TitleUtil.sendTitle(title, player);
 			EffectUtil.playSound(player, Sound.BLOCK_FURNACE_FIRE_CRACKLE);
 		}, messageDelay);
@@ -134,14 +134,14 @@ public class DisplayMessageUtil {
 
 	public static void selectHero(Player player, Hero hero)
 	{
-		Title title = TitleUtil.createTitle(ChatColor.YELLOW + "" + ChatColor.BOLD + "You selected " + hero.getColor() + "" + ChatColor.BOLD + hero.getName(), "", 10, 40, 10, false);
+		Title title = TitleUtil.createTitle(ChatColor.YELLOW + "" + ChatColor.BOLD + "You selected " + hero.getColor() + "" + ChatColor.BOLD + hero.getName(), "", 10, 40, 10,true);
 		TitleUtil.sendTitle(title, player);
 		EffectUtil.playSound(player, Sound.BLOCK_STONE_PRESSUREPLATE_CLICK_ON);
 	}
 
 	public static void ultimateReady(Player player, Hero hero)
 	{
-		Title title = TitleUtil.createTitle("", hero.getUltimateReadyMessage(), 10, 40, 10, false);
+		Title title = TitleUtil.createTitle("", hero.getUltimateReadyMessage(), 10, 40, 10,true);
 		TitleUtil.sendTitle(title, player);
 		EffectUtil.playSound(player, Sound.ENTITY_CHICKEN_DEATH);
 	}
@@ -155,7 +155,7 @@ public class DisplayMessageUtil {
 
 	public static void onSpawn(Player player, Hero hero)
 	{
-		Title title = TitleUtil.createTitle("", ChatColor.RED + "" + ChatColor.BOLD + "Kill! Kill! Kill!", 10, 20, 10, false);
+		Title title = TitleUtil.createTitle("", ChatColor.RED + "" + ChatColor.BOLD + "Kill! Kill! Kill!", 10, 20, 10, true);
 		TitleUtil.sendTitle(title, player);
 		EffectUtil.playSound(player, Sound.AMBIENT_CAVE);
 	}
