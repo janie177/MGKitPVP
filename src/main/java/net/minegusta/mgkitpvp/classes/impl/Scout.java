@@ -80,7 +80,7 @@ public class Scout implements IHero {
 
 	@Override
 	public int getCost() {
-		return 150;
+		return 260;
 	}
 
 	@Override

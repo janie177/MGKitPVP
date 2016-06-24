@@ -202,17 +202,36 @@ public class MGPlayer extends MGPlayerModel {
 		EffectUtil.playParticle(getPlayer().getLocation(), Effect.CLOUD, 1, 1, 1, 0.1F, 40, 40);
 		setPower(0);
 		DisplayMessageUtil.onDeath(getPlayer(), killstreak);
-		setKillstreak(0);
 		getPlayer().setHealth(getPlayer().getMaxHealth());
 		getPlayer().setFoodLevel(20);
 		getPlayer().teleport(getPlayer().getWorld().getSpawnLocation());
-		int ticketsToAdd = killstreak * 5 + (killstreak * killstreak / 2);
+		int ticketsToAdd = killstreak * 10 + (killstreak * (killstreak / 2));
 		if(ticketsToAdd > 0)
 		{
-			addTickets(ticketsToAdd, 40);
+			addTickets(ticketsToAdd, 80);
 		}
 		damagers.clear();
+		setKillstreak(0);
+		getPlayer().getActivePotionEffects().clear();
 
+		getPlayer().getInventory().clear();
+	}
+
+	public void resetOnMapChange()
+	{
+		setPlaying(false);
+		EffectUtil.playParticle(getPlayer().getLocation(), Effect.CLOUD, 1, 1, 1, 0.1F, 40, 40);
+		setPower(0);
+		getPlayer().setHealth(getPlayer().getMaxHealth());
+		getPlayer().setFoodLevel(20);
+		getPlayer().teleport(getPlayer().getWorld().getSpawnLocation());
+		int ticketsToAdd = killstreak * 10 + (killstreak * (killstreak / 2));
+		if(ticketsToAdd > 0)
+		{
+			addTickets(ticketsToAdd, 80);
+		}
+		damagers.clear();
+		setKillstreak(0);
 		getPlayer().getActivePotionEffects().clear();
 
 		getPlayer().getInventory().clear();
@@ -224,6 +243,7 @@ public class MGPlayer extends MGPlayerModel {
 		getPlayer().teleport(SpawnManager.getCurrentSpawn());
 		getPlayer().setHealth(getPlayer().getMaxHealth());
 		getPlayer().setFoodLevel(20);
+		getPlayer().getInventory().clear();
 		applyInventory();
 		getPlayer().getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 64));
 		DisplayMessageUtil.onSpawn(getPlayer(), hero);
@@ -234,7 +254,7 @@ public class MGPlayer extends MGPlayerModel {
 		addPower(hero.getPowerPerKill());
 		addKill();
 		addKillStreakKill();
-		DisplayMessageUtil.onKill(getPlayer(), killstreak, killedName);
+		DisplayMessageUtil.onKill(hero, getPlayer(), killstreak, killedName);
 	}
 
 	public void addDamage(Player damager, double damage)
@@ -293,11 +313,12 @@ public class MGPlayer extends MGPlayerModel {
 
 	public void onUltimate(Player player, Event event)
 	{
+		if(isPlaying()) return;
 		setPower(0);
 		if(hero.ultimateDuration() > 0)
 		{
 			setUltimateActive();
-			BossBarUtil.createSecondCountdown(hero.getColor() + hero.ultimateBarMessage(), hero.getBarColor(), hero.getBarStyle(), hero.ultimateDuration());
+			DisplayMessageUtil.activateUltimate(player, hero);
 		}
 		if(player != null)
 		{

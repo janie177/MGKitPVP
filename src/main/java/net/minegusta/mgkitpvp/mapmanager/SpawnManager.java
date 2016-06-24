@@ -2,9 +2,14 @@ package net.minegusta.mgkitpvp.mapmanager;
 
 import com.google.common.collect.Maps;
 import net.minegusta.mgkitpvp.main.Main;
+import net.minegusta.mgkitpvp.saving.MGPlayer;
+import net.minegusta.mgkitpvp.utils.DisplayMessageUtil;
 import net.minegusta.mglib.configs.ConfigurationFileManager;
 import net.minegusta.mglib.tasks.Task;
+import net.minegusta.mglib.utils.Title;
+import net.minegusta.mglib.utils.TitleUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
 import java.util.concurrent.ConcurrentMap;
@@ -22,19 +27,44 @@ public class SpawnManager {
 	{
 		mapChangeTask.start(Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), ()-> {
 
-			if(current >= locations.size())
+			//Warn one minute ahead
+			DisplayMessageUtil.announceMapChange();
+
+			//Run the task a minute after.
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
 			{
-				current = 0;
-			}
+				if(current >= locations.size())
+				{
+					current = 0;
+				}
 
-			if(!locations.isEmpty())
+				if(!locations.isEmpty())
+				{
+					String currentName = indexes.get(current);
+					currentSpawn = locations.get(currentName);
+					Main.getSaveManager().getAllPlayers().stream().forEach(MGPlayer::resetOnMapChange);
+
+					Bukkit.broadcastMessage(ChatColor.GOLD +   "----------------------");
+					Bukkit.broadcastMessage(ChatColor.YELLOW + " The map is changing!");
+					Bukkit.broadcastMessage(ChatColor.YELLOW + " The map is changing!");
+					Bukkit.broadcastMessage(ChatColor.YELLOW + " The map is changing!");
+					Bukkit.broadcastMessage(ChatColor.GOLD +   "----------------------");
+				}
+
+				current++;
+			}, 20 * 60);
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
 			{
-				String currentName = indexes.get(current);
-				currentSpawn = locations.get(currentName);
-			}
+				Title t = TitleUtil.createTitle(ChatColor.YELLOW + "The map is changing in 10 seconds.", ChatColor.GRAY + "You will be teleported to the spawn.", 10, 100, 0, false);
+				Bukkit.getOnlinePlayers().stream().forEach(t::send);
 
+				Bukkit.broadcastMessage(ChatColor.GOLD +   "------------------------------------");
+				Bukkit.broadcastMessage(ChatColor.YELLOW + " The map is changing in 10 seconds!");
+				Bukkit.broadcastMessage(ChatColor.YELLOW + " The map is changing in 10 seconds!");
+				Bukkit.broadcastMessage(ChatColor.YELLOW + " The map is changing in 10 seconds!");
+				Bukkit.broadcastMessage(ChatColor.GOLD +   "------------------------------------");
 
-			current++;
+			}, 20 * 50);
 
 		}, 60, 20 * 600));
 
