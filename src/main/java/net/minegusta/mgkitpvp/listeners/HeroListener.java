@@ -57,11 +57,11 @@ public class HeroListener implements Listener {
 		String uuid = player.getUniqueId().toString();
 		if(mgp.getActiveHero() == Hero.SCOUT)
 		{
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()-> player.setAllowFlight(true), 38);
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()-> player.setAllowFlight(true), 20);
 			if (CooldownUtil.isCooledDown("jumpscout", uuid))
 			{
 				player.setVelocity(player.getLocation().getDirection().multiply(0.8).setY(1));
-				CooldownUtil.newCoolDown("jumpscout",  uuid, 2);
+				CooldownUtil.newCoolDown("jumpscout",  uuid, 1);
 				EffectUtil.playSound(player.getLocation(), Sound.BLOCK_SLIME_FALL);
 				EffectUtil.playParticle(player, Effect.TILE_DUST);
 			}
