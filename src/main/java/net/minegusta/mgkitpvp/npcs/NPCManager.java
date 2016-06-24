@@ -22,6 +22,7 @@ public class NPCManager {
 		shopNPC.getEquipment().setBoots(new ItemStack(Material.IRON_BOOTS));
 		shopNPC.setCollidable(false);
 		shopNPC.setInvulnerable(true);
+		shopNPC.setGravity(false);
 		shopNPC.setAI(false);
 	}
 
@@ -38,6 +39,7 @@ public class NPCManager {
 		selectClassNPC.getEquipment().setHelmet(new ItemStack(Material.IRON_HELMET));
 		selectClassNPC.getEquipment().setBoots(new ItemStack(Material.IRON_BOOTS));
 		selectClassNPC.setCollidable(false);
+		selectClassNPC.setGravity(false);
 		selectClassNPC.setInvulnerable(true);
 		selectClassNPC.setAI(false);
 	}
@@ -60,6 +62,7 @@ public class NPCManager {
 		});
 		startGameNPC.setCollidable(false);
 		startGameNPC.setInvulnerable(true);
+		startGameNPC.setGravity(false);
 		startGameNPC.setAI(false);
 	}
 }

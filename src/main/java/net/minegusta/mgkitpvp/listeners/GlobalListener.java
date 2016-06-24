@@ -166,10 +166,12 @@ public class GlobalListener implements Listener {
 	}
 
 	//Teleport user to spawn area on login. Also add users to the announcement bar.
+	//Also set players to be unable to collide.
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e)
 	{
 		DisplayMessageUtil.addPlayerToBar(e.getPlayer());
+		e.getPlayer().setCollidable(false);
 	}
 
 	//Prevent dropping items
