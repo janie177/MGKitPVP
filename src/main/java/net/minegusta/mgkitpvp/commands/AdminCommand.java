@@ -15,7 +15,7 @@ import java.util.List;
 
 public class AdminCommand implements CommandExecutor {
 
-	private static List<String> help = Lists.newArrayList("/heropvp help - Show this menu", "/heropvp addspawn <name> - Add current location as a spawn.", "/heropvp deletespawn <name> - Remove given location as spawn.", "/heropvp list - List all spawns.", "/heropvp addNPC <name> <shop/spawn/selector> - Spawn an NPC with the given role.", "/heropvp npclist - List all NPC's", "/heropvp removeNPC <name> - Remove the given NPC.", "/heropvp resetNPCS");
+	private static List<String> help = Lists.newArrayList("/heropvp help - Show this menu.", "/heropvp addspawn <name> - Add current location as a spawn.", "/heropvp deletespawn <name> - Remove given location as spawn.", "/heropvp list - List all spawns.", "/heropvp addNPC <name> <shop/spawn/selector> - Spawn an NPC with the given role.", "/heropvp npclist - List all NPC's.", "/heropvp removeNPC <name> - Remove the given NPC.", "/heropvp resetNPCS - Reset all NPC's.");
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
