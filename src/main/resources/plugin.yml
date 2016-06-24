@@ -1,0 +1,14 @@
+name: MGKitPVP
+version: ${project.version}
+main: net.minegusta.mgkitpvp.main.Main
+author: janie177
+depend: [MGLib]
+commands:
+  heropvp:
+    usage: /HeroPvP
+    description: The admin command.
+    permission: heropvp.admin
+  break:
+    usage: /Break
+    description: take a break!
+    aliases: [suicide, spawn, hub, out, surrender]
