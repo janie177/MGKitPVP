@@ -17,7 +17,7 @@ public class Default implements IHero {
 
 	@Override
 	public void doUltimate(Player player) {
-		PotionUtil.updatePotion(player, PotionEffectType.HEAL, 1, 6);
+		PotionUtil.updatePotion(player, PotionEffectType.REGENERATION, 1, ultimateDuration());
 	}
 
 	@Override

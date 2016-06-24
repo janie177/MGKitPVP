@@ -3,6 +3,7 @@ package net.minegusta.heropvp.utils;
 import com.google.common.collect.Lists;
 import net.minegusta.heropvp.classes.Hero;
 import net.minegusta.heropvp.main.Main;
+import net.minegusta.heropvp.saving.MGPlayer;
 import net.minegusta.mglib.bossbars.BossBarUtil;
 import net.minegusta.mglib.bossbars.PermanentBossBarHolder;
 import net.minegusta.mglib.bossbars.TimedBossBarHolder;
@@ -144,11 +145,16 @@ public class DisplayMessageUtil {
 		EffectUtil.playSound(player, Sound.BLOCK_STONE_PRESSUREPLATE_CLICK_ON);
 	}
 
-	public static void ultimateReady(Player player, Hero hero)
+	public static void ultimateReady(Player player, Hero hero, MGPlayer mgp)
 	{
-		Title title = TitleUtil.createTitle("", hero.getUltimateReadyMessage(), 10, 40, 10,true);
-		TitleUtil.sendTitle(title, player);
-		EffectUtil.playSound(player, Sound.ENTITY_CHICKEN_DEATH);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
+		{
+			if(!player.isOnline() || !mgp.isPlaying()) return;
+			Title title = TitleUtil.createTitle("", hero.getUltimateReadyMessage(), 10, 40, 10,true);
+			TitleUtil.sendTitle(title, player);
+			EffectUtil.playSound(player, Sound.ENTITY_CHICKEN_DEATH);
+		}, 30);
+
 	}
 
 	public static void activateUltimate(Player player, Hero hero)

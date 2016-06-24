@@ -131,7 +131,7 @@ public class MGPlayer extends MGPlayerModel {
 
 		if(power == 100)
 		{
-			DisplayMessageUtil.ultimateReady(getPlayer(), hero);
+			DisplayMessageUtil.ultimateReady(getPlayer(), hero, this);
 		}
 
 		float progressBar = power / 100;
