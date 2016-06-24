@@ -46,6 +46,7 @@ public class MGPlayer extends MGPlayerModel {
 		tickets = fileConfiguration.getInt("tickets");
 		if(fileConfiguration.isSet("unlocked-heroes"))
 		{
+			unlocked.clear();
 			for(String s : fileConfiguration.getStringList("unlocked-heroes"))
 			{
 				try
