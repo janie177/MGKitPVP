@@ -134,7 +134,8 @@ public class AdminCommand implements CommandExecutor {
 	{
 		for(String s : help)
 		{
-			p.sendMessage(ChatColor.DARK_GRAY + s);
+			String[] split = s.split("-");
+			p.sendMessage(ChatColor.YELLOW + split[0] + ChatColor.GRAY + split[1]);
 		}
 	}
 }
