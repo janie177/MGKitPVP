@@ -3,6 +3,7 @@ package net.minegusta.mgkitpvp.classes.impl;
 import net.minegusta.mgkitpvp.classes.IHero;
 import net.minegusta.mgkitpvp.inventories.HeroInventory;
 import net.minegusta.mglib.utils.PotionUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.boss.BarColor;
@@ -36,6 +37,7 @@ public class Scout implements IHero {
 
 	@Override
 	public void applyPermanentPassives(Player player) {
+		Bukkit.getLogger().info("boopboop");
 		PotionUtil.updatePotion(player, PotionEffectType.SPEED, 0, 5);
 	}
 

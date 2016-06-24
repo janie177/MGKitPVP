@@ -101,10 +101,10 @@ public class DisplayMessageUtil {
 	{
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
 		{
-			final int divide = tickets > 20 ? 20 : 10;
+			final int divide = tickets > 30 ? 30 : tickets > 20 ? 20 : 10;
 			int step = tickets / divide;
 			int total = 0;
-			final int interval = 3;
+			final int interval = 2;
 
 			for(int i = 0; i <= divide; i++)
 			{
@@ -113,11 +113,15 @@ public class DisplayMessageUtil {
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
 				{
 
-					Title title = TitleUtil.createTitle(ChatColor.GREEN + "" + ChatColor.BOLD + "+" + display + " " + ChatColor.GOLD + "" + ChatColor.BOLD + " Tickets", "", 0, k >= divide ? 80 : 3, 0,true);
+					Title title = TitleUtil.createTitle(ChatColor.GREEN + "" + ChatColor.BOLD + "+" + display + " " + ChatColor.GOLD + "" + ChatColor.BOLD + " Tickets", "", 0, k >= divide ? 80 : 6, 0,true);
 					TitleUtil.sendTitle(title, player);
-					EffectUtil.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
-				}, interval);
+					EffectUtil.playSound(player, Sound.BLOCK_LEVER_CLICK);
+				}, interval * i);
 				total += step;
+				if(i == divide)
+				{
+					total = tickets;
+				}
 			}
 		}, messageDelay);
 	}

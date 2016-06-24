@@ -95,7 +95,7 @@ public class TicketShop extends InventoryGUI {
 			if(mgp.getTickets() >= h.getCost()){
 
 				mgp.addHero(h);
-				mgp.removeTickets(h.getCost(), 60);
+				mgp.removeTickets(h.getCost(), 40);
 
 				player.closeInventory();
 				shopLayout.remove(player.getUniqueId().toString());
