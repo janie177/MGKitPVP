@@ -20,6 +20,7 @@ import org.bukkit.event.inventory.FurnaceExtractEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.List;
 import java.util.Optional;
@@ -140,7 +141,7 @@ public class GlobalListener implements Listener {
 			e.setCancelled(true);
 			MGPlayer mgp = Main.getSaveManager().getMGPlayer((Player) e.getEntity());
 			Optional<Player> killer = mgp.getMostDamage();
-			if(killer.isPresent())
+			if(killer.isPresent() && !killer.get().getUniqueId().equals(e.getEntity().getUniqueId()))
 			{
 				Main.getSaveManager().getMGPlayer(killer.get()).onKillPlayer(e.getEntity().getName());
 			}
@@ -179,7 +180,6 @@ public class GlobalListener implements Listener {
 	public void onJoin(PlayerJoinEvent e)
 	{
 		DisplayMessageUtil.addPlayerToBar(e.getPlayer());
-		e.getPlayer().setCollidable(false);
 		MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
 		mgp.resetOnMapChange();
 		ScoreBoardManager.getTicketBoard().addPlayer(e.getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", mgp.getTickets()));
@@ -200,6 +200,8 @@ public class GlobalListener implements Listener {
 	@EventHandler
 	public void onEntityDamage(PlayerInteractEntityEvent e)
 	{
+		if(e.getHand() != EquipmentSlot.HAND) return;
+
 		if(e.getRightClicked() instanceof Villager || e.getRightClicked() instanceof Zombie || e.getRightClicked() instanceof Skeleton)
 		{
 			LivingEntity rightClicked = (LivingEntity) e.getRightClicked();
@@ -216,7 +218,9 @@ public class GlobalListener implements Listener {
 				//Spawn
 				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.GREEN + "" + ChatColor.BOLD + "" + "Play Now!"))
 				{
-					Main.getSaveManager().getMGPlayer(e.getPlayer()).onSpawn();
+					MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
+					if(mgp.isPlaying()) mgp.onDeath();
+					else mgp.onSpawn();
 					e.setCancelled(true);
 					return;
 				}
@@ -259,7 +263,9 @@ public class GlobalListener implements Listener {
 				//Spawn
 				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.GREEN + "" + ChatColor.BOLD + "" + "Play Now!"))
 				{
-					Main.getSaveManager().getMGPlayer(player).onSpawn();
+					MGPlayer mgp = Main.getSaveManager().getMGPlayer(player);
+					if(mgp.isPlaying()) mgp.onDeath();
+					else mgp.onSpawn();
 					e.setCancelled(true);
 					return;
 				}
@@ -279,6 +285,7 @@ public class GlobalListener implements Listener {
 				}
 			}
 		}
+
 	}
 
 	//Stop players from using projectiles and stuff.

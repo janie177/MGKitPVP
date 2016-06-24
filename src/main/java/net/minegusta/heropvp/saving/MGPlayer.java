@@ -58,6 +58,8 @@ public class MGPlayer extends MGPlayerModel {
 		}
 		ScoreBoardManager.getTicketBoard().updatePlayer(getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", tickets));
 		setActiveHero(hero);
+
+		getPlayer().setCollidable(false);
 	}
 
 	@Override
@@ -238,6 +240,7 @@ public class MGPlayer extends MGPlayerModel {
 		getPlayer().getActivePotionEffects().clear();
 
 		getPlayer().getInventory().clear();
+		getPlayer().setCollidable(false);
 	}
 
 	public void onSpawn()
@@ -252,6 +255,7 @@ public class MGPlayer extends MGPlayerModel {
 		DisplayMessageUtil.onSpawn(getPlayer(), hero);
 		ScoreBoardManager.getTicketBoard().removePlayer(getPlayer());
 		ScoreBoardManager.getHeroTagsBoard().addPlayer(getPlayer(), hero.name());
+		getPlayer().setCollidable(true);
 	}
 
 	public void onKillPlayer(String killedName)
@@ -263,6 +267,7 @@ public class MGPlayer extends MGPlayerModel {
 		Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "addcredits " + getPlayer().getName() + " 2");
 		getPlayer().sendMessage(ChatColor.LIGHT_PURPLE + "You earned " + ChatColor.YELLOW + "2" + ChatColor.LIGHT_PURPLE + " credits.");
 		hero.onKill(getPlayer());
+		getPlayer().setCollidable(false);
 	}
 
 	public void addDamage(Player damager, double damage)

@@ -2,10 +2,8 @@ package net.minegusta.heropvp.npcs;
 
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.mglib.configs.ConfigurationFileManager;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import net.minegusta.mglib.tasks.Task;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -14,10 +12,12 @@ import org.bukkit.metadata.FixedMetadataValue;
 public class NPCManager {
 
 	private static ConfigurationFileManager<NPCConfiguration> npcConfig;
+	private static Task respawnNPCs = new Task();
 
 	public static void initConfig()
 	{
 		npcConfig = new ConfigurationFileManager<>(Main.getPlugin(), NPCConfiguration.class, 180, "npcs");
+		respawnNPCs.start(Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), NPCConfiguration::resetNPCS, 20 * 600, 20 * 600));
 	}
 
 	public static void spawnNPCS()
