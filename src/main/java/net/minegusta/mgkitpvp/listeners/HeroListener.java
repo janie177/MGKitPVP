@@ -6,6 +6,7 @@ import net.minegusta.mgkitpvp.main.Main;
 import net.minegusta.mgkitpvp.saving.MGPlayer;
 import net.minegusta.mglib.utils.CooldownUtil;
 import net.minegusta.mglib.utils.EffectUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -56,7 +57,7 @@ public class HeroListener implements Listener {
 		String uuid = player.getUniqueId().toString();
 		if(mgp.getActiveHero() == Hero.SCOUT)
 		{
-			player.setAllowFlight(true);
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()-> player.setAllowFlight(true), 38);
 			if (CooldownUtil.isCooledDown("jumpscout", uuid))
 			{
 				player.setVelocity(player.getLocation().getDirection().multiply(0.8).setY(1));
