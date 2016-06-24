@@ -218,6 +218,7 @@ public class MGPlayer extends MGPlayerModel {
 		setKillstreak(0);
 		getPlayer().getActivePotionEffects().clear();
 		getPlayer().getInventory().clear();
+		getPlayer().setCollidable(false);
 	}
 
 	public void resetOnMapChange()
@@ -267,7 +268,6 @@ public class MGPlayer extends MGPlayerModel {
 		Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "addcredits " + getPlayer().getName() + " 2");
 		getPlayer().sendMessage(ChatColor.LIGHT_PURPLE + "You earned " + ChatColor.YELLOW + "2" + ChatColor.LIGHT_PURPLE + " credits.");
 		hero.onKill(getPlayer());
-		getPlayer().setCollidable(false);
 	}
 
 	public void addDamage(Player damager, double damage)
