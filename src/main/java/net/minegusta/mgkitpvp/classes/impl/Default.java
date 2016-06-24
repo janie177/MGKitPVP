@@ -9,6 +9,8 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffectType;
 
@@ -56,7 +58,7 @@ public class Default implements IHero {
 
 	@Override
 	public String getName() {
-		return "Noobington";
+		return "Noobly";
 	}
 
 	private static String[] desc = new String[]{"The default hero!", "Gain tickets to unlock more.", "Ultimate heals you."};
@@ -68,10 +70,23 @@ public class Default implements IHero {
 
 	@Override
 	public String getTag() {
-		return "[Noobington]";
+		return "[Noobly]";
 	}
 
-	private static HeroInventory inventory = new HeroInventory();
+	private static HeroInventory inventory = new HeroInventory(){
+		{
+			//Helmet
+			addItem(5, new ItemStack(Material.CHAINMAIL_HELMET));
+			//Chest
+			addItem(6, new ItemStack(Material.CHAINMAIL_CHESTPLATE));
+			//Legs
+			addItem(7, new ItemStack(Material.IRON_LEGGINGS));
+			//Boots
+			addItem(8, new ItemStack(Material.LEATHER_BOOTS));
+			//hand1
+			addItem(36, new ItemStack(Material.IRON_SWORD));
+		}
+	};
 
 	@Override
 	public void applyInventory(PlayerInventory inv) {

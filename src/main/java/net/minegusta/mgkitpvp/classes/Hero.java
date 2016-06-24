@@ -1,5 +1,6 @@
 package net.minegusta.mgkitpvp.classes;
 
+import net.minegusta.mgkitpvp.classes.impl.Artemiz;
 import net.minegusta.mgkitpvp.classes.impl.Default;
 import net.minegusta.mgkitpvp.classes.impl.Scout;
 import org.bukkit.ChatColor;
@@ -12,6 +13,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 public enum Hero {
 	DEFAULT(new Default()),
+	ARTEMIZ(new Artemiz()),
 	SCOUT(new Scout());
 
 	private IHero hero;

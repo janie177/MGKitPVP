@@ -11,12 +11,14 @@ import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TippedArrow;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
-
-import java.util.List;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
 
 public class HeroListener implements Listener {
 
@@ -25,18 +27,15 @@ public class HeroListener implements Listener {
 	 */
 
 	//Activate abilities using crouch.
-
-	private static List<Hero> herosOnCrouch = Lists.newArrayList(Hero.SCOUT, Hero.DEFAULT);
-
 	@EventHandler
 	public void onCrouch(PlayerToggleSneakEvent e)
 	{
 		if(!e.isSneaking()) return;
 
 		MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
-		if(mgp.isUltimateReady() && herosOnCrouch.contains(mgp.getActiveHero()))
+		if(mgp.isUltimateReady())
 		{
-			mgp.onUltimate(e.getPlayer());
+			mgp.activateUltimate();
 		}
 	}
 
@@ -69,5 +68,29 @@ public class HeroListener implements Listener {
 		}
 
 	}
+
+	//Bow shoot event
+	@EventHandler
+	public void onShootBow(EntityShootBowEvent e)
+	{
+		if(e.getEntity() instanceof Player)
+		{
+			MGPlayer mgp = Main.getSaveManager().getMGPlayer((Player) e.getEntity());
+			if(!mgp.isPlaying())
+			{
+				e.setCancelled(true);
+				return;
+			}
+
+			//Artemiz ultimate ability to shoot poison arrows.
+			if(mgp.getActiveHero() == Hero.ARTEMIZ && mgp.isUltimateActive())
+			{
+				TippedArrow arrow = e.getEntity().getWorld().spawnArrow(e.getEntity().getLocation(), e.getProjectile().getVelocity(), 0, 0, TippedArrow.class);
+				arrow.setBasePotionData(new PotionData(PotionType.POISON, false, false));
+				e.setProjectile(arrow);
+			}
+		}
+	}
+
 
 }

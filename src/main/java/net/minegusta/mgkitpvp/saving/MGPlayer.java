@@ -305,6 +305,11 @@ public class MGPlayer extends MGPlayerModel {
 		hero.applyPermanentPassives(getPlayer());
 	}
 
+	public void onUltimate()
+	{
+		onUltimate(null, null);
+	}
+
 	public void onUltimate(Player player)
 	{
 		onUltimate(player, null);
@@ -315,15 +320,20 @@ public class MGPlayer extends MGPlayerModel {
 		onUltimate(null, event);
 	}
 
-	public void onUltimate(Player player, Event event)
+	public void activateUltimate()
 	{
-		if(isPlaying()) return;
+		if(!isPlaying()) return;
 		setPower(0);
 		if(hero.ultimateDuration() > 0)
 		{
 			setUltimateActive();
-			DisplayMessageUtil.activateUltimate(player, hero);
+			DisplayMessageUtil.activateUltimate(getPlayer(), hero);
 		}
+	}
+
+	public void onUltimate(Player player, Event event)
+	{
+		if(!isPlaying()) return;
 		if(player != null)
 		{
 			hero.doUltimate(player);

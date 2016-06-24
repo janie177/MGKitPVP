@@ -2,23 +2,21 @@ package net.minegusta.mgkitpvp.classes.impl;
 
 import net.minegusta.mgkitpvp.classes.IHero;
 import net.minegusta.mgkitpvp.inventories.HeroInventory;
-import net.minegusta.mglib.utils.PotionUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.potion.PotionEffectType;
 
-public class Scout implements IHero {
+public class Artemiz implements IHero {
 
 	@Override
 	public void doUltimate(Player player) {
-		PotionUtil.updatePotion(player, PotionEffectType.SPEED, 1, 10);
+
 	}
 
 	@Override
@@ -38,30 +36,29 @@ public class Scout implements IHero {
 
 	@Override
 	public void applyPermanentPassives(Player player) {
-		PotionUtil.updatePotion(player, PotionEffectType.SPEED, 0, 5);
 	}
 
 	@Override
 	public void onSelect(Player player) {
-		player.setAllowFlight(true);
+
 	}
 
 	@Override
 	public int powerPerKill() {
-		return 100;
+		return 50;
 	}
 
 	@Override
 	public int ultimateDuration() {
-		return 10;
+		return 18;
 	}
 
 	@Override
 	public String getName() {
-		return "Scout";
+		return "Artemiz";
 	}
 
-	private static String[] desc = new String[]{"The scout is fast.", "They can double jump too!", "Ultimate gives extra speed."};
+	private static String[] desc = new String[]{"A skilled archer.", "Shoot poisonous arrows", "as ultimate ability."};
 
 	@Override
 	public String[] getDescription() {
@@ -70,21 +67,35 @@ public class Scout implements IHero {
 
 	@Override
 	public String getTag() {
-		return "[Scout]";
+		return "[Artemiz]";
 	}
 
 	private static HeroInventory inventory = new HeroInventory(){
 		{
 			//Helmet
-			addItem(5, new ItemStack(Material.IRON_HELMET));
+			addItem(5, new ItemStack(Material.LEATHER_HELMET));
 			//Chest
-			addItem(6, new ItemStack(Material.LEATHER_CHESTPLATE));
+			addItem(6, new ItemStack(Material.CHAINMAIL_CHESTPLATE));
 			//Legs
 			addItem(7, new ItemStack(Material.LEATHER_LEGGINGS));
 			//Boots
 			addItem(8, new ItemStack(Material.LEATHER_BOOTS));
 			//hand1
-			addItem(36, new ItemStack(Material.IRON_SWORD));
+			addItem(36, new ItemStack(Material.BOW){
+				{
+					addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 2);
+					addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
+					addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
+				}
+			});
+			//hand2
+			addItem(37, new ItemStack(Material.WOOD_SWORD){
+				{
+					addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+					addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
+				}
+			});
+			addItem(12, new ItemStack(Material.ARROW, 64));
 		}
 	};
 
@@ -95,36 +106,36 @@ public class Scout implements IHero {
 
 	@Override
 	public Material getMaterial() {
-		return Material.FEATHER;
+		return Material.BOW;
 	}
 
 	@Override
 	public int getCost() {
-		return 260;
+		return 250;
 	}
 
 	@Override
 	public ChatColor getColor() {
-		return ChatColor.YELLOW;
+		return ChatColor.GREEN;
 	}
 
 	@Override
 	public BarStyle getBarStyle() {
-		return BarStyle.SEGMENTED_20;
+		return BarStyle.SEGMENTED_10;
 	}
 
 	@Override
 	public BarColor getBarColor() {
-		return BarColor.YELLOW;
+		return BarColor.GREEN;
 	}
 
 	@Override
 	public String ultimateReadyMessage() {
-		return ChatColor.DARK_PURPLE + "Ultimate Ready!" + ChatColor.YELLOW + "" + ChatColor.BOLD + " Crouch to activate!";
+		return ChatColor.GREEN + "Ultimate Ready!" + ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + " Crouch to activate!";
 	}
 
 	@Override
 	public String ultimateBarMessage() {
-		return "Gotta go fast(er)!";
+		return "Your arrows are now poisonous.";
 	}
 }
