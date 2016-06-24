@@ -76,15 +76,15 @@ public class Scout implements IHero {
 	private static HeroInventory inventory = new HeroInventory(){
 		{
 			//Helmet
-			addItem(5, new ItemStack(Material.IRON_HELMET));
+			addItem(39, new ItemStack(Material.IRON_HELMET));
 			//Chest
-			addItem(6, new ItemStack(Material.LEATHER_CHESTPLATE));
+			addItem(38, new ItemStack(Material.LEATHER_CHESTPLATE));
 			//Legs
-			addItem(7, new ItemStack(Material.LEATHER_LEGGINGS));
+			addItem(37, new ItemStack(Material.LEATHER_LEGGINGS));
 			//Boots
-			addItem(8, new ItemStack(Material.LEATHER_BOOTS));
+			addItem(36, new ItemStack(Material.LEATHER_BOOTS));
 			//hand1
-			addItem(36, new ItemStack(Material.IRON_SWORD));
+			addItem(0, new ItemStack(Material.IRON_SWORD));
 		}
 	};
 

@@ -73,15 +73,15 @@ public class Artemiz implements IHero {
 	private static HeroInventory inventory = new HeroInventory(){
 		{
 			//Helmet
-			addItem(5, new ItemStack(Material.LEATHER_HELMET));
+			addItem(39, new ItemStack(Material.LEATHER_HELMET));
 			//Chest
-			addItem(6, new ItemStack(Material.CHAINMAIL_CHESTPLATE));
+			addItem(38, new ItemStack(Material.CHAINMAIL_CHESTPLATE));
 			//Legs
-			addItem(7, new ItemStack(Material.LEATHER_LEGGINGS));
+			addItem(37, new ItemStack(Material.LEATHER_LEGGINGS));
 			//Boots
-			addItem(8, new ItemStack(Material.LEATHER_BOOTS));
+			addItem(36, new ItemStack(Material.LEATHER_BOOTS));
 			//hand1
-			addItem(36, new ItemStack(Material.BOW){
+			addItem(0, new ItemStack(Material.BOW){
 				{
 					addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 2);
 					addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
@@ -89,13 +89,13 @@ public class Artemiz implements IHero {
 				}
 			});
 			//hand2
-			addItem(37, new ItemStack(Material.WOOD_SWORD){
+			addItem(1, new ItemStack(Material.WOOD_SWORD){
 				{
 					addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
 					addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
 				}
 			});
-			addItem(12, new ItemStack(Material.ARROW, 64));
+			addItem(35, new ItemStack(Material.ARROW, 64));
 		}
 	};
 
