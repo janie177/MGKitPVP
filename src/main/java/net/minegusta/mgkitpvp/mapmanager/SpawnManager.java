@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
+import java.util.Optional;
 import java.util.concurrent.ConcurrentMap;
 
 public class SpawnManager {
@@ -66,10 +67,12 @@ public class SpawnManager {
 
 			}, 20 * 50);
 
-		}, 60, 20 * 600));
+		}, 20 * 600, 20 * 600));
 
 		//Load the spawn configuration
 		configurationFileManager = new ConfigurationFileManager<>(Main.getPlugin(), SpawnConfiguration.class, 300, "spawns");
+		Optional<Location> loc = locations.values().stream().findAny();
+		if(loc.isPresent()) currentSpawn = loc.get();
 	}
 
 	public static void addSpawnLocation(String name, Location l)
