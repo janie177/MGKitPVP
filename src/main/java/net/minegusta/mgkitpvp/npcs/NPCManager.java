@@ -100,4 +100,8 @@ public class NPCManager {
 		startGameNPC.setAI(false);
 		startGameNPC.setMetadata("heropvpnpc", new FixedMetadataValue(Main.getPlugin(), true));
 	}
+
+	public static ConfigurationFileManager<NPCConfiguration> getNpcConfig() {
+		return npcConfig;
+	}
 }

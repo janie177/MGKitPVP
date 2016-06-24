@@ -3,7 +3,9 @@ package net.minegusta.mgkitpvp.listeners;
 import com.google.common.collect.Lists;
 import net.minegusta.mgkitpvp.main.Main;
 import net.minegusta.mgkitpvp.saving.MGPlayer;
+import net.minegusta.mgkitpvp.scoreboards.ScoreBoardManager;
 import net.minegusta.mgkitpvp.utils.DisplayMessageUtil;
+import net.minegusta.mglib.scoreboards.MGScore;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
@@ -174,6 +176,7 @@ public class GlobalListener implements Listener {
 		e.getPlayer().setCollidable(false);
 		MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
 		mgp.resetOnMapChange();
+		ScoreBoardManager.getTicketBoard().addPlayer(e.getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", mgp.getTickets()));
 	}
 
 	//Prevent dropping items

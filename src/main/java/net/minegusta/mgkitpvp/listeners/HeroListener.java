@@ -59,7 +59,7 @@ public class HeroListener implements Listener {
 			player.setAllowFlight(true);
 			if (CooldownUtil.isCooledDown("jumpscout", uuid))
 			{
-				player.setVelocity(player.getLocation().getDirection().multiply(1.1).setY(1));
+				player.setVelocity(player.getLocation().getDirection().multiply(0.8).setY(1));
 				CooldownUtil.newCoolDown("jumpscout",  uuid, 2);
 				EffectUtil.playSound(player.getLocation(), Sound.BLOCK_SLIME_FALL);
 				EffectUtil.playParticle(player, Effect.TILE_DUST);

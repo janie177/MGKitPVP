@@ -91,6 +91,7 @@ public class AdminCommand implements CommandExecutor {
 				}
 				break;
 			}
+			NPCManager.getNpcConfig().saveConfig();
 			return true;
 		}
 
@@ -98,6 +99,7 @@ public class AdminCommand implements CommandExecutor {
 		{
 			String name = args[1].toLowerCase();
 			NPCConfiguration.removeNPC(name);
+			NPCManager.getNpcConfig().saveConfig();
 			return true;
 		}
 
