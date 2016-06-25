@@ -20,6 +20,7 @@ import org.bukkit.event.inventory.FurnaceExtractEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.List;
@@ -75,7 +76,7 @@ public class GlobalListener implements Listener {
 				if(target.getHealth() - e.getFinalDamage() <= 0)
 				{
 					targetMGP.addDamage(damager, e.getFinalDamage());
-					e.setCancelled(true);
+					e.setDamage(0);
 					Optional<Player> p = targetMGP.getMostDamage();
 					if(p.isPresent())
 					{
@@ -110,7 +111,7 @@ public class GlobalListener implements Listener {
 				//On death
 				if(target.getHealth() - e.getFinalDamage() <= 0)
 				{
-					e.setCancelled(true);
+					e.setDamage(0);
 					Optional<Player> p = targetMGP.getMostDamage();
 					if(p.isPresent())
 					{
@@ -146,6 +147,19 @@ public class GlobalListener implements Listener {
 				Main.getSaveManager().getMGPlayer(killer.get()).onKillPlayer(e.getEntity().getName());
 			}
 			mgp.onDeath();
+		}
+	}
+
+	@EventHandler
+	public void onEnderPearl(PlayerTeleportEvent e)
+	{
+		MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
+		if(e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL)
+		{
+			if(!mgp.isPlaying())
+			{
+				e.setCancelled(true);
+			}
 		}
 	}
 
