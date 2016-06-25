@@ -86,7 +86,7 @@ public class DisplayMessageUtil {
 
 	public static void onAssist(Player player, String assistName)
 	{
-		Title title = TitleUtil.createTitle("", ChatColor.RED + "Assist!", 6, 14, 6,true);
+		Title title = TitleUtil.createTitle("", ChatColor.RED + "Assist! " + ChatColor.GREEN + "+2 Tickets", 6, 14, 6,true);
 		TitleUtil.sendTitle(title, player);
 		EffectUtil.playSound(player, Sound.BLOCK_LEVER_CLICK);
 	}
