@@ -183,6 +183,7 @@ public class GlobalListener implements Listener {
 		MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
 		mgp.resetOnMapChange();
 		ScoreBoardManager.getTicketBoard().addPlayer(e.getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", mgp.getTickets()));
+		e.getPlayer().setCollidable(false);
 	}
 
 	//Prevent dropping items
