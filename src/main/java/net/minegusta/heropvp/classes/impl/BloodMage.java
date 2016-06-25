@@ -52,7 +52,7 @@ public class BloodMage implements IHero {
 
 			if(oTarget.isPresent())
 			{
-				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 2);
+				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 3);
 				SpellUtil.castBloodSpell(player, oTarget.get(), mgp.isUltimateActive());
 			}
 
@@ -194,7 +194,7 @@ public class BloodMage implements IHero {
 
 	@Override
 	public int getCost() {
-		return 600;
+		return 750;
 	}
 
 	@Override

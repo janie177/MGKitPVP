@@ -25,7 +25,7 @@ public class BloodSpell extends AbstractTargetingParticleEffect {
 
 	@Override
 	public void onHit(Entity targetedEntity) {
-		EffectUtil.playSound(targetedEntity.getLocation(), Sound.BLOCK_PORTAL_TRIGGER);
+		EffectUtil.playSound(targetedEntity.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT);
 		try {
 			Player caster = Bukkit.getPlayer(UUID.fromString(casterUUID));
 			if(caster.isOnline())
@@ -37,7 +37,7 @@ public class BloodSpell extends AbstractTargetingParticleEffect {
 					LivingEntity le = (LivingEntity) targetedEntity;
 					double maxHealed = caster.getMaxHealth() - caster.getMaxHealth();
 					if(maxHealed > 3) maxHealed = 3;
-					caster.setHealth(maxHealed + maxHealed);
+					caster.setHealth(le.getHealth() + maxHealed);
 					le.damage(e.getFinalDamage());
 				}
 			}

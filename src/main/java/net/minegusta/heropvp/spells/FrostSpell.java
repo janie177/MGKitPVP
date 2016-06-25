@@ -26,7 +26,7 @@ public class FrostSpell extends AbstractTargetingParticleEffect {
 
 	@Override
 	public void onHit(Entity targetedEntity) {
-		EffectUtil.playSound(targetedEntity.getLocation(), Sound.BLOCK_PORTAL_TRIGGER);
+		EffectUtil.playSound(targetedEntity.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT);
 		try {
 			Player caster = Bukkit.getPlayer(UUID.fromString(casterUUID));
 			if(caster.isOnline())

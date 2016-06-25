@@ -15,20 +15,20 @@ public class SpellUtil {
 
 	public static void castBloodSpell(Player caster, Entity targetedEntity, boolean ultimate)
 	{
-		EffectUtil.playSound(caster.getLocation(), Sound.BLOCK_PORTAL_TRIGGER);
+		EffectUtil.playSound(caster.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT);
 		new BloodSpell(140, Effect.WITCH_MAGIC, caster.getLocation(), ultimate ? 12 : 7, targetedEntity.getLocation(), targetedEntity, true, true, Effect.DRAGON_BREATH, caster.getUniqueId().toString());
 	}
 
 	public static void castFrostSpell(Player caster, Entity targetedEntity, boolean ultimate)
 	{
-		EffectUtil.playSound(caster.getLocation(), Sound.BLOCK_PORTAL_TRIGGER);
+		EffectUtil.playSound(caster.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT);
 		new FrostSpell(140, Effect.SNOWBALL_BREAK, caster.getLocation(), ultimate ? 10 : 7, targetedEntity.getLocation(), targetedEntity, true, true, Effect.SNOWBALL_BREAK, caster.getUniqueId().toString());
 	}
 
 	public static void castFireSpell(Player caster, Entity targetedEntity, boolean ultimate)
 	{
-		EffectUtil.playSound(caster.getLocation(), Sound.BLOCK_PORTAL_TRIGGER);
-		new FireSpell(140, Effect.FLAME, caster.getLocation(), ultimate ? 12 : 7, targetedEntity.getLocation(), targetedEntity, true, true, Effect.MOBSPAWNER_FLAMES, caster.getUniqueId().toString());
+		EffectUtil.playSound(caster.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT);
+		new FireSpell(140, Effect.MOBSPAWNER_FLAMES, caster.getLocation(), ultimate ? 12 : 7, targetedEntity.getLocation(), targetedEntity, true, true, Effect.MOBSPAWNER_FLAMES, caster.getUniqueId().toString());
 	}
 
 	public static Optional<Player> getTarget(Player player)

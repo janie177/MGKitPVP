@@ -52,7 +52,7 @@ public class IceMage implements IHero {
 
 			if(oTarget.isPresent())
 			{
-				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 2);
+				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 3);
 				SpellUtil.castFrostSpell(player, oTarget.get(), mgp.isUltimateActive());
 			}
 

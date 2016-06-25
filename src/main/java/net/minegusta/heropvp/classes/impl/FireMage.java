@@ -5,6 +5,7 @@ import net.minegusta.heropvp.inventories.HeroInventory;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
 import net.minegusta.heropvp.spells.SpellUtil;
+import net.minegusta.mglib.particles.ParticleEffect;
 import net.minegusta.mglib.utils.CooldownUtil;
 import net.minegusta.mglib.utils.EffectUtil;
 import org.bukkit.ChatColor;
@@ -54,14 +55,17 @@ public class FireMage implements IHero {
 
 			if(oTarget.isPresent())
 			{
-				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 2);
+				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 3);
 				SpellUtil.castFireSpell(player, oTarget.get(), mgp.isUltimateActive());
 			}
 			else
 			{
 				EffectUtil.playSound(player.getLocation(), Sound.BLOCK_DISPENSER_FAIL);
 			}
-
+		}
+		else
+		{
+			EffectUtil.playSound(player.getLocation(), Sound.BLOCK_DISPENSER_FAIL);
 		}
 
 
