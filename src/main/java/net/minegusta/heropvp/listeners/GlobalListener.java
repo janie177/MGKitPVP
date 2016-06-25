@@ -84,6 +84,7 @@ public class GlobalListener implements Listener {
 						if(!p.get().getUniqueId().equals(damager.getUniqueId()))
 						{
 							DisplayMessageUtil.onAssist(damager, target.getName());
+							damagerMGP.addAssist();
 						}
 					}
 					else
@@ -119,6 +120,7 @@ public class GlobalListener implements Listener {
 						if(!p.get().getUniqueId().equals(damager.getUniqueId()))
 						{
 							DisplayMessageUtil.onAssist(damager, target.getName());
+							damagerMGP.addAssist();
 						}
 
 					}

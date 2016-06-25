@@ -26,6 +26,7 @@ import java.util.concurrent.ConcurrentMap;
 public class MGPlayer extends MGPlayerModel {
 
 	private int kills = 0;
+	private int assists = 0;
 	private int killstreak = 0;
 	private int power = 0;
 	private boolean isPlaying = false;
@@ -37,13 +38,14 @@ public class MGPlayer extends MGPlayerModel {
 
 	@Override
 	public void onLoad(FileConfiguration fileConfiguration) {
-		killstreak = fileConfiguration.getInt("killstreak");
-		kills = fileConfiguration.getInt("kills");
-		power = fileConfiguration.getInt("power");
+		killstreak = fileConfiguration.getInt("killstreak", 0);
+		assists = fileConfiguration.getInt("assists", 0);
+		kills = fileConfiguration.getInt("kills", 0);
+		power = fileConfiguration.getInt("power", 0);
 		try {
 			hero = Hero.valueOf(fileConfiguration.getString("hero"));
 		} catch (Exception ignored){}
-		tickets = fileConfiguration.getInt("tickets");
+		tickets = fileConfiguration.getInt("tickets", 0);
 		if(fileConfiguration.isSet("unlocked-heroes"))
 		{
 			unlocked.clear();
@@ -69,6 +71,7 @@ public class MGPlayer extends MGPlayerModel {
 		fileConfiguration.set("power", power);
 		fileConfiguration.set("hero", hero.name());
 		fileConfiguration.set("tickets", tickets);
+		fileConfiguration.set("assists", assists);
 
 		List<String> heroes = Lists.newArrayList();
 		for(Hero h : unlocked)
@@ -154,6 +157,16 @@ public class MGPlayer extends MGPlayerModel {
 		return kills;
 	}
 
+	public void addAssist()
+	{
+		assists++;
+	}
+
+	public void setAssists(int assists)
+	{
+		this.assists = assists;
+	}
+
 	public void setKills(int kills) {
 		this.kills = kills;
 	}
@@ -189,7 +202,7 @@ public class MGPlayer extends MGPlayerModel {
 	public void addTickets(int ticketsToAdd, int messageDelay)
 	{
 		setTickets(getTickets() + ticketsToAdd);
-		DisplayMessageUtil.giveTickets(getPlayer(), ticketsToAdd, messageDelay);
+		if(ticketsToAdd >= 10) DisplayMessageUtil.giveTickets(getPlayer(), ticketsToAdd, messageDelay);
 	}
 
 	public void removeTickets(int ticketsToRemove, int messageDelay)
@@ -216,6 +229,7 @@ public class MGPlayer extends MGPlayerModel {
 		}
 		damagers.clear();
 		setKillstreak(0);
+		setAssists(0);
 		getPlayer().getActivePotionEffects().clear();
 		getPlayer().getInventory().clear();
 		getPlayer().setCollidable(false);
@@ -231,13 +245,14 @@ public class MGPlayer extends MGPlayerModel {
 		getPlayer().setHealth(getPlayer().getMaxHealth());
 		getPlayer().setFoodLevel(20);
 		getPlayer().teleport(getPlayer().getWorld().getSpawnLocation());
-		int ticketsToAdd = killstreak * 10 + (killstreak * (killstreak / 2));
+		int ticketsToAdd = (killstreak * 10 + (killstreak * (killstreak / 2)) + assists * 2);
 		if(ticketsToAdd > 0)
 		{
 			addTickets(ticketsToAdd, 5);
 		}
 		damagers.clear();
 		setKillstreak(0);
+		setAssists(0);
 		getPlayer().getActivePotionEffects().clear();
 
 		getPlayer().getInventory().clear();

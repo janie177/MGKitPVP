@@ -45,7 +45,7 @@ public class BloodMage implements IHero {
 	public void doPassive(Player player) {
 		MGPlayer mgp = Main.getSaveManager().getMGPlayer(player);
 
-		if(player.getInventory().getItemInMainHand().getType() == Material.BONE && CooldownUtil.isCooledDown("spelltargetsearch", player.getUniqueId().toString()))
+		if(player.getInventory().getItemInMainHand().getType() == Material.BONE && CooldownUtil.isCooledDown("spellcast", player.getUniqueId().toString()) && CooldownUtil.isCooledDown("spelltargetsearch", player.getUniqueId().toString()))
 		{
 			Optional<Player> oTarget = SpellUtil.getTarget(player);
 			CooldownUtil.newCoolDown("spelltargetsearch", player.getUniqueId().toString(), 1);

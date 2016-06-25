@@ -45,7 +45,7 @@ public class IceMage implements IHero {
 	public void doPassive(Player player) {
 		MGPlayer mgp = Main.getSaveManager().getMGPlayer(player);
 
-		if(player.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD && CooldownUtil.isCooledDown("spelltargetsearch", player.getUniqueId().toString()))
+		if(player.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD && CooldownUtil.isCooledDown("spellcast", player.getUniqueId().toString()) && CooldownUtil.isCooledDown("spelltargetsearch", player.getUniqueId().toString()))
 		{
 			Optional<Player> oTarget = SpellUtil.getTarget(player);
 			CooldownUtil.newCoolDown("spelltargetsearch", player.getUniqueId().toString(), 1);
