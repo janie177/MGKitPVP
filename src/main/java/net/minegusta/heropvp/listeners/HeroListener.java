@@ -172,7 +172,7 @@ public class HeroListener implements Listener {
 			MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
 
 			//Mage abilities
-			if(mages.contains(mgp.getActiveHero()))
+			if(mages.contains(mgp.getActiveHero()) && mgp.isPlaying())
 			{
 				mgp.onPassive(e.getPlayer());
 			}

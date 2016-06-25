@@ -6,9 +6,11 @@ import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
 import net.minegusta.heropvp.spells.SpellUtil;
 import net.minegusta.mglib.utils.CooldownUtil;
+import net.minegusta.mglib.utils.EffectUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.enchantments.Enchantment;
@@ -45,7 +47,7 @@ public class FireMage implements IHero {
 	public void doPassive(Player player) {
 		MGPlayer mgp = Main.getSaveManager().getMGPlayer(player);
 
-		if(player.getInventory().getItemInMainHand().getType() == Material.BLAZE_ROD && CooldownUtil.isCooledDown("spelltargetsearch", player.getUniqueId().toString()))
+		if(player.getInventory().getItemInMainHand().getType() == Material.BLAZE_ROD && CooldownUtil.isCooledDown("spellcast", player.getUniqueId().toString()) && CooldownUtil.isCooledDown("spelltargetsearch", player.getUniqueId().toString()))
 		{
 			Optional<Player> oTarget = SpellUtil.getTarget(player);
 			CooldownUtil.newCoolDown("spelltargetsearch", player.getUniqueId().toString(), 1);
@@ -54,6 +56,10 @@ public class FireMage implements IHero {
 			{
 				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 2);
 				SpellUtil.castFireSpell(player, oTarget.get(), mgp.isUltimateActive());
+			}
+			else
+			{
+				EffectUtil.playSound(player.getLocation(), Sound.BLOCK_DISPENSER_FAIL);
 			}
 
 		}
