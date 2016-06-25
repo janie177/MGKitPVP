@@ -29,12 +29,12 @@ public class FireSpell extends AbstractTargetingParticleEffect {
 			Player caster = Bukkit.getPlayer(UUID.fromString(casterUUID));
 			if(caster.isOnline())
 			{
-				EntityDamageByEntityEvent e = new EntityDamageByEntityEvent(caster, targetedEntity, EntityDamageEvent.DamageCause.CUSTOM, 7);
+				EntityDamageByEntityEvent e = new EntityDamageByEntityEvent(caster, targetedEntity, EntityDamageEvent.DamageCause.CUSTOM, 2);
 				Bukkit.getPluginManager().callEvent(e);
 				if(!e.isCancelled())
 				{
 					LivingEntity le = (LivingEntity) targetedEntity;
-					le.setFireTicks(80);
+					le.setFireTicks(40);
 					le.damage(e.getFinalDamage());
 				}
 			}

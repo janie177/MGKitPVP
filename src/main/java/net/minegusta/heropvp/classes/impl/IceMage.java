@@ -52,7 +52,7 @@ public class IceMage implements IHero {
 
 			if(oTarget.isPresent())
 			{
-				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 5);
+				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 2);
 				SpellUtil.castFrostSpell(player, oTarget.get(), mgp.isUltimateActive());
 			}
 
@@ -90,7 +90,7 @@ public class IceMage implements IHero {
 		return "IceMage";
 	}
 
-	private static String[] desc = new String[]{"A mage specialized in ice.", "Shoots spells that slow you.", "Ultimate makes spells go faster.", "Spells have a 5 second cooldown."};
+	private static String[] desc = new String[]{"A mage specialized in ice.", "Shoots spells that slow you.", "Ultimate makes spells go faster.", "Spells have a 2 second cooldown."};
 
 	@Override
 	public String[] getDescription() {

@@ -31,7 +31,7 @@ public class FrostSpell extends AbstractTargetingParticleEffect {
 			Player caster = Bukkit.getPlayer(UUID.fromString(casterUUID));
 			if(caster.isOnline())
 			{
-				EntityDamageByEntityEvent e = new EntityDamageByEntityEvent(caster, targetedEntity, EntityDamageEvent.DamageCause.CUSTOM, 9);
+				EntityDamageByEntityEvent e = new EntityDamageByEntityEvent(caster, targetedEntity, EntityDamageEvent.DamageCause.CUSTOM, 3);
 				Bukkit.getPluginManager().callEvent(e);
 				if(!e.isCancelled())
 				{

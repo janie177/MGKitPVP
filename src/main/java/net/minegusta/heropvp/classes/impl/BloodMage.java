@@ -52,7 +52,7 @@ public class BloodMage implements IHero {
 
 			if(oTarget.isPresent())
 			{
-				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 5);
+				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 4);
 				SpellUtil.castBloodSpell(player, oTarget.get(), mgp.isUltimateActive());
 			}
 
@@ -90,7 +90,7 @@ public class BloodMage implements IHero {
 		return "BloodMage";
 	}
 
-	private static String[] desc = new String[]{"A mage specialized in Blood.", "Drains your opponents health.", "Ultimate makes spells go faster.", "Spells have a 5 second cooldown."};
+	private static String[] desc = new String[]{"A mage specialized in Blood.", "Drains your opponents health.", "Ultimate makes spells go faster.", "Spells have a 4 second cooldown."};
 
 	@Override
 	public String[] getDescription() {
@@ -161,6 +161,7 @@ public class BloodMage implements IHero {
 			addItem(1, new ItemStack(Material.WOOD_SWORD){
 				{
 					addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
+					addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
 				}
 			});
 			addItem(2, new ItemStack(Material.SPLASH_POTION, 1)

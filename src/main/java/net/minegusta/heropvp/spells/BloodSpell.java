@@ -30,13 +30,13 @@ public class BloodSpell extends AbstractTargetingParticleEffect {
 			Player caster = Bukkit.getPlayer(UUID.fromString(casterUUID));
 			if(caster.isOnline())
 			{
-				EntityDamageByEntityEvent e = new EntityDamageByEntityEvent(caster, targetedEntity, EntityDamageEvent.DamageCause.CUSTOM, 7);
+				EntityDamageByEntityEvent e = new EntityDamageByEntityEvent(caster, targetedEntity, EntityDamageEvent.DamageCause.CUSTOM, 4);
 				Bukkit.getPluginManager().callEvent(e);
 				if(!e.isCancelled())
 				{
 					LivingEntity le = (LivingEntity) targetedEntity;
 					double maxHealed = caster.getMaxHealth() - caster.getMaxHealth();
-					if(maxHealed > 3) maxHealed = 3;
+					if(maxHealed > 2) maxHealed = 2;
 					caster.setHealth(le.getHealth() + maxHealed);
 					le.damage(e.getFinalDamage());
 				}

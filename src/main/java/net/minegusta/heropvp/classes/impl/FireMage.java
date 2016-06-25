@@ -55,7 +55,7 @@ public class FireMage implements IHero {
 
 			if(oTarget.isPresent())
 			{
-				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 5);
+				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 2);
 				SpellUtil.castFireSpell(player, oTarget.get(), mgp.isUltimateActive());
 			}
 			else
@@ -100,7 +100,7 @@ public class FireMage implements IHero {
 		return "FireMage";
 	}
 
-	private static String[] desc = new String[]{"A mage specialized in Fire.", "Shoots spells that burn you.", "Ultimate makes spells go faster.", "Spells have a 5 second cooldown."};
+	private static String[] desc = new String[]{"A mage specialized in Fire.", "Shoots spells that burn you.", "Ultimate makes spells go faster.", "Spells have a 2 second cooldown."};
 
 	@Override
 	public String[] getDescription() {
