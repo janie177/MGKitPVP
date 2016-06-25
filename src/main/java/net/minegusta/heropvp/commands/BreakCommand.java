@@ -20,7 +20,11 @@ public class BreakCommand implements CommandExecutor {
 			{
 				mgp.resetOnMapChange();
 				TitleUtil.createTitle(ChatColor.YELLOW + "You have been returned to the spawn.", "", 10, 40, 10, true).send(player);
-
+			}
+			else
+			{
+				player.teleport(player.getWorld().getSpawnLocation());
+				TitleUtil.createTitle(ChatColor.YELLOW + "You have been returned to the spawn.", "", 10, 40, 10, true).send(player);
 			}
 		}
 		return true;
