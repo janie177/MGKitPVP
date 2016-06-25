@@ -1,0 +1,224 @@
+package net.minegusta.heropvp.classes.impl;
+
+import net.minegusta.heropvp.classes.IHero;
+import net.minegusta.heropvp.inventories.HeroInventory;
+import net.minegusta.heropvp.main.Main;
+import net.minegusta.heropvp.saving.MGPlayer;
+import net.minegusta.heropvp.spells.SpellUtil;
+import net.minegusta.mglib.utils.CooldownUtil;
+import org.bukkit.ChatColor;
+import org.bukkit.Color;
+import org.bukkit.Material;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
+
+import java.util.Optional;
+
+public class IceMage implements IHero {
+
+	@Override
+	public void doUltimate(Player player) {
+
+	}
+
+	@Override
+	public void doUltimate(Event event) {
+
+	}
+
+	@Override
+	public void doPassive(Event event) {
+
+	}
+
+	@Override
+	public void doPassive(Player player) {
+		MGPlayer mgp = Main.getSaveManager().getMGPlayer(player);
+
+		if(player.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD && CooldownUtil.isCooledDown("spelltargetsearch", player.getUniqueId().toString()))
+		{
+			Optional<Player> oTarget = SpellUtil.getTarget(player);
+			CooldownUtil.newCoolDown("spelltargetsearch", player.getUniqueId().toString(), 1);
+
+			if(oTarget.isPresent())
+			{
+				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 2);
+				SpellUtil.castFrostSpell(player, oTarget.get(), mgp.isUltimateActive());
+			}
+
+		}
+
+
+	}
+
+	@Override
+	public void applyPermanentPassives(Player player) {
+	}
+
+	@Override
+	public void onKill(Player player) {
+
+	}
+
+	@Override
+	public void onSelect(Player player) {
+
+	}
+
+	@Override
+	public int powerPerKill() {
+		return 50;
+	}
+
+	@Override
+	public int ultimateDuration() {
+		return 15;
+	}
+
+	@Override
+	public String getName() {
+		return "IceMage";
+	}
+
+	private static String[] desc = new String[]{"A mage specialized in ice.", "Shoots spells that slow you.", "Ultimate makes spells go faster."};
+
+	@Override
+	public String[] getDescription() {
+		return desc;
+	}
+
+	@Override
+	public String getTag() {
+		return "[IceMage]";
+	}
+
+	private static HeroInventory inventory = new HeroInventory(){
+		{
+			//Helmet
+			addItem(39, new ItemStack(Material.LEATHER_HELMET){
+				{
+					{
+						LeatherArmorMeta meta = (LeatherArmorMeta) getItemMeta();
+						meta.setColor(Color.WHITE);
+						meta.setDisplayName(ChatColor.WHITE + "Mage's Hood.");
+						setItemMeta(meta);
+						addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+					}
+				}});
+			//Chest
+			addItem(38, new ItemStack(Material.LEATHER_CHESTPLATE){
+				{
+					{
+						LeatherArmorMeta meta = (LeatherArmorMeta) getItemMeta();
+						meta.setColor(Color.WHITE);
+						meta.setDisplayName(ChatColor.WHITE + "Mage's Robe.");
+						setItemMeta(meta);
+						addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+					}
+				}});
+			//Legs
+			addItem(37, new ItemStack(Material.LEATHER_LEGGINGS){
+				{
+					{
+						LeatherArmorMeta meta = (LeatherArmorMeta) getItemMeta();
+						meta.setColor(Color.WHITE);
+						meta.setDisplayName(ChatColor.WHITE + "Mage's Robe.");
+						setItemMeta(meta);
+						addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+					}
+				}});
+			//Boots
+			addItem(36, new ItemStack(Material.LEATHER_BOOTS){
+				{
+					{
+						LeatherArmorMeta meta = (LeatherArmorMeta) getItemMeta();
+						meta.setColor(Color.WHITE);
+						meta.setDisplayName(ChatColor.WHITE + "Mage's Boots.");
+						setItemMeta(meta);
+						addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+					}
+				}});
+			//hand1
+			addItem(0, new ItemStack(Material.PRISMARINE_SHARD){
+				{
+					ItemMeta meta = getItemMeta();
+					meta.setDisplayName(ChatColor.AQUA + "Ice Wand");
+					setItemMeta(meta);
+					addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+				}
+			});
+			//hand2
+			addItem(1, new ItemStack(Material.WOOD_SWORD){
+				{
+					addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
+				}
+			});
+			addItem(2, new ItemStack(Material.SPLASH_POTION, 1)
+			{
+				{
+					PotionMeta meta = (PotionMeta) getItemMeta();
+					meta.setBasePotionData(new PotionData(PotionType.INSTANT_DAMAGE, false, true));
+					setItemMeta(meta);
+				}
+			});
+			addItem(2, new ItemStack(Material.POTION, 1)
+			{
+				{
+					PotionMeta meta = (PotionMeta) getItemMeta();
+					meta.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL, false, false));
+					setItemMeta(meta);
+				}
+			});
+		}
+	};
+
+	@Override
+	public void applyInventory(PlayerInventory inv) {
+		inventory.fillInventory(inv);
+	}
+
+	@Override
+	public Material getMaterial() {
+		return Material.PRISMARINE_SHARD;
+	}
+
+	@Override
+	public int getCost() {
+		return 600;
+	}
+
+	@Override
+	public ChatColor getColor() {
+		return ChatColor.AQUA;
+	}
+
+	@Override
+	public BarStyle getBarStyle() {
+		return BarStyle.SOLID;
+	}
+
+	@Override
+	public BarColor getBarColor() {
+		return BarColor.BLUE;
+	}
+
+	@Override
+	public String ultimateReadyMessage() {
+		return ChatColor.GREEN + "Ultimate Ready!" + ChatColor.DARK_AQUA + "" + ChatColor.BOLD + " Crouch to activate!";
+	}
+
+	@Override
+	public String ultimateBarMessage() {
+		return "Your spells travel twice as fast!";
+	}
+}

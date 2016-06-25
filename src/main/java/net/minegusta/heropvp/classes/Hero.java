@@ -15,6 +15,9 @@ public enum Hero {
 	WITCHER(new Witcher()),
 	ASSASSIN(new Assassin()),
 	ELVENLORD(new ElvenLord()),
+	ICEMAGE(new IceMage()),
+	FIREMAGE(new FireMage()),
+	BLOODMAGE(new BloodMage()),
 	SCOUT(new Scout());
 
 	private IHero hero;

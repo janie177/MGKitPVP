@@ -147,6 +147,7 @@ public class DisplayMessageUtil {
 
 	public static void ultimateReady(Player player, Hero hero, MGPlayer mgp)
 	{
+		player.sendMessage(hero.getUltimateReadyMessage());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
 		{
 			if(!player.isOnline() || !mgp.isPlaying()) return;

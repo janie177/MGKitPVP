@@ -93,7 +93,7 @@ public class ElvenLord implements IHero {
 				{
 					addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 3);
 					addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
-					addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 2);
+					addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
 					addUnsafeEnchantment(Enchantment.DURABILITY, 3);
 				}
 			});
@@ -152,6 +152,6 @@ public class ElvenLord implements IHero {
 
 	@Override
 	public String ultimateBarMessage() {
-		return "Your arrows are now poisonous.";
+		return "Right click your bow to fire countless arrows!";
 	}
 }

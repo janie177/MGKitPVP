@@ -35,7 +35,7 @@ public class HeroListener implements Listener {
 	 * Listen for ultimate and passive abilities
 	 */
 
-	private static List<Hero> activateOnCrouch = Lists.newArrayList(Hero.SCOUT, Hero.WITCHER, Hero.DEFAULT, Hero.ELVENLORD);
+	private static List<Hero> activateOnCrouch = Lists.newArrayList(Hero.SCOUT, Hero.WITCHER, Hero.DEFAULT, Hero.ELVENLORD, Hero.BLOODMAGE, Hero.ICEMAGE, Hero.FIREMAGE);
 
 	//Activate abilities using crouch.
 	@EventHandler
@@ -116,7 +116,7 @@ public class HeroListener implements Listener {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()-> player.setAllowFlight(true), 30);
 			if (CooldownUtil.isCooledDown("jumpscout", uuid))
 			{
-				player.setVelocity(player.getLocation().getDirection().multiply(0.8).setY(1));
+				player.setVelocity(player.getLocation().getDirection().multiply(0.5).setY(1));
 				CooldownUtil.newCoolDown("jumpscout",  uuid, 1);
 				EffectUtil.playSound(player.getLocation(), Sound.BLOCK_SLIME_FALL);
 				EffectUtil.playParticle(player, Effect.TILE_DUST);
@@ -161,6 +161,8 @@ public class HeroListener implements Listener {
 		}
 	}
 
+	private static List<Hero> mages = Lists.newArrayList(Hero.BLOODMAGE, Hero.ICEMAGE, Hero.FIREMAGE);
+
 	//Elven lord arrow spam
 	@EventHandler
 	public void interact(PlayerInteractEvent e)
@@ -168,6 +170,15 @@ public class HeroListener implements Listener {
 		if(e.getHand() == EquipmentSlot.HAND && e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
 		{
 			MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
+
+			//Mage abilities
+			if(mages.contains(mgp.getActiveHero()))
+			{
+				mgp.onPassive(e.getPlayer());
+			}
+
+
+			//Elven lord ultimate ability
 			if(mgp.isUltimateActive() && mgp.getActiveHero() == Hero.ELVENLORD && e.getPlayer().getInventory().getItemInMainHand().getType() == Material.BOW)
 			{
 				final Player player = e.getPlayer();
