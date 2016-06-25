@@ -82,6 +82,10 @@ public class Main extends JavaPlugin {
 	{
 		//Despawn all entities on shutdown
 		Bukkit.getWorlds().stream().forEach(world -> world.getLivingEntities().stream().filter(ent -> !(ent instanceof Player)).forEach(LivingEntity::remove));
+
+		//Save everything
+		getSaveManager().saveAllMGPlayers();
+		SpawnManager.getSpawnConfigManager().saveConfig();
 	}
 
 	public static Plugin getPlugin()
