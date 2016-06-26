@@ -23,7 +23,7 @@ import java.util.List;
 public class Brewer implements IHero {
 
 	private static List<ItemStack> potions = Lists.newArrayList(
-			new ItemStack(Material.SPLASH_POTION, 2)
+			new ItemStack(Material.SPLASH_POTION, 1)
 			{
 				{
 					PotionMeta meta = (PotionMeta) getItemMeta();
@@ -31,7 +31,7 @@ public class Brewer implements IHero {
 					setItemMeta(meta);
 				}
 			},
-			new ItemStack(Material.SPLASH_POTION, 1)
+			new ItemStack(Material.SPLASH_POTION, 2)
 			{
 				{
 					PotionMeta meta = (PotionMeta) getItemMeta();
@@ -39,7 +39,7 @@ public class Brewer implements IHero {
 					setItemMeta(meta);
 				}
 			},
-			new ItemStack(Material.SPLASH_POTION, 2)
+			new ItemStack(Material.SPLASH_POTION, 3)
 			{
 				{
 					PotionMeta meta = (PotionMeta) getItemMeta();
@@ -55,7 +55,7 @@ public class Brewer implements IHero {
 					setItemMeta(meta);
 				}
 			},
-			new ItemStack(Material.SPLASH_POTION, 1)
+			new ItemStack(Material.POTION, 1)
 			{
 				{
 					PotionMeta meta = (PotionMeta) getItemMeta();
@@ -196,6 +196,7 @@ public class Brewer implements IHero {
 					addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
 				}
 			});
+			addItem(35, new ItemStack(Material.GLASS_BOTTLE, 1));
 		}
 	};
 

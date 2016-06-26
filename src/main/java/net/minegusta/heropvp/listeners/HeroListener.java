@@ -59,6 +59,8 @@ public class HeroListener implements Listener {
 	@EventHandler
 	public void onInteract(PlayerInteractEntityEvent e)
 	{
+		if(e.getHand() != EquipmentSlot.HAND) return;
+
 		MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
 		if(e.getRightClicked() instanceof Player) {
 			Player target = (Player) e.getRightClicked();
@@ -290,12 +292,12 @@ public class HeroListener implements Listener {
 	}
 
 	private static void nukeEffect(Location target, int range, int particles, int offSetY) {
-		target.getWorld().playEffect(target, Effect.EXPLOSION_HUGE, 1, 60);
+		target.getWorld().playEffect(target.clone().add(0, offSetY, 0), Effect.EXPLOSION_HUGE, 1, 60);
 		EffectUtil.playSound(target, Sound.ENTITY_GENERIC_EXPLODE, 4, 1);
 		target.getWorld().playSound(target, Sound.AMBIENT_CAVE, 1F, 1F);
-		target.getWorld().spigot().playEffect(target, Effect.CLOUD, 1, 1, 0F, 3F + offSetY, 3F, 1F, particles, range);
-		target.getWorld().spigot().playEffect(target, Effect.LAVA_POP, 1, 1, 0F, 3F, 0F, 1F, particles, range);
-		target.getWorld().spigot().playEffect(target, Effect.SMOKE, 1, 1, 0F, 3F + offSetY, 0F, 1F, particles, range);
-		target.getWorld().spigot().playEffect(target, Effect.FLAME, 1, 1, 0F, 3F + offSetY, 0F + offSetY, 1F, particles, range);
+		target.getWorld().spigot().playEffect(target, Effect.CLOUD, 1, 1, 3F, 0F, 3F, 1F, particles, range);
+		target.getWorld().spigot().playEffect(target, Effect.LAVA_POP, 1, 1, 0.4F, 10F, 0.4F, 1F, particles, range);
+		target.getWorld().spigot().playEffect(target, Effect.SMOKE, 1, 1, 0.4F, 10F, 0.4F, 1F, particles, range);
+		target.getWorld().spigot().playEffect(target, Effect.FLAME, 1, 1, 0.4F, 10F, 0.4F, 1F, particles, range);
 	}
 }

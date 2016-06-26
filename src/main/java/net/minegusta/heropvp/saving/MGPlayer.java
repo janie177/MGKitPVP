@@ -18,6 +18,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 
 import java.util.List;
 import java.util.Optional;
@@ -231,7 +232,14 @@ public class MGPlayer extends MGPlayerModel {
 		damagers.clear();
 		setKillstreak(0);
 		setAssists(0);
-		getPlayer().getActivePotionEffects().clear();
+
+		Player player = getPlayer();
+		for(PotionEffect effect : getPlayer().getActivePotionEffects())
+		{
+			player.removePotionEffect(effect.getType());
+		}
+
+
 		getPlayer().getInventory().clear();
 		getPlayer().setCollidable(false);
 
@@ -260,7 +268,12 @@ public class MGPlayer extends MGPlayerModel {
 		damagers.clear();
 		setKillstreak(0);
 		setAssists(0);
-		getPlayer().getActivePotionEffects().clear();
+
+		Player player = getPlayer();
+		for(PotionEffect effect : getPlayer().getActivePotionEffects())
+		{
+			player.removePotionEffect(effect.getType());
+		}
 
 		getPlayer().getInventory().clear();
 		getPlayer().setCollidable(false);

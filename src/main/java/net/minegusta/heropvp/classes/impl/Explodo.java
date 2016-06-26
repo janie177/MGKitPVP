@@ -65,7 +65,7 @@ public class Explodo implements IHero {
 			mgp.activateUltimate();
 			TNTPrimed tnt = (TNTPrimed) player.getWorld().spawnEntity(player.getLocation().add(player.getLocation().getDirection().normalize()).add(0,1.3F,0), EntityType.PRIMED_TNT);
 			tnt.setVelocity(v.normalize().multiply(1.8));
-			tnt.setFuseTicks(40);
+			tnt.setFuseTicks(28);
 			tnt.setGlowing(true);
 			tnt.setMetadata("nuke", new FixedMetadataValue(Main.getPlugin(), true));
 			tnt.setMetadata("mgplayer", new FixedMetadataValue(Main.getPlugin(), player.getUniqueId().toString()));
@@ -76,7 +76,7 @@ public class Explodo implements IHero {
 			TNTPrimed tnt = (TNTPrimed) player.getWorld().spawnEntity(player.getLocation().add(player.getLocation().getDirection().normalize()).add(0,1.3F,0), EntityType.PRIMED_TNT);
 			tnt.setVelocity(v.normalize().multiply(1.8));
 			tnt.setGlowing(true);
-			tnt.setFuseTicks(40);
+			tnt.setFuseTicks(28);
 			tnt.setMetadata("explodo", new FixedMetadataValue(Main.getPlugin(), true));
 			tnt.setMetadata("mgplayer", new FixedMetadataValue(Main.getPlugin(), player.getUniqueId().toString()));
 		}
