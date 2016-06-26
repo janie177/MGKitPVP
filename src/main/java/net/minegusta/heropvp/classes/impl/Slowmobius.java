@@ -19,6 +19,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Slowmobius implements IHero {
 	@Override
@@ -27,6 +28,7 @@ public class Slowmobius implements IHero {
 		final Location center = player.getLocation();
 		final int radius = 12;
 		final List<Location> circleSpots = LocationUtil.getPointsOnCircle(center, 15, radius);
+		final UUID uuid = player.getUniqueId();
 
 
 		for(int i = 0; i < ultimateDuration() * 4 * 20; i++)
@@ -45,7 +47,7 @@ public class Slowmobius implements IHero {
 			{
 				center.getWorld().getEntitiesByClasses(LivingEntity.class, Projectile.class).stream().filter(ent -> ent.getLocation().distance(center) < radius).forEach(ent ->
 				{
-					if(ent instanceof LivingEntity)
+					if(ent instanceof LivingEntity && !ent.getUniqueId().equals(uuid))
 					{
 						PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.SLOW, 2, 3);
 					}
