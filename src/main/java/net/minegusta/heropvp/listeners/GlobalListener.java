@@ -136,6 +136,7 @@ public class GlobalListener implements Listener {
 	@EventHandler
 	public void onPassiveKill(EntityDamageEvent e)
 	{
+		if(e.isCancelled())return;
 		if(e instanceof EntityDamageByEntityEvent) return;
 		if(e.getEntity() instanceof Player && ((Player) e.getEntity()).getHealth() - e.getFinalDamage() <= 0)
 		{

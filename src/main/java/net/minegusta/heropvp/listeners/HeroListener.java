@@ -147,7 +147,7 @@ public class HeroListener implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onFallDamage(EntityDamageEvent e)
 	{
 		if(e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.FALL)
