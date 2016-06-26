@@ -63,19 +63,20 @@ public class Explodo implements IHero {
 		if(mgp.isUltimateReady())
 		{
 			mgp.activateUltimate();
-			TNTPrimed tnt = (TNTPrimed) player.getWorld().spawnEntity(player.getLocation().add(player.getLocation().getDirection().normalize()), EntityType.PRIMED_TNT);
-			tnt.setVelocity(v.normalize().multiply(2.5));
-			tnt.setFuseTicks(20);
+			TNTPrimed tnt = (TNTPrimed) player.getWorld().spawnEntity(player.getLocation().add(player.getLocation().getDirection().normalize()).add(0,1.3F,0), EntityType.PRIMED_TNT);
+			tnt.setVelocity(v.normalize().multiply(1.8));
+			tnt.setFuseTicks(40);
+			tnt.setGlowing(true);
 			tnt.setMetadata("nuke", new FixedMetadataValue(Main.getPlugin(), true));
 			tnt.setMetadata("mgplayer", new FixedMetadataValue(Main.getPlugin(), player.getUniqueId().toString()));
 		}
 		//Normal tnt
 		else
 		{
-			TNTPrimed tnt = (TNTPrimed) player.getWorld().spawnEntity(player.getLocation().add(player.getLocation().getDirection().normalize()), EntityType.PRIMED_TNT);
-			tnt.setVelocity(v.normalize().multiply(2.5));
+			TNTPrimed tnt = (TNTPrimed) player.getWorld().spawnEntity(player.getLocation().add(player.getLocation().getDirection().normalize()).add(0,1.3F,0), EntityType.PRIMED_TNT);
+			tnt.setVelocity(v.normalize().multiply(1.8));
 			tnt.setGlowing(true);
-			tnt.setFuseTicks(20);
+			tnt.setFuseTicks(40);
 			tnt.setMetadata("explodo", new FixedMetadataValue(Main.getPlugin(), true));
 			tnt.setMetadata("mgplayer", new FixedMetadataValue(Main.getPlugin(), player.getUniqueId().toString()));
 		}

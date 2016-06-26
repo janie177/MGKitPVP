@@ -237,7 +237,7 @@ public class HeroListener implements Listener {
 				e.setCancelled(true);
 				try
 				{
-					String uuid = tnt.getMetadata("player").get(0).asString();
+					String uuid = tnt.getMetadata("mgplayer").get(0).asString();
 					Player player = Bukkit.getPlayer(UUID.fromString(uuid));
 					if(player.isOnline()) {
 						final Location target = tnt.getLocation();
@@ -260,14 +260,15 @@ public class HeroListener implements Listener {
 							}
 						});
 					}
-				} catch (Exception ignored){}
+				} catch (Exception ignored){
+				}
 			}
 			else if(tnt.hasMetadata("explodo"))
 			{
 				e.setCancelled(true);
 				try
 				{
-					String uuid = tnt.getMetadata("player").get(0).asString();
+					String uuid = tnt.getMetadata("mgplayer").get(0).asString();
 					Player player = Bukkit.getPlayer(UUID.fromString(uuid));
 					if(player.isOnline()) {
 						e.getEntity().getWorld().spigot().playEffect(e.getEntity().getLocation(), Effect.EXPLOSION, 0, 0, 1, 1, 1, 1, 1, 60);
@@ -280,7 +281,8 @@ public class HeroListener implements Listener {
 							}
 						});
 					}
-				} catch (Exception ignored){}
+				} catch (Exception ignored){
+				}
 
 			}
 		}
