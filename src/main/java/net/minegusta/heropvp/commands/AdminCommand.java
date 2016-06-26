@@ -27,9 +27,6 @@ public class AdminCommand implements CommandExecutor {
 			try {
 				Player player = Bukkit.getPlayer(args[1]);
 				int amount = Integer.valueOf(args[2]);
-
-				if(amount < 10) amount = 10;
-
 				Main.getSaveManager().getMGPlayer(player).addTickets(amount, 20);
 			} catch (Exception ignored) {}
 			return true;

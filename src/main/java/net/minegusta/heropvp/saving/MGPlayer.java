@@ -202,7 +202,7 @@ public class MGPlayer extends MGPlayerModel {
 	public void addTickets(int ticketsToAdd, int messageDelay)
 	{
 		setTickets(getTickets() + ticketsToAdd);
-		if(ticketsToAdd >= 10) DisplayMessageUtil.giveTickets(getPlayer(), ticketsToAdd, messageDelay);
+		DisplayMessageUtil.giveTickets(getPlayer(), ticketsToAdd, messageDelay);
 	}
 
 	public void removeTickets(int ticketsToRemove, int messageDelay)
