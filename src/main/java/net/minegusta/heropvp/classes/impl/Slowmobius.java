@@ -26,19 +26,19 @@ public class Slowmobius implements IHero {
 	public void doUltimate(Player player) {
 
 		final Location center = player.getLocation();
-		final int radius = 12;
+		final int radius = 10;
 		final List<Location> circleSpots = LocationUtil.getPointsOnCircle(center, 15, radius);
 		final UUID uuid = player.getUniqueId();
 
 
-		for(int i = 0; i < ultimateDuration() * 4 * 20; i++)
+		for(int i = 0; i < ultimateDuration() * 5; i++)
 		{
 			//The effect task
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
 			{
 				circleSpots.stream().forEach(l ->
 				{
-					ParticleUtil.createNewMovingParticle(30, Effect.WITCH_MAGIC, l, 2.5, l.clone().add(0, 5, 0));
+					ParticleUtil.createNewMovingParticle(20, Effect.WITCH_MAGIC, l, 3.2, l.clone().add(0, 5, 0));
 				});
 			}, i * 4);
 
@@ -51,7 +51,7 @@ public class Slowmobius implements IHero {
 					{
 						PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.SLOW, 2, 3);
 					}
-					else
+					else if(ent instanceof Projectile)
 					{
 						ent.setVelocity(ent.getVelocity().multiply(0.5));
 					}
