@@ -1,5 +1,6 @@
 package net.minegusta.heropvp.mapmanager;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
@@ -12,16 +13,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentMap;
 
 public class SpawnManager {
 	private static Task mapChangeTask = new Task();
 	private static ConfigurationFileManager<SpawnConfiguration> configurationFileManager;
-	private static ConcurrentMap<String, Location> locations = Maps.newConcurrentMap();
+	private static ConcurrentMap<String, Arena> locations = Maps.newConcurrentMap();
 	private static ConcurrentMap<Integer, String> indexes = Maps.newConcurrentMap();
 	private static int current = 0;
-	private static Location currentSpawn = Bukkit.getWorlds().get(0).getSpawnLocation();
+	private static Arena currentArena = new Arena("spawn", Lists.newArrayList(Bukkit.getWorlds().get(0).getSpawnLocation()));
 
 
 	public static void init()
@@ -42,7 +44,7 @@ public class SpawnManager {
 				if(!locations.isEmpty())
 				{
 					String currentName = indexes.get(current);
-					currentSpawn = locations.get(currentName);
+					currentArena = locations.get(currentName);
 					Main.getSaveManager().getAllPlayers().stream().forEach(MGPlayer::resetOnMapChange);
 
 					Bukkit.broadcastMessage(ChatColor.GOLD +   "----------------------");
@@ -71,13 +73,14 @@ public class SpawnManager {
 
 		//Load the spawn configuration
 		configurationFileManager = new ConfigurationFileManager<>(Main.getPlugin(), SpawnConfiguration.class, 300, "spawns");
-		Optional<Location> loc = locations.values().stream().findAny();
-		if(loc.isPresent()) currentSpawn = loc.get();
+		Optional<Arena> a = locations.values().stream().findAny();
+		if(a.isPresent()) currentArena = a.get();
 	}
 
-	public static void addSpawnLocation(String name, Location l)
+	public static void addArena(String name, Location l)
 	{
-		locations.put(name.toLowerCase(), l);
+		Arena a = new Arena(name.toLowerCase(), Lists.newArrayList(l));
+		locations.put(name.toLowerCase(), a);
 		int index = 0;
 		indexes.clear();
 		for(String s : locations.keySet())
@@ -87,22 +90,65 @@ public class SpawnManager {
 		}
 	}
 
-	public static ConcurrentMap<String, Location> getLocations()
+	public static void addArena(String name, List<Location> l)
+	{
+		Arena a = new Arena(name.toLowerCase(), l);
+		locations.put(name.toLowerCase(), a);
+		int index = 0;
+		indexes.clear();
+		for(String s : locations.keySet())
+		{
+			indexes.put(index, s);
+			index++;
+		}
+	}
+
+	public static boolean addLocationToArena(String arena, Location l)
+	{
+		if(locations.containsKey(arena.toLowerCase()))
+		{
+			Arena a = locations.get(arena.toLowerCase());
+			a.addLocation(l);
+			return true;
+		}
+		return false;
+	}
+
+	public static ConcurrentMap<String, Arena> getArenas()
 	{
 		return locations;
 	}
 
-	public static Location getCurrentSpawn()
+	public static boolean removeLocationFromArena(String name, Location l)
 	{
-		return currentSpawn;
+		if(locations.containsKey(name.toLowerCase()))
+		{
+			Arena a = locations.get(name.toLowerCase());
+			return a.removeLocation(l);
+		}
+		return false;
 	}
 
-	public static boolean isSpawnLocation(String s)
+	public static List<Location> listLocationsForArena(String name)
+	{
+		if(locations.containsKey(name.toLowerCase()))
+		{
+			return locations.get(name.toLowerCase()).getSpawnLocations();
+		}
+		return Lists.newArrayList();
+	}
+
+	public static Arena getCurrentArena()
+	{
+		return currentArena;
+	}
+
+	public static boolean isArena(String s)
 	{
 		return locations.containsKey(s.toLowerCase());
 	}
 
-	public static void removeSpawnLocation(String name)
+	public static void removeArena(String name)
 	{
 		if(locations.containsKey(name.toLowerCase()))
 		{

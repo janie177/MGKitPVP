@@ -263,7 +263,7 @@ public class MGPlayer extends MGPlayerModel {
 	public void onSpawn()
 	{
 		setPlaying(true);
-		getPlayer().teleport(SpawnManager.getCurrentSpawn());
+		getPlayer().teleport(SpawnManager.getCurrentArena().getRandomSpawn());
 		getPlayer().setHealth(getPlayer().getMaxHealth());
 		getPlayer().setFoodLevel(20);
 		getPlayer().getInventory().clear();

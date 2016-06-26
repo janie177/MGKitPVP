@@ -6,8 +6,10 @@ import net.minegusta.heropvp.mapmanager.SpawnManager;
 import net.minegusta.heropvp.npcs.NPCConfiguration;
 import net.minegusta.heropvp.npcs.NPCManager;
 import net.minegusta.heropvp.npcs.NPCType;
+import net.minegusta.mglib.utils.LocationUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,10 +19,12 @@ import java.util.List;
 
 public class AdminCommand implements CommandExecutor {
 
-	private static List<String> help = Lists.newArrayList("/heropvp help - Show this menu.", "/heropvp addspawn <name> - Add current location as a spawn.", "/heropvp deletespawn <name> - Remove given location as spawn.", "/heropvp list - List all spawns.", "/heropvp addNPC <name> <shop/spawn/selector> - Spawn an NPC with the given role.", "/heropvp npclist - List all NPC's.", "/heropvp removeNPC <name> - Remove the given NPC.", "/heropvp resetNPCS - Reset all NPC's.", "/heropvp addtickets <name> <amount> - Add tickets to someone.");
+	private static List<String> help = Lists.newArrayList("/heropvp help - Show this menu.", "/heropvp addarena <name> - Add arena with current location as spawn.", "/heropvp removearena <name> - Remove arena.", "/heropvp addspawn <arena> - Add current location as a spawn to given arena.", "/heropvp removespawn <arena> <index> - Remove given index from arena spawns.", "/heropvp list - List all arenas.", "/heropvp listspawns <arena> - List all spawn locations for arena.", "/heropvp addNPC <name> <shop/spawn/selector> - Spawn an NPC with the given role.", "/heropvp npclist - List all NPC's.", "/heropvp removeNPC <name> - Remove the given NPC.", "/heropvp resetNPCS - Reset all NPC's.", "/heropvp addtickets <name> <amount> - Add tickets to someone.");
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+		if(!sender.hasPermission("heropvp.admin")) return true;
 
 		if(args.length > 2 && args[0].equalsIgnoreCase("addtickets"))
 		{
@@ -36,8 +40,6 @@ public class AdminCommand implements CommandExecutor {
 
 		Player p = (Player) sender;
 
-		if(!p.hasPermission("heropvp.admin")) return true;
-
 
 		if(args.length < 1 || args[0].equalsIgnoreCase("help"))
 		{
@@ -47,8 +49,8 @@ public class AdminCommand implements CommandExecutor {
 
 		if(args[0].equalsIgnoreCase("list"))
 		{
-			p.sendMessage(ChatColor.DARK_GRAY + "Current Spawns:");
-			for(String s : SpawnManager.getLocations().keySet())
+			p.sendMessage(ChatColor.DARK_GRAY + "Current Arenas:");
+			for(String s : SpawnManager.getArenas().keySet())
 			{
 				p.sendMessage(ChatColor.YELLOW + " - " + s);
 			}
@@ -107,6 +109,7 @@ public class AdminCommand implements CommandExecutor {
 			return true;
 		}
 
+
 		if(args[0].equalsIgnoreCase("removeNPC"))
 		{
 			String name = args[1].toLowerCase();
@@ -115,28 +118,121 @@ public class AdminCommand implements CommandExecutor {
 			return true;
 		}
 
-		if(args[0].equalsIgnoreCase("addspawn"))
+
+		/**
+		 * ARENAS ------------------------------------------------------------|
+		 */
+
+
+
+		if(args[0].equalsIgnoreCase("addarena"))
 		{
 			String spawnName = args[1].toLowerCase();
-			SpawnManager.addSpawnLocation(spawnName, p.getLocation());
-			p.sendMessage(ChatColor.GREEN + "You added a spawn.");
+			if(SpawnManager.isArena(spawnName))
+			{
+				p.sendMessage(ChatColor.RED + "Arena already exists.");
+				return true;
+			}
+			SpawnManager.addArena(spawnName, p.getLocation());
+			p.sendMessage(ChatColor.GREEN + "You added an arena.");
 
 			return true;
 		}
-		else if(args[0].equalsIgnoreCase("removespawn"))
+
+		else if(args[0].equalsIgnoreCase("removearena"))
 		{
 			String spawnName = args[1].toLowerCase();
-			if(SpawnManager.isSpawnLocation(spawnName))
+			if(SpawnManager.isArena(spawnName))
 			{
-				SpawnManager.removeSpawnLocation(spawnName);
-				p.sendMessage(ChatColor.GREEN + "You removed a spawn.");
+				SpawnManager.removeArena(spawnName);
+				p.sendMessage(ChatColor.GREEN + "You removed an arena.");
 			}
 			else
 			{
-				p.sendMessage(ChatColor.RED + "That spawn could not be found.");
+				p.sendMessage(ChatColor.RED + "That arena could not be found.");
 			}
 			return true;
 		}
+
+		else if(args[0].equalsIgnoreCase("addspawn"))
+		{
+			String arenaName = args[1].toLowerCase();
+			Location l = p.getLocation();
+
+			if(SpawnManager.isArena(arenaName))
+			{
+				SpawnManager.addLocationToArena(arenaName, l);
+				p.sendMessage(ChatColor.GREEN + "You added a spawn to " + arenaName + ".");
+			}
+			else
+			{
+				p.sendMessage(ChatColor.RED + "That arena could not be found.");
+			}
+			return true;
+		}
+
+		else if(args[0].equalsIgnoreCase("listspawns"))
+		{
+			String arenaName = args[1].toLowerCase();
+
+			if(SpawnManager.isArena(arenaName))
+			{
+				p.sendMessage(ChatColor.GOLD + "Spawns for arena " + arenaName + ":");
+				int index = 0;
+				for(Location l : SpawnManager.listLocationsForArena(arenaName))
+				{
+					p.sendMessage(index + " - " + LocationUtil.locationToString(l));
+					index++;
+				}
+			}
+			else
+			{
+				p.sendMessage(ChatColor.RED + "That arena could not be found.");
+			}
+			return true;
+		}
+
+		else if(args[0].equalsIgnoreCase("removespawn") && args.length == 3)
+		{
+			String arenaName = args[1].toLowerCase();
+			if(!SpawnManager.isArena(arenaName))
+			{
+				p.sendMessage(ChatColor.RED + "That arena could not be found.");
+				return true;
+			}
+			try
+			{
+				int index = Integer.valueOf(args[2]);
+				if(SpawnManager.listLocationsForArena(arenaName).size() < index)
+				{
+					p.sendMessage(ChatColor.RED + "Index of spawn could not be found.");
+					return true;
+				}
+				else if(SpawnManager.listLocationsForArena(arenaName).size() == 1)
+				{
+					p.sendMessage(ChatColor.RED + "There has to be at least one location per arena.");
+					return true;
+				}
+				else
+				{
+					Location toRemove = SpawnManager.listLocationsForArena(arenaName).get(index);
+					SpawnManager.removeLocationFromArena(arenaName, toRemove);
+					p.sendMessage(ChatColor.GREEN + "Arena removed.");
+				}
+
+
+			} catch (Exception ignored){
+				p.sendMessage(ChatColor.RED + "Index of spawn could not be found.");
+			}
+			return true;
+		}
+
+
+		/**
+		 * ARENAS ------------------------------------------------------------|
+		 */
+
+
 		else
 		{
 			sendHelp(p);
