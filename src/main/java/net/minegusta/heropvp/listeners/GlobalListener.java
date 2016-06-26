@@ -81,7 +81,7 @@ public class GlobalListener implements Listener {
 					Optional<Player> p = targetMGP.getMostDamage();
 					if(p.isPresent())
 					{
-						Main.getSaveManager().getMGPlayer(p.get()).onKillPlayer(target.getName());
+						if(!p.get().getUniqueId().toString().equalsIgnoreCase(target.getUniqueId().toString()))Main.getSaveManager().getMGPlayer(p.get()).onKillPlayer(target.getName());
 						if(!p.get().getUniqueId().equals(damager.getUniqueId()))
 						{
 							DisplayMessageUtil.onAssist(damager, target.getName());
@@ -117,7 +117,7 @@ public class GlobalListener implements Listener {
 					Optional<Player> p = targetMGP.getMostDamage();
 					if(p.isPresent())
 					{
-						Main.getSaveManager().getMGPlayer(p.get()).onKillPlayer(target.getName());
+						if(!p.get().getUniqueId().toString().equalsIgnoreCase(target.getUniqueId().toString()))Main.getSaveManager().getMGPlayer(p.get()).onKillPlayer(target.getName());
 						if(!p.get().getUniqueId().equals(damager.getUniqueId()))
 						{
 							DisplayMessageUtil.onAssist(damager, target.getName());
