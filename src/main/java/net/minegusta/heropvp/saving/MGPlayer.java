@@ -3,6 +3,7 @@ package net.minegusta.heropvp.saving;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minegusta.heropvp.classes.Hero;
+import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.mapmanager.SpawnManager;
 import net.minegusta.heropvp.scoreboards.ScoreBoardManager;
 import net.minegusta.heropvp.utils.DisplayMessageUtil;
@@ -233,6 +234,12 @@ public class MGPlayer extends MGPlayerModel {
 		getPlayer().getActivePotionEffects().clear();
 		getPlayer().getInventory().clear();
 		getPlayer().setCollidable(false);
+
+		Optional<Player> p = getMostDamage();
+		if(p.isPresent()) {
+			if (!p.get().getUniqueId().toString().equalsIgnoreCase(getUuidString()))
+				Main.getSaveManager().getMGPlayer(p.get()).onKillPlayer(getPlayer().getName());
+		}
 	}
 
 	public void resetOnMapChange()

@@ -12,14 +12,13 @@ import net.minegusta.mglib.utils.TitleUtil;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.entity.TippedArrow;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
@@ -29,6 +28,7 @@ import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
 import java.util.List;
+import java.util.UUID;
 
 public class HeroListener implements Listener {
 
@@ -36,7 +36,7 @@ public class HeroListener implements Listener {
 	 * Listen for ultimate and passive abilities
 	 */
 
-	private static List<Hero> activateOnCrouch = Lists.newArrayList(Hero.KNIGHT, Hero.SLOWMOBIUS, Hero.SCOUT, Hero.WITCHER, Hero.DEFAULT, Hero.ELVENLORD, Hero.BLOODMAGE, Hero.ICEMAGE, Hero.FIREMAGE);
+	private static List<Hero> activateOnCrouch = Lists.newArrayList(Hero.BREWER, Hero.DWARF, Hero.TANK, Hero.KNIGHT, Hero.SLOWMOBIUS, Hero.SCOUT, Hero.WITCHER, Hero.DEFAULT, Hero.ELVENLORD, Hero.BLOODMAGE, Hero.ICEMAGE, Hero.FIREMAGE);
 
 	//Activate abilities using crouch.
 	@EventHandler
@@ -180,6 +180,14 @@ public class HeroListener implements Listener {
 			if(mages.contains(mgp.getActiveHero()) && mgp.isPlaying())
 			{
 				mgp.onPassive(e.getPlayer());
+				return;
+			}
+
+			//Explodo BOOM
+			if(mgp.getActiveHero() == Hero.EXPLODO && mgp.isPlaying())
+			{
+				mgp.onPassive(e.getPlayer());
+				return;
 			}
 
 
@@ -199,5 +207,76 @@ public class HeroListener implements Listener {
 				}
 			}
 		}
+	}
+
+	//On explodo tnt explode
+	@EventHandler
+	public void onTntExplode(ExplosionPrimeEvent e)
+	{
+		if(e.getEntity() instanceof TNTPrimed)
+		{
+			TNTPrimed tnt = (TNTPrimed) e.getEntity();
+			if(tnt.hasMetadata("nuke"))
+			{
+				e.setCancelled(true);
+				try
+				{
+					String uuid = tnt.getMetadata("player").get(0).asString();
+					Player player = Bukkit.getPlayer(UUID.fromString(uuid));
+					if(player.isOnline()) {
+						final Location target = tnt.getLocation();
+						for (int i = 0; i < 60; i++) {
+							final int k = i;
+							Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
+								@Override
+								public void run() {
+									nukeEffect(target, 110 + k, 30 * k, k / 4);
+								}
+							}, i);
+						}
+
+						e.getEntity().getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(e.getEntity().getLocation()) < 8).forEach(ent ->
+						{
+							EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(player, ent, EntityDamageEvent.DamageCause.ENTITY_EXPLOSION, 8 + (15 - ent.getLocation().distance(tnt.getLocation())));
+							Bukkit.getPluginManager().callEvent(event);
+							if (!event.isCancelled()) {
+								ent.damage(event.getFinalDamage());
+							}
+						});
+					}
+				} catch (Exception ignored){}
+			}
+			else if(tnt.hasMetadata("explodo"))
+			{
+				e.setCancelled(true);
+				try
+				{
+					String uuid = tnt.getMetadata("player").get(0).asString();
+					Player player = Bukkit.getPlayer(UUID.fromString(uuid));
+					if(player.isOnline()) {
+						e.getEntity().getWorld().spigot().playEffect(e.getEntity().getLocation(), Effect.EXPLOSION, 0, 0, 1, 1, 1, 1, 1, 60);
+						e.getEntity().getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(e.getEntity().getLocation()) < 4).forEach(ent ->
+						{
+							EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(player, ent, EntityDamageEvent.DamageCause.ENTITY_EXPLOSION, 6 + (7 - ent.getLocation().distance(tnt.getLocation())));
+							Bukkit.getPluginManager().callEvent(event);
+							if (!event.isCancelled()) {
+								ent.damage(event.getFinalDamage());
+							}
+						});
+					}
+				} catch (Exception ignored){}
+
+			}
+		}
+	}
+
+	private static void nukeEffect(Location target, int range, int particles, int offSetY) {
+		target.getWorld().spigot().playEffect(target, Effect.EXPLOSION, 0, 0, 1, 1, 1, 1, 1, 60);
+		EffectUtil.playSound(target, Sound.ENTITY_GENERIC_EXPLODE);
+		target.getWorld().playSound(target, Sound.AMBIENT_CAVE, 1F, 1F);
+		target.getWorld().spigot().playEffect(target, Effect.CLOUD, 1, 1, 0F, 3F + offSetY, 3F, 1F, particles, range);
+		target.getWorld().spigot().playEffect(target, Effect.LAVA_POP, 1, 1, 0F, 3F, 0F, 1F, particles, range);
+		target.getWorld().spigot().playEffect(target, Effect.SMOKE, 1, 1, 0F, 3F + offSetY, 0F, 1F, particles, range);
+		target.getWorld().spigot().playEffect(target, Effect.FLAME, 1, 1, 0F, 3F + offSetY, 0F + offSetY, 1F, particles, range);
 	}
 }

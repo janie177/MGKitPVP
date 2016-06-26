@@ -20,7 +20,11 @@ public enum Hero {
 	BLOODMAGE(new BloodMage()),
 	SCOUT(new Scout()),
 	SLOWMOBIUS(new Slowmobius()),
-	KNIGHT(new Knight());
+	BREWER(new Brewer()),
+	DWARF(new Dwarf()),
+	KNIGHT(new Knight()),
+	EXPLODO(new Explodo()),
+	TANK(new Tank());
 
 	private IHero hero;
 

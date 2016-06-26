@@ -145,7 +145,7 @@ public class Slowmobius implements IHero {
 
 	@Override
 	public int getCost() {
-		return 900;
+		return 1600;
 	}
 
 	@Override
