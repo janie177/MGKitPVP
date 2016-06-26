@@ -90,7 +90,6 @@ public class Artemiz implements IHero {
 				{
 					addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 2);
 					addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
-					addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
 				}
 			});
 			//hand2
