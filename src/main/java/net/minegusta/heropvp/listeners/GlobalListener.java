@@ -18,10 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.FurnaceExtractEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.List;
@@ -203,6 +200,13 @@ public class GlobalListener implements Listener {
 		e.getPlayer().setCollidable(false);
 		//Remove fly perms if stuck from previous scout.
 		PEXUtil.removePermission(e.getPlayer(),"nocheatplus.checks.moving.survivalfly");
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onQuit(PlayerQuitEvent e)
+	{
+		MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
+		if(mgp.isPlaying()) mgp.onDeath();
 	}
 
 	//Prevent dropping items
