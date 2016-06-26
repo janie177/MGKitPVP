@@ -7,6 +7,7 @@ import net.minegusta.heropvp.saving.MGPlayer;
 import net.minegusta.heropvp.utils.DisplayMessageUtil;
 import net.minegusta.mglib.utils.EffectUtil;
 import net.minegusta.mglib.utils.PotionUtil;
+import net.minegusta.mglib.utils.TitleUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -30,6 +31,12 @@ public class Mimic implements IHero {
 		EffectUtil.playParticle(player.getLocation(), Effect.CLOUD, 1, 1, 1, 0.1F, 40, 40);
 		if(killer.isPresent()) DisplayMessageUtil.setDeathMessageAnnounced(killer.get(), Main.getSaveManager().getMGPlayer(killer.get()).getActiveHero(), player.getName());
 		EffectUtil.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
+		player.getInventory().clear(36);
+		player.getInventory().clear(37);
+		player.getInventory().clear(38);
+		player.getInventory().clear(39);
+		player.getInventory().setHeldItemSlot(8);
+		TitleUtil.createTitle(ChatColor.YELLOW + "You faked your death!", ChatColor.RED + "Armor has been reset...", 0, 120, 0, true);
 		PotionUtil.updatePotion(player, PotionEffectType.INVISIBILITY, 0, ultimateDuration());
 	}
 
