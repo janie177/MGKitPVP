@@ -28,7 +28,7 @@ public class Assassin implements IHero {
 		PotionUtil.updatePotion(player, PotionEffectType.WEAKNESS, 0, ultimateDuration());
 		player.setHealth(player.getHealth() / 3);
 
-		ParticleUtil.createNewTargetingParticle(ultimateDuration(), Effect.WITCH_MAGIC, player.getLocation(), 12.0, player, false, false, Effect.MAGIC_CRIT);
+		ParticleUtil.createNewTargetingParticle(ultimateDuration() * 20, Effect.WITCH_MAGIC, player.getLocation(), 12.0, player, false, false, Effect.MAGIC_CRIT);
 	}
 
 	@Override

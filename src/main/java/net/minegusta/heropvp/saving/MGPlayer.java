@@ -134,7 +134,7 @@ public class MGPlayer extends MGPlayerModel {
 			this.power = 0;
 		}
 
-		if(power == 100)
+		if(this.power >= 100)
 		{
 			DisplayMessageUtil.ultimateReady(getPlayer(), hero, this);
 		}
