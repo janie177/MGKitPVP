@@ -81,7 +81,7 @@ public class Explodo implements IHero {
 			tnt.setMetadata("mgplayer", new FixedMetadataValue(Main.getPlugin(), player.getUniqueId().toString()));
 		}
 
-		CooldownUtil.newCoolDown("tntlaunch", player.getUniqueId().toString(), 3);
+		CooldownUtil.newCoolDown("tntlaunch", player.getUniqueId().toString(), 2);
 
 	}
 

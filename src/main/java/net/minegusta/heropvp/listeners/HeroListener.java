@@ -271,7 +271,8 @@ public class HeroListener implements Listener {
 					String uuid = tnt.getMetadata("mgplayer").get(0).asString();
 					Player player = Bukkit.getPlayer(UUID.fromString(uuid));
 					if(player.isOnline()) {
-						e.getEntity().getWorld().spigot().playEffect(e.getEntity().getLocation(), Effect.EXPLOSION, 0, 0, 1, 1, 1, 1, 1, 60);
+						e.getEntity().getWorld().playEffect(e.getEntity().getLocation(), Effect.EXPLOSION_HUGE, 0, 60);
+						EffectUtil.playSound(e.getEntity().getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 4, 1);
 						e.getEntity().getWorld().getLivingEntities().stream().filter(ent -> ent.getLocation().distance(e.getEntity().getLocation()) < 4).forEach(ent ->
 						{
 							EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(player, ent, EntityDamageEvent.DamageCause.ENTITY_EXPLOSION, 6 + (7 - ent.getLocation().distance(tnt.getLocation())));
@@ -289,8 +290,8 @@ public class HeroListener implements Listener {
 	}
 
 	private static void nukeEffect(Location target, int range, int particles, int offSetY) {
-		target.getWorld().spigot().playEffect(target, Effect.EXPLOSION, 0, 0, 1, 1, 1, 1, 1, 60);
-		EffectUtil.playSound(target, Sound.ENTITY_GENERIC_EXPLODE);
+		target.getWorld().playEffect(target, Effect.EXPLOSION_HUGE, 1, 60);
+		EffectUtil.playSound(target, Sound.ENTITY_GENERIC_EXPLODE, 4, 1);
 		target.getWorld().playSound(target, Sound.AMBIENT_CAVE, 1F, 1F);
 		target.getWorld().spigot().playEffect(target, Effect.CLOUD, 1, 1, 0F, 3F + offSetY, 3F, 1F, particles, range);
 		target.getWorld().spigot().playEffect(target, Effect.LAVA_POP, 1, 1, 0F, 3F, 0F, 1F, particles, range);
