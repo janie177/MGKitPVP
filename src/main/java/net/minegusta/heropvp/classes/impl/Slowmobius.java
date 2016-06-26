@@ -36,7 +36,7 @@ public class Slowmobius implements IHero {
 			{
 				circleSpots.stream().forEach(l ->
 				{
-					ParticleUtil.createNewMovingParticle(30, Effect.WITCH_MAGIC, l, 2.5, l.add(0, 5, 0));
+					ParticleUtil.createNewMovingParticle(30, Effect.WITCH_MAGIC, l, 2.5, l.clone().add(0, 5, 0));
 				});
 			}, i * 4);
 
