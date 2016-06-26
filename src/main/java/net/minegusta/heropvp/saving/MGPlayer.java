@@ -257,7 +257,7 @@ public class MGPlayer extends MGPlayerModel {
 
 		getPlayer().getInventory().clear();
 		getPlayer().setCollidable(false);
-		ScoreBoardManager.getTicketBoard().updatePlayer(getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", tickets));
+		ScoreBoardManager.getTicketBoard().addPlayer(getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", tickets));
 	}
 
 	public void onSpawn()

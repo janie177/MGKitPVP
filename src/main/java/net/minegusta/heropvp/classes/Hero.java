@@ -18,7 +18,9 @@ public enum Hero {
 	ICEMAGE(new IceMage()),
 	FIREMAGE(new FireMage()),
 	BLOODMAGE(new BloodMage()),
-	SCOUT(new Scout());
+	SCOUT(new Scout()),
+	SLOWMOBIUS(new Slowmobius()),
+	KNIGHT(new Knight());
 
 	private IHero hero;
 

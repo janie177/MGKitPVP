@@ -36,7 +36,7 @@ public class HeroListener implements Listener {
 	 * Listen for ultimate and passive abilities
 	 */
 
-	private static List<Hero> activateOnCrouch = Lists.newArrayList(Hero.SCOUT, Hero.WITCHER, Hero.DEFAULT, Hero.ELVENLORD, Hero.BLOODMAGE, Hero.ICEMAGE, Hero.FIREMAGE);
+	private static List<Hero> activateOnCrouch = Lists.newArrayList(Hero.KNIGHT, Hero.SLOWMOBIUS, Hero.SCOUT, Hero.WITCHER, Hero.DEFAULT, Hero.ELVENLORD, Hero.BLOODMAGE, Hero.ICEMAGE, Hero.FIREMAGE);
 
 	//Activate abilities using crouch.
 	@EventHandler
@@ -47,7 +47,7 @@ public class HeroListener implements Listener {
 		MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
 		if(mgp.isUltimateReady())
 		{
-			if(activateOnCrouch.contains(mgp.getActiveHero()))
+			if(activateOnCrouch.contains(mgp.getActiveHero()) && mgp.isPlaying())
 			{
 				mgp.activateUltimate();
 				mgp.onUltimate(e.getPlayer());
