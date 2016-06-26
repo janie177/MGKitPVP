@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import net.minegusta.heropvp.classes.Hero;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
+import net.minegusta.mglib.permissionsex.PEXUtil;
 import net.minegusta.mglib.utils.CooldownUtil;
 import net.minegusta.mglib.utils.EffectUtil;
 import net.minegusta.mglib.utils.Title;
@@ -97,7 +98,7 @@ public class HeroListener implements Listener {
 	}
 
 	//Jumping for the scout
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onDoubleJump(PlayerToggleFlightEvent e)
 	{
 		Player player = e.getPlayer();
@@ -113,7 +114,11 @@ public class HeroListener implements Listener {
 		String uuid = player.getUniqueId().toString();
 		if(mgp.getActiveHero() == Hero.SCOUT)
 		{
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()-> player.setAllowFlight(true), 30);
+			PEXUtil.addPermission(e.getPlayer(),"nocheatplus.checks.moving.survivalfly");
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()-> {
+				player.setAllowFlight(true);
+				PEXUtil.removePermission(e.getPlayer(),"nocheatplus.checks.moving.survivalfly");
+			}, 30);
 			if (CooldownUtil.isCooledDown("jumpscout", uuid))
 			{
 				player.setVelocity(player.getLocation().getDirection().multiply(0.5).setY(1));

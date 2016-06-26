@@ -6,6 +6,7 @@ import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
 import net.minegusta.heropvp.scoreboards.ScoreBoardManager;
 import net.minegusta.heropvp.utils.DisplayMessageUtil;
+import net.minegusta.mglib.permissionsex.PEXUtil;
 import net.minegusta.mglib.scoreboards.MGScore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -200,6 +201,8 @@ public class GlobalListener implements Listener {
 		mgp.resetOnMapChange();
 		ScoreBoardManager.getTicketBoard().addPlayer(e.getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", mgp.getTickets()));
 		e.getPlayer().setCollidable(false);
+		//Remove fly perms if stuck from previous scout.
+		PEXUtil.removePermission(e.getPlayer(),"nocheatplus.checks.moving.survivalfly");
 	}
 
 	//Prevent dropping items
