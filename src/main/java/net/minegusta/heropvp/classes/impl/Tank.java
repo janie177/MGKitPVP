@@ -120,7 +120,7 @@ public class Tank implements IHero {
 
 	@Override
 	public ChatColor getColor() {
-		return ChatColor.GRAY;
+		return ChatColor.BLUE;
 	}
 
 	@Override
@@ -130,7 +130,7 @@ public class Tank implements IHero {
 
 	@Override
 	public BarColor getBarColor() {
-		return BarColor.WHITE;
+		return BarColor.BLUE;
 	}
 
 	@Override
