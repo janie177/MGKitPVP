@@ -25,7 +25,7 @@ public class SpawnConfiguration extends ConfigurationModel {
 				for(String l : fileConfiguration.getStringList("arenas." + s + ".spawns"))
 				{
 					Location location = LocationUtil.stringToLocation(l);
-					location.add(location);
+					locations.add(location);
 				}
 				SpawnManager.addArena(s.toLowerCase(), locations);
 
