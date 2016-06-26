@@ -35,9 +35,9 @@ public class BloodSpell extends AbstractTargetingParticleEffect {
 				if(!e.isCancelled())
 				{
 					LivingEntity le = (LivingEntity) targetedEntity;
-					double maxHealed = caster.getMaxHealth() - caster.getMaxHealth();
-					if(maxHealed > 2) maxHealed = 2;
-					caster.setHealth(le.getHealth() + maxHealed);
+					double maxHealed = caster.getMaxHealth() - caster.getHealth();
+					if(maxHealed > 3) maxHealed = 3;
+					caster.setHealth(caster.getHealth() + maxHealed);
 					le.damage(e.getFinalDamage());
 				}
 			}
