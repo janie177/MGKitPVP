@@ -53,7 +53,7 @@ public class Slowmobius implements IHero {
 					}
 					else if(ent instanceof Projectile)
 					{
-						ent.setVelocity(ent.getVelocity().multiply(0.5));
+						ent.setVelocity(ent.getVelocity().multiply(0.2));
 					}
 				});
 			}, i * 4);
