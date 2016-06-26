@@ -29,7 +29,7 @@ public class Slowmobius implements IHero {
 		final List<Location> circleSpots = LocationUtil.getPointsOnCircle(center, 15, radius);
 
 
-		for(int i = 0; i < ultimateDuration() * 4; i++)
+		for(int i = 0; i < ultimateDuration() * 4 * 20; i++)
 		{
 			//The effect task
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
