@@ -69,7 +69,7 @@ public class SpawnManager {
 
 			}, 20 * 50);
 
-		}, 20 * 600, 20 * 600));
+		}, 20 * 300, 20 * 300));
 
 		//Load the spawn configuration
 		configurationFileManager = new ConfigurationFileManager<>(Main.getPlugin(), SpawnConfiguration.class, 300, "spawns");
