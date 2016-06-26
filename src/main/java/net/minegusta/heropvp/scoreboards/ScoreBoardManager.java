@@ -15,7 +15,7 @@ public class ScoreBoardManager {
 	{
 		for(Hero hero : Hero.values())
 		{
-			heroTags.addTeam(hero.name(), hero.getColor() + hero.getTag(), "", false, true);
+			heroTags.addTeam(hero.name(), hero.getTag(), "", false, true);
 		}
 	}
 
