@@ -85,13 +85,13 @@ public class ElvenLord implements IHero {
 			//Chest
 			addItem(38, new ItemStack(Material.CHAINMAIL_CHESTPLATE));
 			//Legs
-			addItem(37, new ItemStack(Material.IRON_LEGGINGS));
+			addItem(37, new ItemStack(Material.CHAINMAIL_LEGGINGS));
 			//Boots
 			addItem(36, new ItemStack(Material.CHAINMAIL_BOOTS));
 			//hand1
 			addItem(0, new ItemStack(Material.BOW){
 				{
-					addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 3);
+					addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 2);
 					addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
 					addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
 					addUnsafeEnchantment(Enchantment.DURABILITY, 3);
