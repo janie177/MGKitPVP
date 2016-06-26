@@ -36,7 +36,7 @@ public class HeroListener implements Listener {
 	 * Listen for ultimate and passive abilities
 	 */
 
-	private static List<Hero> activateOnCrouch = Lists.newArrayList(Hero.BREWER, Hero.DWARF, Hero.TANK, Hero.KNIGHT, Hero.SLOWMOBIUS, Hero.SCOUT, Hero.WITCHER, Hero.DEFAULT, Hero.ELVENLORD, Hero.BLOODMAGE, Hero.ICEMAGE, Hero.FIREMAGE);
+	private static List<Hero> activateOnCrouch = Lists.newArrayList(Hero.BREWER, Hero.MIMIC, Hero.DWARF, Hero.TANK, Hero.KNIGHT, Hero.SLOWMOBIUS, Hero.SCOUT, Hero.WITCHER, Hero.DEFAULT, Hero.ELVENLORD, Hero.BLOODMAGE, Hero.ICEMAGE, Hero.FIREMAGE);
 
 	//Activate abilities using crouch.
 	@EventHandler
@@ -59,19 +59,35 @@ public class HeroListener implements Listener {
 	@EventHandler
 	public void onInteract(PlayerInteractEntityEvent e)
 	{
-		//Activate assassin
 		MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
-		if(e.getRightClicked() instanceof Player)
-		{
+		if(e.getRightClicked() instanceof Player) {
 			Player target = (Player) e.getRightClicked();
-			if(mgp.isUltimateReady() && mgp.getActiveHero() == Hero.ASSASSIN)
-			{
+
+			//Assassin
+			if (mgp.isUltimateReady() && mgp.getActiveHero() == Hero.ASSASSIN) {
 				mgp.activateUltimate();
 				mgp.onUltimate(target);
 				Title t = TitleUtil.createTitle("", ChatColor.RED + "You marked " + target.getName() + " for death.", 5, 30, 5, true);
 				t.send(e.getPlayer());
+				return;
+			}
+
+			if (mgp.getActiveHero() == Hero.MIMIC)
+			{
+				if(CooldownUtil.isCooledDown("mimic", e.getPlayer().getUniqueId().toString()))
+				{
+					CooldownUtil.newCoolDown("mimic", e.getPlayer().getUniqueId().toString(), 15);
+					TitleUtil.createTitle("", ChatColor.YELLOW + "" + ChatColor.ITALIC + "Armour copied!", 5, 20, 5, true).send(e.getPlayer());
+					TitleUtil.createTitle("", ChatColor.RED + "" + ChatColor.ITALIC + "A mimic copied you!", 5, 20, 5, true).send(target);
+					e.getPlayer().getInventory().setArmorContents(target.getInventory().getArmorContents());
+				}
+				else
+				{
+					e.getPlayer().sendMessage(ChatColor.RED + "You have to wait " + CooldownUtil.getRemainingSeconds("mimic", e.getPlayer().getUniqueId().toString()) + " seconds before stealing armour.");
+				}
 			}
 		}
+
 	}
 
 	//On data
@@ -87,7 +103,7 @@ public class HeroListener implements Listener {
 			//Assassin extra damage on backstab
 			if(mgp.getActiveHero() == Hero.ASSASSIN)
 			{
-				if(Math.abs(attacker.getLocation().getYaw() - victim.getLocation().getYaw()) < 40)
+				if(Math.abs(attacker.getLocation().getYaw() - victim.getLocation().getYaw()) < 50)
 				{
 					TitleUtil.createTitle("", ChatColor.RED + "" + ChatColor.ITALIC + "Backstab! " + ChatColor.DARK_PURPLE + "1.5x damage dealt", 5, 15, 5, true).send(attacker);
 					TitleUtil.createTitle("", ChatColor.RED + "" + ChatColor.ITALIC + "You got backstabbed!", 5, 10, 5, true).send(victim);

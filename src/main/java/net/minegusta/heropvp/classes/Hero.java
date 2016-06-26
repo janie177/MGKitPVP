@@ -21,6 +21,7 @@ public enum Hero {
 	SCOUT(new Scout()),
 	SLOWMOBIUS(new Slowmobius()),
 	BREWER(new Brewer()),
+	MIMIC(new Mimic()),
 	DWARF(new Dwarf()),
 	KNIGHT(new Knight()),
 	EXPLODO(new Explodo()),

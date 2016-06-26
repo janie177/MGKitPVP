@@ -36,6 +36,12 @@ public class DisplayMessageUtil {
 		announcementBar.addPlayer(player);
 	}
 
+	public static void setDeathMessageAnnounced(Player player, Hero hero, String killedName)
+	{
+		String message = deathMessages.get(RandomUtil.getZeroIncludedMaxExcluded(deathMessages.size())).replace("%killer%",hero.getTag() + ChatColor.YELLOW + " " + player.getName() + ChatColor.DARK_GRAY).replace("%victim%", ChatColor.DARK_RED + killedName + ChatColor.DARK_GRAY);
+		announcementBar.setTitle(message);
+	}
+
 	public static void onKill(Hero hero, Player player, int streak, String killedName)
 	{
 		String message = deathMessages.get(RandomUtil.getZeroIncludedMaxExcluded(deathMessages.size())).replace("%killer%",hero.getTag() + ChatColor.YELLOW + " " + player.getName() + ChatColor.DARK_GRAY).replace("%victim%", ChatColor.DARK_RED + killedName + ChatColor.DARK_GRAY);
