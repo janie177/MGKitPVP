@@ -140,8 +140,8 @@ public class MGPlayer extends MGPlayerModel {
 			DisplayMessageUtil.ultimateReady(getPlayer(), hero, this);
 		}
 
-		float progressBar = power / 100;
-		getPlayer().setExp(progressBar);
+		double progressBar = power / 100;
+		getPlayer().setExp((float) progressBar);
 	}
 
 	public void addPower(int power)
