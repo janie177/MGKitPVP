@@ -120,7 +120,7 @@ public class HeroListener implements Listener {
 	public void onDoubleJump(PlayerToggleFlightEvent e)
 	{
 		Player player = e.getPlayer();
-		if (player.getGameMode() != GameMode.SURVIVAL) {
+		if (player.getGameMode() != GameMode.SURVIVAL && player.getGameMode() != GameMode.ADVENTURE) {
 			return;
 		}
 
