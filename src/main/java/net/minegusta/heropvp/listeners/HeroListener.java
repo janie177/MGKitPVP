@@ -78,7 +78,7 @@ public class HeroListener implements Listener {
 			{
 				if(CooldownUtil.isCooledDown("mimic", e.getPlayer().getUniqueId().toString()))
 				{
-					CooldownUtil.newCoolDown("mimic", e.getPlayer().getUniqueId().toString(), 15);
+					CooldownUtil.newCoolDown("mimic", e.getPlayer().getUniqueId().toString(), 5);
 					TitleUtil.createTitle("", ChatColor.YELLOW + "" + ChatColor.ITALIC + "Armour copied!", 5, 20, 5, true).send(e.getPlayer());
 					TitleUtil.createTitle("", ChatColor.RED + "" + ChatColor.ITALIC + "A mimic copied you!", 5, 20, 5, true).send(target);
 					e.getPlayer().getInventory().setArmorContents(target.getInventory().getArmorContents());
