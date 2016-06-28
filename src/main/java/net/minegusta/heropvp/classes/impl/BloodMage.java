@@ -56,7 +56,7 @@ public class BloodMage implements IHero {
 			{
 				CooldownUtil.newCoolDown("spelltargetsearch", player.getUniqueId().toString(), 1);
 				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 8);
-				BossBarUtil.createTimedBar(ChatColor.DARK_PURPLE + "Homing spell cast in:", BarColor.PURPLE, BarStyle.SOLID, 160, 2, 1.0/160.0 , true).addPlayer(player);
+				BossBarUtil.createTimedBar(ChatColor.DARK_PURPLE + "Homing spell cast in:", BarColor.PURPLE, BarStyle.SOLID, 160, 2, 1.0/80.0 , true).addPlayer(player);
 				SpellUtil.castBloodSpell(player, oTarget.get(), mgp.isUltimateActive());
 			}
 			else
