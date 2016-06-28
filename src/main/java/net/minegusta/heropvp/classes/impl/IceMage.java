@@ -56,7 +56,7 @@ public class IceMage implements IHero {
 			{
 				CooldownUtil.newCoolDown("spelltargetsearch", player.getUniqueId().toString(), 1);
 				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 8);
-				BossBarUtil.createSecondCountdown(ChatColor.DARK_AQUA + "Homing spell cast in:", BarColor.WHITE, BarStyle.SOLID, 8);
+				BossBarUtil.createSecondCountdown(ChatColor.DARK_AQUA + "Homing spell cast in:", BarColor.WHITE, BarStyle.SOLID, 8).addPlayer(player);
 				SpellUtil.castFrostSpell(player, oTarget.get(), mgp.isUltimateActive());
 			}
 			else
@@ -70,7 +70,7 @@ public class IceMage implements IHero {
 			CooldownUtil.newCoolDown("spelltargetsearch", player.getUniqueId().toString(), 1);
 			CooldownUtil.newCoolDown("normalspellcast", mgp.getUuid().toString(), 2);
 			SpellUtil.castNormalIceSpell(player, player.getTargetBlock(Sets.newHashSet(Material.AIR), 15).getLocation(), mgp.isUltimateActive());
-			BossBarUtil.createSecondCountdown(ChatColor.AQUA + "Normal spell cast in:", BarColor.BLUE, BarStyle.SOLID, 2);
+			BossBarUtil.createSecondCountdown(ChatColor.AQUA + "Normal spell cast in:", BarColor.BLUE, BarStyle.SOLID, 2).addPlayer(player);
 		}
 
 

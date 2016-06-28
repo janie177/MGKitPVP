@@ -23,19 +23,19 @@ public class SpellUtil {
 	public static void castNormalBloodSpell(Player caster, Location target, boolean ultimate)
 	{
 		EffectUtil.playSound(caster.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT);
-		new NormalBloodSpell(140, Effect.SNOWBALL_BREAK, caster.getLocation().add(0, 1.3F, 0).add(caster.getLocation().getDirection().normalize()), ultimate ? 12 : 8, target, true, caster);
+		new NormalBloodSpell(140, Effect.PORTAL, caster.getLocation().add(0, 1.3F, 0).add(caster.getLocation().getDirection().normalize().multiply(2.2)), ultimate ? 15 : 11, target, true, caster);
 	}
 
 	public static void castNormalIceSpell(Player caster, Location target, boolean ultimate)
 	{
 		EffectUtil.playSound(caster.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT);
-		new NormalIceSpell(140, Effect.PORTAL, caster.getLocation().add(0, 1.3F, 0).add(caster.getLocation().getDirection().normalize()), ultimate ? 12 : 8, target, true, caster);
+		new NormalIceSpell(140, Effect.SNOWBALL_BREAK, caster.getLocation().add(0, 1.3F, 0).add(caster.getLocation().getDirection().normalize().multiply(2.2)), ultimate ? 15 : 11, target, true, caster);
 	}
 
 	public static void castNormalFireSpell(Player caster, Location target, boolean ultimate)
 	{
 		EffectUtil.playSound(caster.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT);
-		new NormalFireSpell(140, Effect.EXTINGUISH, caster.getLocation().add(0, 1.3F, 0).add(caster.getLocation().getDirection().normalize()), ultimate ? 12 : 8, target, true, caster);
+		new NormalFireSpell(140, Effect.EXTINGUISH, caster.getLocation().add(0, 1.3F, 0).add(caster.getLocation().getDirection().normalize().multiply(2.2)), ultimate ? 15 : 11, target, true, caster);
 	}
 
 	public static void castFrostSpell(Player caster, Entity targetedEntity, boolean ultimate)

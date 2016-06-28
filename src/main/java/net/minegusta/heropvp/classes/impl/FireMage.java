@@ -58,7 +58,7 @@ public class FireMage implements IHero {
 			{
 				CooldownUtil.newCoolDown("spelltargetsearch", player.getUniqueId().toString(), 1);
 				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 8);
-				BossBarUtil.createSecondCountdown(ChatColor.RED + "Homing spell cast in:", BarColor.RED, BarStyle.SOLID, 8);
+				BossBarUtil.createSecondCountdown(ChatColor.RED + "Homing spell cast in:", BarColor.RED, BarStyle.SOLID, 8).addPlayer(player);
 				SpellUtil.castFireSpell(player, oTarget.get(), mgp.isUltimateActive());
 			}
 			else
@@ -71,7 +71,7 @@ public class FireMage implements IHero {
 			CooldownUtil.newCoolDown("spelltargetsearch", player.getUniqueId().toString(), 1);
 			CooldownUtil.newCoolDown("normalspellcast", mgp.getUuid().toString(), 2);
 			SpellUtil.castNormalFireSpell(player, player.getTargetBlock(Sets.newHashSet(Material.AIR), 15).getLocation(), mgp.isUltimateActive());
-			BossBarUtil.createSecondCountdown(ChatColor.DARK_RED + "Normal spell cast in:", BarColor.RED, BarStyle.SOLID, 2);
+			BossBarUtil.createSecondCountdown(ChatColor.DARK_RED + "Normal spell cast in:", BarColor.RED, BarStyle.SOLID, 2).addPlayer(player);
 		}
 	}
 
