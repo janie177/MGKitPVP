@@ -58,7 +58,7 @@ public class FireMage implements IHero {
 			{
 				CooldownUtil.newCoolDown("spelltargetsearch", player.getUniqueId().toString(), 1);
 				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 8);
-				BossBarUtil.createTimedBar(ChatColor.RED + "Homing spell cast in:", BarColor.RED, BarStyle.SOLID, 30, 2, 1.0/20.0 , true).addPlayer(player);
+				BossBarUtil.createTimedBar(ChatColor.RED + "Homing spell cast in:", BarColor.RED, BarStyle.SOLID, 160, 2, 1.0/160.0 , true).addPlayer(player);
 				SpellUtil.castFireSpell(player, oTarget.get(), mgp.isUltimateActive());
 			}
 			else
