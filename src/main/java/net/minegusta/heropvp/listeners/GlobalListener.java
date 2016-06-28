@@ -73,7 +73,7 @@ public class GlobalListener implements Listener {
 				//On death
 				if(target.getHealth() - e.getFinalDamage() <= 0)
 				{
-					targetMGP.addDamage(damager, e.getFinalDamage());
+					if(!damager.getUniqueId().toString().equalsIgnoreCase(target.getUniqueId().toString())) targetMGP.addDamage(damager, e.getFinalDamage());
 					e.setDamage(0);
 					Optional<Player> p = targetMGP.getMostDamage();
 					if(p.isPresent())
@@ -87,14 +87,14 @@ public class GlobalListener implements Listener {
 					}
 					else
 					{
-						damagerMGP.onKillPlayer(target.getName());
+						if(!damager.getUniqueId().toString().equalsIgnoreCase(target.getUniqueId().toString())) damagerMGP.onKillPlayer(target.getName());
 					}
 					targetMGP.onDeath();
 				}
 				//On normal damage that does not result in death
 				else
 				{
-					targetMGP.addDamage(damager, e.getFinalDamage());
+					if(!damager.getUniqueId().toString().equalsIgnoreCase(target.getUniqueId().toString())) targetMGP.addDamage(damager, e.getFinalDamage());
 				}
 			}
 			else if(e.getDamager() instanceof Projectile && ((Projectile) e.getDamager()).getShooter() instanceof Player)
@@ -124,7 +124,7 @@ public class GlobalListener implements Listener {
 					}
 					else
 					{
-						damagerMGP.onKillPlayer(target.getName());
+						if(!damager.getUniqueId().toString().equalsIgnoreCase(target.getUniqueId().toString())) damagerMGP.onKillPlayer(target.getName());
 					}
 					targetMGP.onDeath();
 				}
