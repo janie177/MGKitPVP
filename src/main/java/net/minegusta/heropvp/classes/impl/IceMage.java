@@ -1,14 +1,18 @@
 package net.minegusta.heropvp.classes.impl;
 
+import com.google.common.collect.Sets;
 import net.minegusta.heropvp.classes.IHero;
 import net.minegusta.heropvp.inventories.HeroInventory;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
 import net.minegusta.heropvp.spells.SpellUtil;
+import net.minegusta.mglib.bossbars.BossBarUtil;
 import net.minegusta.mglib.utils.CooldownUtil;
+import net.minegusta.mglib.utils.EffectUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.enchantments.Enchantment;
@@ -48,14 +52,25 @@ public class IceMage implements IHero {
 		if(player.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD && CooldownUtil.isCooledDown("spellcast", player.getUniqueId().toString()) && CooldownUtil.isCooledDown("spelltargetsearch", player.getUniqueId().toString()))
 		{
 			Optional<Player> oTarget = SpellUtil.getTarget(player);
-			CooldownUtil.newCoolDown("spelltargetsearch", player.getUniqueId().toString(), 1);
-
 			if(oTarget.isPresent())
 			{
-				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 2);
+				CooldownUtil.newCoolDown("spelltargetsearch", player.getUniqueId().toString(), 1);
+				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 8);
+				BossBarUtil.createSecondCountdown(ChatColor.DARK_AQUA + "Homing spell cast in:", BarColor.WHITE, BarStyle.SOLID, 8);
 				SpellUtil.castFrostSpell(player, oTarget.get(), mgp.isUltimateActive());
 			}
+			else
+			{
+				EffectUtil.playSound(player.getLocation(), Sound.BLOCK_DISPENSER_FAIL);
+			}
 
+		}
+		else if(player.getInventory().getItemInMainHand().getType() == Material.STICK && CooldownUtil.isCooledDown("normalspellcast", player.getUniqueId().toString()) && CooldownUtil.isCooledDown("spelltargetsearch", player.getUniqueId().toString()))
+		{
+			CooldownUtil.newCoolDown("spelltargetsearch", player.getUniqueId().toString(), 1);
+			CooldownUtil.newCoolDown("normalspellcast", mgp.getUuid().toString(), 2);
+			SpellUtil.castNormalIceSpell(player, player.getTargetBlock(Sets.newHashSet(Material.AIR), 15).getLocation(), mgp.isUltimateActive());
+			BossBarUtil.createSecondCountdown(ChatColor.AQUA + "Normal spell cast in:", BarColor.BLUE, BarStyle.SOLID, 2);
 		}
 
 
@@ -152,18 +167,26 @@ public class IceMage implements IHero {
 			addItem(0, new ItemStack(Material.PRISMARINE_SHARD){
 				{
 					ItemMeta meta = getItemMeta();
+					meta.setDisplayName(ChatColor.AQUA + "Homing Ice Wand");
+					setItemMeta(meta);
+					addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+				}
+			});
+			addItem(1, new ItemStack(Material.STICK){
+				{
+					ItemMeta meta = getItemMeta();
 					meta.setDisplayName(ChatColor.AQUA + "Ice Wand");
 					setItemMeta(meta);
 					addUnsafeEnchantment(Enchantment.DURABILITY, 1);
 				}
 			});
 			//hand2
-			addItem(1, new ItemStack(Material.WOOD_SWORD){
+			addItem(2, new ItemStack(Material.WOOD_SWORD){
 				{
 					addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
 				}
 			});
-			addItem(2, new ItemStack(Material.SPLASH_POTION, 1)
+			addItem(3, new ItemStack(Material.SPLASH_POTION, 1)
 			{
 				{
 					PotionMeta meta = (PotionMeta) getItemMeta();
@@ -171,7 +194,7 @@ public class IceMage implements IHero {
 					setItemMeta(meta);
 				}
 			});
-			addItem(2, new ItemStack(Material.POTION, 1)
+			addItem(4, new ItemStack(Material.POTION, 1)
 			{
 				{
 					PotionMeta meta = (PotionMeta) getItemMeta();

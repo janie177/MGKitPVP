@@ -18,10 +18,6 @@
             <id>md_5-releases</id>
             <url>http://repo.md-5.net/content/repositories/snapshots</url>
         </repository>
-        <repository>
-            <id>my</id>
-            <url>file://${basedir}/libs</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -33,7 +29,7 @@
         <dependency>
             <groupId>net.minegusta</groupId>
             <artifactId>mglib</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </dependency>
     </dependencies>
 

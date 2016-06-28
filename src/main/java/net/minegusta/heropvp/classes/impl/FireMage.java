@@ -1,10 +1,12 @@
 package net.minegusta.heropvp.classes.impl;
 
+import com.google.common.collect.Sets;
 import net.minegusta.heropvp.classes.IHero;
 import net.minegusta.heropvp.inventories.HeroInventory;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
 import net.minegusta.heropvp.spells.SpellUtil;
+import net.minegusta.mglib.bossbars.BossBarUtil;
 import net.minegusta.mglib.particles.ParticleEffect;
 import net.minegusta.mglib.utils.CooldownUtil;
 import net.minegusta.mglib.utils.EffectUtil;
@@ -51,11 +53,12 @@ public class FireMage implements IHero {
 		if(player.getInventory().getItemInMainHand().getType() == Material.BLAZE_ROD && CooldownUtil.isCooledDown("spellcast", player.getUniqueId().toString()) && CooldownUtil.isCooledDown("spelltargetsearch", player.getUniqueId().toString()))
 		{
 			Optional<Player> oTarget = SpellUtil.getTarget(player);
-			CooldownUtil.newCoolDown("spelltargetsearch", player.getUniqueId().toString(), 1);
 
 			if(oTarget.isPresent())
 			{
-				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 2);
+				CooldownUtil.newCoolDown("spelltargetsearch", player.getUniqueId().toString(), 1);
+				CooldownUtil.newCoolDown("spellcast", mgp.getUuid().toString(), 8);
+				BossBarUtil.createSecondCountdown(ChatColor.RED + "Homing spell cast in:", BarColor.RED, BarStyle.SOLID, 8);
 				SpellUtil.castFireSpell(player, oTarget.get(), mgp.isUltimateActive());
 			}
 			else
@@ -63,12 +66,13 @@ public class FireMage implements IHero {
 				EffectUtil.playSound(player.getLocation(), Sound.BLOCK_DISPENSER_FAIL);
 			}
 		}
-		else
+		else if(player.getInventory().getItemInMainHand().getType() == Material.STICK && CooldownUtil.isCooledDown("normalspellcast", player.getUniqueId().toString()) && CooldownUtil.isCooledDown("spelltargetsearch", player.getUniqueId().toString()))
 		{
-			EffectUtil.playSound(player.getLocation(), Sound.BLOCK_DISPENSER_FAIL);
+			CooldownUtil.newCoolDown("spelltargetsearch", player.getUniqueId().toString(), 1);
+			CooldownUtil.newCoolDown("normalspellcast", mgp.getUuid().toString(), 2);
+			SpellUtil.castNormalFireSpell(player, player.getTargetBlock(Sets.newHashSet(Material.AIR), 15).getLocation(), mgp.isUltimateActive());
+			BossBarUtil.createSecondCountdown(ChatColor.DARK_RED + "Normal spell cast in:", BarColor.RED, BarStyle.SOLID, 2);
 		}
-
-
 	}
 
 	@Override
@@ -162,18 +166,26 @@ public class FireMage implements IHero {
 			addItem(0, new ItemStack(Material.BLAZE_ROD){
 				{
 					ItemMeta meta = getItemMeta();
+					meta.setDisplayName(ChatColor.DARK_RED + "Homing Fire Wand");
+					setItemMeta(meta);
+					addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+				}
+			});
+			addItem(1, new ItemStack(Material.STICK){
+				{
+					ItemMeta meta = getItemMeta();
 					meta.setDisplayName(ChatColor.DARK_RED + "Fire Wand");
 					setItemMeta(meta);
 					addUnsafeEnchantment(Enchantment.DURABILITY, 1);
 				}
 			});
 			//hand2
-			addItem(1, new ItemStack(Material.WOOD_SWORD){
+			addItem(2, new ItemStack(Material.WOOD_SWORD){
 				{
 					addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
 				}
 			});
-			addItem(2, new ItemStack(Material.SPLASH_POTION, 1)
+			addItem(3, new ItemStack(Material.SPLASH_POTION, 1)
 			{
 				{
 					PotionMeta meta = (PotionMeta) getItemMeta();
@@ -181,7 +193,7 @@ public class FireMage implements IHero {
 					setItemMeta(meta);
 				}
 			});
-			addItem(2, new ItemStack(Material.POTION, 1)
+			addItem(4, new ItemStack(Material.POTION, 1)
 			{
 				{
 					PotionMeta meta = (PotionMeta) getItemMeta();

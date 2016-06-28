@@ -14,10 +14,11 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.UUID;
 
-public class FireSpell extends AbstractTargetingParticleEffect {
+public class HomingBloodSpell extends AbstractTargetingParticleEffect {
+
 	private String casterUUID;
 
-	public FireSpell(int duration, Effect effect, Location location, double blocksPerSecond, Location target, Entity targetedEntity, boolean removeOnHit, boolean removeOnBlock, Effect particleOnHit, String casterUUID) {
+	public HomingBloodSpell(int duration, Effect effect, Location location, double blocksPerSecond, Location target, Entity targetedEntity, boolean removeOnHit, boolean removeOnBlock, Effect particleOnHit, String casterUUID) {
 		super(duration, effect, location, blocksPerSecond, target, targetedEntity, removeOnHit, removeOnBlock, particleOnHit);
 		this.casterUUID = casterUUID;
 	}
@@ -29,12 +30,14 @@ public class FireSpell extends AbstractTargetingParticleEffect {
 			Player caster = Bukkit.getPlayer(UUID.fromString(casterUUID));
 			if(caster.isOnline())
 			{
-				EntityDamageByEntityEvent e = new EntityDamageByEntityEvent(caster, targetedEntity, EntityDamageEvent.DamageCause.CUSTOM, 4);
+				EntityDamageByEntityEvent e = new EntityDamageByEntityEvent(caster, targetedEntity, EntityDamageEvent.DamageCause.CUSTOM, 7);
 				Bukkit.getPluginManager().callEvent(e);
 				if(!e.isCancelled())
 				{
 					LivingEntity le = (LivingEntity) targetedEntity;
-					le.setFireTicks(40);
+					double maxHealed = caster.getMaxHealth() - caster.getHealth();
+					if(maxHealed > 7) maxHealed = 7;
+					caster.setHealth(caster.getHealth() + maxHealed);
 					le.damage(e.getFinalDamage());
 				}
 			}
