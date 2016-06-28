@@ -173,7 +173,7 @@ public class BloodMage implements IHero {
 				}
 			});
 			//hand1
-			addItem(0, new ItemStack(Material.STICK){
+			addItem(1, new ItemStack(Material.STICK){
 				{
 					ItemMeta meta = getItemMeta();
 					meta.setDisplayName(ChatColor.DARK_RED + "Blood Wand");
