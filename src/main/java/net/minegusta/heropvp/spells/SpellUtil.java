@@ -23,7 +23,7 @@ public class SpellUtil {
 	public static void castNormalBloodSpell(Player caster, Location target, boolean ultimate)
 	{
 		EffectUtil.playSound(caster.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT);
-		new NormalBloodSpell(140, Effect.PORTAL, caster.getLocation().add(0, 1.3F, 0).add(caster.getLocation().getDirection().normalize().multiply(2.2)), ultimate ? 15 : 11, target, true, caster);
+		new NormalBloodSpell(140, Effect.WITCH_MAGIC, caster.getLocation().add(0, 1.3F, 0).add(caster.getLocation().getDirection().normalize().multiply(2.2)), ultimate ? 15 : 11, target, true, caster);
 	}
 
 	public static void castNormalIceSpell(Player caster, Location target, boolean ultimate)
