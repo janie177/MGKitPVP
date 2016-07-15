@@ -2,6 +2,8 @@ package net.minegusta.heropvp.mapmanager;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import net.minegusta.heropvp.leaderboard.game.WinnerManager;
+import net.minegusta.heropvp.leaderboard.highscores.HighScoreManager;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
 import net.minegusta.heropvp.utils.DisplayMessageUtil;
@@ -53,6 +55,15 @@ public class SpawnManager {
 					Bukkit.broadcastMessage(ChatColor.YELLOW + " The map is changing!");
 					Bukkit.broadcastMessage(ChatColor.GOLD +   "----------------------");
 				}
+
+				//Award the winner for this map.
+				WinnerManager.awardWinner();
+
+				//Update the highscores for all players in the map.
+				HighScoreManager.update();
+
+				//Reset the winners for the next map
+				WinnerManager.reset();
 
 				current++;
 			}, 20 * 60);

@@ -4,13 +4,16 @@ import net.minegusta.heropvp.commands.AdminCommand;
 import net.minegusta.heropvp.commands.BreakCommand;
 import net.minegusta.heropvp.gui.HeroSelectionMenu;
 import net.minegusta.heropvp.gui.TicketShop;
+import net.minegusta.heropvp.leaderboard.config.HighScoreConfig;
 import net.minegusta.heropvp.listeners.GlobalListener;
 import net.minegusta.heropvp.listeners.HeroListener;
+import net.minegusta.heropvp.mapmanager.SpawnConfiguration;
 import net.minegusta.heropvp.mapmanager.SpawnManager;
 import net.minegusta.heropvp.npcs.NPCManager;
 import net.minegusta.heropvp.saving.MGPlayer;
 import net.minegusta.heropvp.scoreboards.ScoreBoardManager;
 import net.minegusta.heropvp.utils.DisplayMessageUtil;
+import net.minegusta.mglib.configs.ConfigurationFileManager;
 import net.minegusta.mglib.gui.InventoryGUI;
 import net.minegusta.mglib.saving.mgplayer.PlayerSaveManager;
 import net.minegusta.mglib.tasks.Task;
@@ -24,6 +27,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
 
 	private static PlayerSaveManager<MGPlayer> saveManager;
+	private static ConfigurationFileManager<HighScoreConfig> scoreConfigManager;
 	private static InventoryGUI ticketShop;
 	private static InventoryGUI heroSelectionMenu;
 	private static Task heroPassiveTask = new Task();
@@ -46,6 +50,9 @@ public class Main extends JavaPlugin {
 		saveManager = new PlayerSaveManager<>(this, MGPlayer.class, 120);
 		//In case of reload, add all players already online to the save manager.
 		Bukkit.getOnlinePlayers().stream().forEach(pl -> saveManager.loadMGPlayer(pl));
+
+		//Initialize the config for highscore boards and per-map winners.
+		scoreConfigManager = new ConfigurationFileManager<>(this, HighScoreConfig.class, 180, "scores");
 
 		//Register listeners
 		Bukkit.getPluginManager().registerEvents(new GlobalListener(), this);
@@ -86,6 +93,12 @@ public class Main extends JavaPlugin {
 		//Save everything
 		getSaveManager().saveAllMGPlayers();
 		SpawnManager.getSpawnConfigManager().saveConfig();
+		scoreConfigManager.saveConfig();
+	}
+
+	public static ConfigurationFileManager getScoreManager()
+	{
+		return scoreConfigManager;
 	}
 
 	public static Plugin getPlugin()

@@ -3,6 +3,7 @@ package net.minegusta.heropvp.saving;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minegusta.heropvp.classes.Hero;
+import net.minegusta.heropvp.leaderboard.game.WinnerManager;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.mapmanager.SpawnManager;
 import net.minegusta.heropvp.scoreboards.ScoreBoardManager;
@@ -304,6 +305,7 @@ public class MGPlayer extends MGPlayerModel {
 		Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "addcredits " + getPlayer().getName() + " 2");
 		getPlayer().sendMessage(ChatColor.LIGHT_PURPLE + "You earned " + ChatColor.YELLOW + "2" + ChatColor.LIGHT_PURPLE + " credits.");
 		hero.onKill(getPlayer());
+		WinnerManager.addKill(getPlayer());
 	}
 
 	public void addDamage(Player damager, double damage)
