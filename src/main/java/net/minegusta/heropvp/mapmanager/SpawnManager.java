@@ -47,7 +47,7 @@ public class SpawnManager {
 				{
 					String currentName = indexes.get(current);
 					currentArena = locations.get(currentName);
-					Main.getSaveManager().getAllPlayers().stream().forEach(MGPlayer::resetOnMapChange);
+					Main.getSaveManager().getAllPlayers().stream().forEach(MGPlayer::breakPlaying);
 
 					Bukkit.broadcastMessage(ChatColor.GOLD +   "----------------------");
 					Bukkit.broadcastMessage(ChatColor.YELLOW + " The map is changing!");

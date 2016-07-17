@@ -31,6 +31,7 @@ public class MGPlayer extends MGPlayerModel {
 	private int kills = 0;
 	private int assists = 0;
 	private int killstreak = 0;
+	private int deaths = 0;
 	private int power = 0;
 	private boolean isPlaying = false;
 	private long ultimateActive = 0;
@@ -44,6 +45,7 @@ public class MGPlayer extends MGPlayerModel {
 		killstreak = fileConfiguration.getInt("killstreak", 0);
 		assists = fileConfiguration.getInt("assists", 0);
 		kills = fileConfiguration.getInt("kills", 0);
+		deaths = fileConfiguration.getInt("deaths", 0);
 		power = fileConfiguration.getInt("power", 0);
 		try {
 			hero = Hero.valueOf(fileConfiguration.getString("hero"));
@@ -72,6 +74,7 @@ public class MGPlayer extends MGPlayerModel {
 		fileConfiguration.set("killstreak", killstreak);
 		fileConfiguration.set("kills", kills);
 		fileConfiguration.set("power", power);
+		fileConfiguration.set("deaths", deaths);
 		fileConfiguration.set("hero", hero.name());
 		fileConfiguration.set("tickets", tickets);
 		fileConfiguration.set("assists", assists);
@@ -160,6 +163,11 @@ public class MGPlayer extends MGPlayerModel {
 		return kills;
 	}
 
+	public int getDeaths()
+	{
+		return deaths;
+	}
+
 	public void addAssist()
 	{
 		assists++;
@@ -177,6 +185,11 @@ public class MGPlayer extends MGPlayerModel {
 	public void addKill()
 	{
 		setKills(getKills() + 1);
+	}
+
+	public void addDeath()
+	{
+		deaths++;
 	}
 
 	public int getKillstreak() {
@@ -233,6 +246,7 @@ public class MGPlayer extends MGPlayerModel {
 		damagers.clear();
 		setKillstreak(0);
 		setAssists(0);
+		addDeath();
 
 		Player player = getPlayer();
 		for(PotionEffect effect : getPlayer().getActivePotionEffects())
@@ -251,7 +265,7 @@ public class MGPlayer extends MGPlayerModel {
 		}
 	}
 
-	public void resetOnMapChange()
+	public void breakPlaying()
 	{
 		ScoreBoardManager.getHeroTagsBoard().removePlayer(getPlayer());
 		ScoreBoardManager.getTicketBoard().updatePlayer(getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", tickets));

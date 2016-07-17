@@ -1,6 +1,7 @@
 package net.minegusta.heropvp.utils;
 
 import com.google.common.collect.Lists;
+import com.google.common.escape.CharEscaper;
 import net.minegusta.heropvp.classes.Hero;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
@@ -18,6 +19,7 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Player;
 
+import java.util.Collection;
 import java.util.List;
 
 public class DisplayMessageUtil {
@@ -173,6 +175,44 @@ public class DisplayMessageUtil {
 			TitleUtil.sendTitle(title, player);
 			EffectUtil.playSound(player, Sound.ENTITY_CHICKEN_DEATH);
 		}, 30);
+
+	}
+
+	public static void displayMapEndWinners(Player player, int place, int tickets, int kills) {
+
+		ChatColor color = ChatColor.BLUE;
+
+		int o = place % 10;
+
+		String ordinal;
+
+		if(o == 1)
+		{
+			ordinal = place + "ST";
+		}
+		else if (o == 2)
+		{
+			ordinal = place + "ND";
+		}
+		else if(o == 3)
+		{
+			ordinal = place + "RD";
+		}
+		else ordinal = place + "TH";
+
+		switch (place)
+		{
+			case 1: color = ChatColor.GOLD;
+				break;
+			case 2: color = ChatColor.GRAY;
+				break;
+			case 3: color = ChatColor.DARK_GRAY;
+				break;
+		}
+
+		Title title = TitleUtil.createTitle(color + "" + ChatColor.BOLD + "You got " + ordinal + " place", ChatColor.YELLOW + "You earned " + tickets + " bonus tickets.", 20, 80, 20, true);
+		title.send(player);
+		Bukkit.broadcastMessage(ChatColor.YELLOW + player.getName() + color + "" + ChatColor.BOLD + " ended " + place + " with " + kills + " kills.");
 
 	}
 

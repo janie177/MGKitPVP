@@ -1,14 +1,12 @@
 package net.minegusta.heropvp.listeners;
 
 import com.google.common.collect.Lists;
-import net.minegusta.heropvp.classes.Hero;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
 import net.minegusta.heropvp.scoreboards.ScoreBoardManager;
 import net.minegusta.heropvp.utils.DisplayMessageUtil;
 import net.minegusta.mglib.permissionsex.PEXUtil;
 import net.minegusta.mglib.scoreboards.MGScore;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
@@ -196,7 +194,7 @@ public class GlobalListener implements Listener {
 	{
 		DisplayMessageUtil.addPlayerToBar(e.getPlayer());
 		MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
-		mgp.resetOnMapChange();
+		mgp.breakPlaying();
 		ScoreBoardManager.getTicketBoard().addPlayer(e.getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", mgp.getTickets()));
 		e.getPlayer().setCollidable(false);
 		//Remove fly perms if stuck from previous scout.

@@ -1,14 +1,37 @@
 package net.minegusta.heropvp.leaderboard.highscores;
 
+import net.minegusta.heropvp.leaderboard.game.WinnerManager;
+import net.minegusta.heropvp.main.Main;
+import net.minegusta.heropvp.saving.MGPlayer;
+
 public class HighScoreManager {
 
+	private static HighScore[] highScores = new HighScore[18];
 
-	//TODO Make a highscore map. In the highscoreconfig class, insert data on load and save it on save.
-	//TODO Then add a command or signs to display said highscores.
+	public static void fillHighScores(HighScore score, int place)
+	{
+		highScores[place] = score;
+	}
 
 	public static void update()
 	{
-		//TODO update highscore data, then save. Also update signs.
+		//Update the highscore data. Compare it to player files.
+		for(String s : WinnerManager.getUUIDS())
+		{
+			try {
+				MGPlayer mgp = Main.getSaveManager().getMGPlayer(s);
+
+			} catch (Exception ignored){}
+
+		}
+
+
+
+		//Save the config
+		Main.getScoreManager().saveConfig();
+
+		//Update the signs with the data.
+		SignManager.updateSigns();
 	}
 
 }
