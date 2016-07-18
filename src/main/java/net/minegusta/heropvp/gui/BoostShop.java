@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import net.minegusta.heropvp.boosts.Boost;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
+import net.minegusta.heropvp.utils.DisplayMessageUtil;
 import net.minegusta.mglib.gui.InventoryGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,9 +26,9 @@ public class BoostShop extends InventoryGUI {
 
 	@Override
 	public Inventory buildInventory(Player player, int i, InventoryHolder inventoryHolder, String s) {
-		Inventory inv = Bukkit.createInventory(inventoryHolder, i, ChatColor.DARK_PURPLE + "Boost!");
-		MGPlayer mgp = Main.getSaveManager().getMGPlayer(player);
 
+		MGPlayer mgp = Main.getSaveManager().getMGPlayer(player);
+		Inventory inv = Bukkit.createInventory(inventoryHolder, i, ChatColor.LIGHT_PURPLE + "Tickets: " + ChatColor.YELLOW + mgp.getTickets());
 
 		for(Boost boost : Boost.values())
 		{
@@ -52,7 +53,7 @@ public class BoostShop extends InventoryGUI {
 					{
 						ItemMeta meta = getItemMeta();
 						meta.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + boost.getName());
-						List<String> lore = Lists.newArrayList(ChatColor.LIGHT_PURPLE + boost.getDescription(), ChatColor.GRAY + "Duration: " + ChatColor.RED + boost.getDuration() + ChatColor.GRAY + " Minutes", ChatColor.YELLOW + "" + ChatColor.BOLD + "Cost: " + ChatColor.GREEN + boost.getCost() + ChatColor.YELLOW + " Tickets.");
+						List<String> lore = Lists.newArrayList(ChatColor.LIGHT_PURPLE + boost.getDescription(), ChatColor.GRAY + "Duration: " + ChatColor.RED + boost.getDuration() + ChatColor.GRAY + " Minutes", ChatColor.YELLOW + "" + ChatColor.BOLD + "Cost: " + (boost.getCost() > mgp.getTickets() ? ChatColor.RED : ChatColor.GREEN) + boost.getCost() + ChatColor.YELLOW + " Tickets.");
 						meta.setLore(lore);
 						setItemMeta(meta);
 					}
@@ -75,7 +76,20 @@ public class BoostShop extends InventoryGUI {
 			}
 			else
 			{
-				mgp.addboostSeconds(boost, boost.getDuration() * 60);
+				int cost = boost.getCost();
+				int tickets = mgp.getTickets();
+
+				if(cost > tickets)
+				{
+					player.sendMessage(ChatColor.RED + "You do not have enough tickets.");
+				}
+				else
+				{
+					mgp.removeTickets(cost, 60);
+					DisplayMessageUtil.unlockBoost(player, boost);
+					mgp.addboostSeconds(boost, boost.getDuration() * 60);
+				}
+
 			}
 		}
 

@@ -11,15 +11,22 @@ import net.minegusta.heropvp.scoreboards.ScoreBoardManager;
 import net.minegusta.heropvp.utils.DisplayMessageUtil;
 import net.minegusta.mglib.saving.mgplayer.MGPlayerModel;
 import net.minegusta.mglib.utils.EffectUtil;
+import net.minegusta.mglib.utils.PotionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 import java.util.List;
 import java.util.Map;
@@ -248,6 +255,11 @@ public class MGPlayer extends MGPlayerModel {
 
 	public void addTickets(int ticketsToAdd, int messageDelay)
 	{
+		if(hasBoost(Boost.TICKETS30))
+		{
+			int third = ticketsToAdd / 3;
+			ticketsToAdd = ticketsToAdd + third;
+		}
 		setTickets(getTickets() + ticketsToAdd);
 		if(messageDelay > -1) DisplayMessageUtil.giveTickets(getPlayer(), ticketsToAdd, messageDelay);
 	}
@@ -260,15 +272,22 @@ public class MGPlayer extends MGPlayerModel {
 
 	public void onDeath()
 	{
-		ScoreBoardManager.getHeroTagsBoard().removePlayer(getPlayer());
+		Player player = getPlayer();
+		if(isPlaying() && hasBoost(Boost.MARTYRDOME))
+		{
+			TNTPrimed tnt = (TNTPrimed) player.getWorld().spawnEntity(player.getLocation(), EntityType.PRIMED_TNT);
+			tnt.setFuseTicks(30);
+		}
+		
+		ScoreBoardManager.getHeroTagsBoard().removePlayer(player);
 		ScoreBoardManager.setToTicketBoard(this);
 		setPlaying(false);
-		EffectUtil.playParticle(getPlayer().getLocation(), Effect.CLOUD, 1, 1, 1, 0.1F, 40, 40);
+		EffectUtil.playParticle(player.getLocation(), Effect.CLOUD, 1, 1, 1, 0.1F, 40, 40);
 		setPower(0);
-		DisplayMessageUtil.onDeath(getPlayer(), killstreak);
-		getPlayer().setHealth(getPlayer().getMaxHealth());
-		getPlayer().setFoodLevel(20);
-		getPlayer().teleport(getPlayer().getWorld().getSpawnLocation());
+		DisplayMessageUtil.onDeath(player, killstreak);
+		player.setHealth(player.getMaxHealth());
+		player.setFoodLevel(20);
+		player.teleport(player.getWorld().getSpawnLocation());
 		int ticketsToAdd = killstreak * 10 + (killstreak * (killstreak / 2));
 		if(ticketsToAdd > 0)
 		{
@@ -278,8 +297,7 @@ public class MGPlayer extends MGPlayerModel {
 		setKillstreak(0);
 		setAssists(0);
 		addDeath();
-
-		Player player = getPlayer();
+		
 		for(PotionEffect effect : getPlayer().getActivePotionEffects())
 		{
 			player.removePotionEffect(effect.getType());
@@ -288,12 +306,6 @@ public class MGPlayer extends MGPlayerModel {
 
 		getPlayer().getInventory().clear();
 		getPlayer().setCollidable(false);
-
-		Optional<Player> p = getMostDamage();
-		if(p.isPresent()) {
-			if (!p.get().getUniqueId().toString().equalsIgnoreCase(getUuidString()))
-				Main.getSaveManager().getMGPlayer(p.get()).onKillPlayer(getPlayer().getName());
-		}
 	}
 
 	//--// BOOSTS //--//
@@ -377,11 +389,38 @@ public class MGPlayer extends MGPlayerModel {
 		ScoreBoardManager.getTicketBoard().removePlayer(getPlayer());
 		ScoreBoardManager.getHeroTagsBoard().addPlayer(getPlayer(), hero.name());
 		getPlayer().setCollidable(true);
+
+		if(hasBoost(Boost.POWER35))
+		{
+			setPower(35);
+		}
+
+
+		if(hasBoost(Boost.SWORDMASTER))
+		{
+			getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND_SWORD));
+		}
+
+
+		if(hasBoost(Boost.HEALTHPOT))
+		{
+			getPlayer().getInventory().addItem(new ItemStack(Material.POTION, 1)
+			{
+				{
+					PotionMeta meta = (PotionMeta) getItemMeta();
+					meta.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL, false, true));
+
+					setItemMeta(meta);
+				}
+			});
+		}
 	}
 
 	public void onKillPlayer(String killedName)
 	{
 		addPower(hero.getPowerPerKill());
+		//Heal player on killing someone.
+		PotionUtil.updatePotion(getPlayer(), PotionEffectType.REGENERATION, 0, 3);
 		addKill();
 		addKillStreakKill();
 		DisplayMessageUtil.onKill(hero, getPlayer(), killstreak, killedName);

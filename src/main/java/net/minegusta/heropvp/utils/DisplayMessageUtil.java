@@ -2,6 +2,7 @@ package net.minegusta.heropvp.utils;
 
 import com.google.common.collect.Lists;
 import com.google.common.escape.CharEscaper;
+import net.minegusta.heropvp.boosts.Boost;
 import net.minegusta.heropvp.classes.Hero;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
@@ -88,6 +89,13 @@ public class DisplayMessageUtil {
 	public static void unlockHero(Player player, Hero hero)
 	{
 		Title title = TitleUtil.createTitle(hero.getColor() + "" + ChatColor.BOLD + hero.getName() + ChatColor.YELLOW + " " + ChatColor.BOLD + "Unlocked!", "", 6, 20, 6,true);
+		TitleUtil.sendTitle(title, player);
+		EffectUtil.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_TOUCH);
+	}
+
+	public static void unlockBoost(Player player, Boost boost)
+	{
+		Title title = TitleUtil.createTitle(ChatColor.RED + "" + ChatColor.BOLD + boost.getName() + ChatColor.YELLOW + " " + ChatColor.BOLD + "Unlocked!", ChatColor.GRAY + "Lasts for: " + ChatColor.LIGHT_PURPLE + boost.getDuration() + ChatColor.GRAY + " Minutes.", 6, 45, 6,true);
 		TitleUtil.sendTitle(title, player);
 		EffectUtil.playSound(player, Sound.ENTITY_EXPERIENCE_ORB_TOUCH);
 	}
