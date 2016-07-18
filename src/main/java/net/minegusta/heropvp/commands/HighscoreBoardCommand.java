@@ -33,7 +33,7 @@ public class HighscoreBoardCommand implements CommandExecutor{
 			}
 
 			Block b = p.getTargetBlock(Sets.newHashSet(Material.AIR), 20);
-			if(b == null || b.getType() != Material.WALL_SIGN || b.getType() != Material.SIGN_POST || b.getType() != Material.SIGN)
+			if(b == null || (b.getType() != Material.WALL_SIGN && b.getType() != Material.SIGN_POST && b.getType() != Material.SIGN))
 			{
 				p.sendMessage(ChatColor.RED + "You have to be looking at a sign.");
 				return true;
