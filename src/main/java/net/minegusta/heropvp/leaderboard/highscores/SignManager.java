@@ -26,12 +26,12 @@ public class SignManager {
 
 	public static void updateSigns()
 	{
-		int index = 0;
-		for(Location l : signs)
+		for(int i = 0; i < 18; i++)
 		{
+			Location l = signs[i];
 			if(l != null)
 			{
-				HighScore score = HighScoreManager.getHighScoreEntry(index);
+				HighScore score = HighScoreManager.getHighScoreEntry(i);
 
 				if(score != null)
 				{
@@ -52,9 +52,6 @@ public class SignManager {
 					}
 				}
 			}
-
-			//Increment index.
-			index++;
 		}
 	}
 

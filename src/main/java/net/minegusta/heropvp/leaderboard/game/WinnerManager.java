@@ -65,6 +65,8 @@ public class WinnerManager {
 				pkills[i] = largestKills;
 				added.add(killer);
 			}
+			killer = "";
+			largestKills = 0;
 		}
 
 		//Awarding players in the arrays.

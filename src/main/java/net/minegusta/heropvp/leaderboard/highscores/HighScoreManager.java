@@ -40,15 +40,14 @@ public class HighScoreManager {
 
 	private static void sortScores()
 	{
-		HighScore temp;
-		for(int i2 = 0; i2 < highScores.length; i2++)
+		for(int i = 0; i < highScores.length; i++)
 		{
-			for(int i = 0; i < highScores.length; i++)
+			for(int i2 = 0; i2 < highScores.length - 1; i++)
 			{
-				if(highScores[i].getKills() > highScores[i2].getKills())
+				if(highScores[i].getKills() > highScores[i2 + 1].getKills())
 				{
-					temp = highScores[i2];
-					highScores[i2] = highScores[i];
+					HighScore temp = highScores[i2 + 1];
+					highScores[i2 + 1] = highScores[i];
 					highScores[i] = temp;
 				}
 			}
