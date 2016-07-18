@@ -7,7 +7,6 @@ import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
 import net.minegusta.heropvp.spells.SpellUtil;
 import net.minegusta.mglib.bossbars.BossBarUtil;
-import net.minegusta.mglib.particles.ParticleEffect;
 import net.minegusta.mglib.utils.CooldownUtil;
 import net.minegusta.mglib.utils.EffectUtil;
 import org.bukkit.ChatColor;

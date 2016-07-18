@@ -50,7 +50,7 @@ public class NPCManager {
 		shopNPC.teleport(location);
 		shopNPC.setCustomNameVisible(true);
 		shopNPC.setRemoveWhenFarAway(false);
-		shopNPC.setCustomName(ChatColor.GOLD + "" + ChatColor.BOLD + "" + "Hero Shop");
+		shopNPC.setCustomName(NPCType.SHOP.getDisplayName());
 		shopNPC.setAdult();
 		shopNPC.getEquipment().setItemInMainHand(new ItemStack(Material.BOOK));
 		shopNPC.getEquipment().setItemInOffHand(new ItemStack(Material.FEATHER));
@@ -69,7 +69,7 @@ public class NPCManager {
 		Zombie selectClassNPC = (Zombie) location.getWorld().spawnEntity(location, EntityType.ZOMBIE);
 		selectClassNPC.setCustomNameVisible(true);
 		selectClassNPC.setRemoveWhenFarAway(false);
-		selectClassNPC.setCustomName(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "" + "Select Hero");
+		selectClassNPC.setCustomName(NPCType.SELECTOR.getDisplayName());
 		selectClassNPC.setBaby(false);
 		selectClassNPC.setVillagerProfession(null);
 		selectClassNPC.getEquipment().setItemInMainHand(new ItemStack(Material.BOOK));
@@ -89,7 +89,7 @@ public class NPCManager {
 		Witch boostNPC = (Witch) location.getWorld().spawnEntity(location, EntityType.WITCH);
 		boostNPC.setCustomNameVisible(true);
 		boostNPC.setRemoveWhenFarAway(false);
-		boostNPC.setCustomName(ChatColor.AQUA + "" + ChatColor.BOLD + "" + "Boost!");
+		boostNPC.setCustomName(NPCType.BOOST.getDisplayName());
 		boostNPC.getEquipment().setItemInMainHand(new ItemStack(Material.WATCH));
 		boostNPC.getEquipment().setItemInOffHand(new ItemStack(Material.DIAMOND));
 		boostNPC.setCollidable(false);
@@ -105,7 +105,7 @@ public class NPCManager {
 		Skeleton startGameNPC = (Skeleton) location.getWorld().spawnEntity(location, EntityType.SKELETON);
 		startGameNPC.setRemoveWhenFarAway(false);
 		startGameNPC.setCustomNameVisible(true);
-		startGameNPC.setCustomName(ChatColor.GREEN + "" + ChatColor.BOLD + "" + "Play Now!");
+		startGameNPC.setCustomName(NPCType.SPAWN.getDisplayName());
 		startGameNPC.setSkeletonType(Skeleton.SkeletonType.NORMAL);
 		startGameNPC.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
 		startGameNPC.getEquipment().setItemInOffHand(new ItemStack(Material.IRON_SWORD));

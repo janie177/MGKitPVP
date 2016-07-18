@@ -5,7 +5,6 @@ import net.minegusta.heropvp.inventories.HeroInventory;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.mglib.particles.ParticleUtil;
 import net.minegusta.mglib.utils.LocationUtil;
-import net.minegusta.mglib.utils.MathUtil;
 import net.minegusta.mglib.utils.PotionUtil;
 import org.bukkit.*;
 import org.bukkit.boss.BarColor;

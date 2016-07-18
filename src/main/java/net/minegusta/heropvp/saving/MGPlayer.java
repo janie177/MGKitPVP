@@ -5,7 +5,6 @@ import com.google.common.collect.Maps;
 import net.minegusta.heropvp.boosts.Boost;
 import net.minegusta.heropvp.classes.Hero;
 import net.minegusta.heropvp.leaderboard.game.WinnerManager;
-import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.mapmanager.SpawnManager;
 import net.minegusta.heropvp.scoreboards.ScoreBoardManager;
 import net.minegusta.heropvp.utils.DisplayMessageUtil;

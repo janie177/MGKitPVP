@@ -1,7 +1,6 @@
 package net.minegusta.heropvp.utils;
 
 import com.google.common.collect.Lists;
-import com.google.common.escape.CharEscaper;
 import net.minegusta.heropvp.boosts.Boost;
 import net.minegusta.heropvp.classes.Hero;
 import net.minegusta.heropvp.main.Main;
@@ -20,7 +19,6 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Player;
 
-import java.util.Collection;
 import java.util.List;
 
 public class DisplayMessageUtil {

@@ -2,7 +2,6 @@ package net.minegusta.heropvp.commands;
 
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
-import net.minegusta.heropvp.utils.DisplayMessageUtil;
 import net.minegusta.mglib.utils.TitleUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

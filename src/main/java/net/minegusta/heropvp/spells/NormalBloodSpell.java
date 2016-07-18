@@ -2,7 +2,6 @@ package net.minegusta.heropvp.spells;
 
 import net.minegusta.mglib.particles.MovingParticleWithAction;
 import net.minegusta.mglib.utils.EffectUtil;
-import net.minegusta.mglib.utils.PotionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -10,7 +9,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.UUID;
 

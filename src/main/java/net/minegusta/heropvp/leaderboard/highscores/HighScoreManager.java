@@ -3,10 +3,7 @@ package net.minegusta.heropvp.leaderboard.highscores;
 import net.minegusta.heropvp.leaderboard.game.WinnerManager;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
-import net.minegusta.mglib.particles.ParticleEffect;
 import org.apache.commons.lang.ArrayUtils;
-
-import java.util.Arrays;
 
 public class HighScoreManager {
 

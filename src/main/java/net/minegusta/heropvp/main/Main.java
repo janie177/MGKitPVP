@@ -9,7 +9,6 @@ import net.minegusta.heropvp.gui.TicketShop;
 import net.minegusta.heropvp.leaderboard.config.HighScoreConfig;
 import net.minegusta.heropvp.listeners.GlobalListener;
 import net.minegusta.heropvp.listeners.HeroListener;
-import net.minegusta.heropvp.mapmanager.SpawnConfiguration;
 import net.minegusta.heropvp.mapmanager.SpawnManager;
 import net.minegusta.heropvp.npcs.NPCManager;
 import net.minegusta.heropvp.saving.MGPlayer;
@@ -119,6 +118,11 @@ public class Main extends JavaPlugin {
 	public static InventoryGUI getTicketShop()
 	{
 		return ticketShop;
+	}
+
+	public static InventoryGUI getBoostShop()
+	{
+		return boostShop;
 	}
 
 	public static InventoryGUI getHeroSelectionMenu()

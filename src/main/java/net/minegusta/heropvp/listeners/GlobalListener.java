@@ -2,11 +2,11 @@ package net.minegusta.heropvp.listeners;
 
 import com.google.common.collect.Lists;
 import net.minegusta.heropvp.main.Main;
+import net.minegusta.heropvp.npcs.NPCType;
 import net.minegusta.heropvp.saving.MGPlayer;
 import net.minegusta.heropvp.scoreboards.ScoreBoardManager;
 import net.minegusta.heropvp.utils.DisplayMessageUtil;
 import net.minegusta.mglib.permissionsex.PEXUtil;
-import net.minegusta.mglib.scoreboards.MGScore;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
@@ -225,7 +225,7 @@ public class GlobalListener implements Listener {
 	{
 		if(e.getHand() != EquipmentSlot.HAND) return;
 
-		if(e.getRightClicked() instanceof Villager || e.getRightClicked() instanceof Zombie || e.getRightClicked() instanceof Skeleton)
+		if(e.getRightClicked() instanceof Villager || e.getRightClicked() instanceof Zombie || e.getRightClicked() instanceof Skeleton || e.getRightClicked() instanceof Witch)
 		{
 			LivingEntity rightClicked = (LivingEntity) e.getRightClicked();
 			if(rightClicked.getCustomName() != null)
@@ -239,7 +239,7 @@ public class GlobalListener implements Listener {
 				}
 
 				//Spawn
-				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.GREEN + "" + ChatColor.BOLD + "" + "Play Now!"))
+				if(rightClicked.getCustomName().equalsIgnoreCase(NPCType.SPAWN.getDisplayName()))
 				{
 					MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
 					if(mgp.isPlaying()) mgp.onDeath();
@@ -248,21 +248,21 @@ public class GlobalListener implements Listener {
 					return;
 				}
 				//Open boost shop
-				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.AQUA + "" + ChatColor.BOLD + "" + "Boost!"))
+				if(rightClicked.getCustomName().equalsIgnoreCase(NPCType.BOOST.getDisplayName()))
 				{
-					Main.getTicketShop().openInventory(e.getPlayer());
+					Main.getBoostShop().openInventory(e.getPlayer());
 					e.setCancelled(true);
 					return;
 				}
 				//Open shop
-				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.GOLD + "" + ChatColor.BOLD + "" + "Hero Shop"))
+				if(rightClicked.getCustomName().equalsIgnoreCase(NPCType.SHOP.getDisplayName()))
 				{
 					Main.getTicketShop().openInventory(e.getPlayer());
 					e.setCancelled(true);
 					return;
 				}
 				//Open selection interface
-				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "" + "Select Hero"))
+				if(rightClicked.getCustomName().equalsIgnoreCase(NPCType.SELECTOR.getDisplayName()))
 				{
 					Main.getHeroSelectionMenu().openInventory(e.getPlayer());
 					e.setCancelled(true);
@@ -276,7 +276,7 @@ public class GlobalListener implements Listener {
 	@EventHandler
 	public void onEntityDamage(EntityDamageByEntityEvent e)
 	{
-		if(e.getDamager() instanceof Player && (e.getEntity() instanceof Villager || e.getEntity() instanceof Zombie || e.getEntity() instanceof Skeleton))
+		if(e.getDamager() instanceof Player && (e.getEntity() instanceof Villager || e.getEntity() instanceof Zombie || e.getEntity() instanceof Skeleton || e.getEntity() instanceof Witch))
 		{
 			LivingEntity rightClicked = (LivingEntity) e.getEntity();
 			Player player = (Player) e.getDamager();
@@ -290,8 +290,8 @@ public class GlobalListener implements Listener {
 					return;
 				}
 
-				//Spawn
-				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.GREEN + "" + ChatColor.BOLD + "" + "Play Now!"))
+//Spawn
+				if(rightClicked.getCustomName().equalsIgnoreCase(NPCType.SPAWN.getDisplayName()))
 				{
 					MGPlayer mgp = Main.getSaveManager().getMGPlayer(player);
 					if(mgp.isPlaying()) mgp.onDeath();
@@ -299,22 +299,22 @@ public class GlobalListener implements Listener {
 					e.setCancelled(true);
 					return;
 				}
-				//Open shop
-				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.GOLD + "" + ChatColor.BOLD + "" + "Hero Shop"))
+				//Open boost shop
+				if(rightClicked.getCustomName().equalsIgnoreCase(NPCType.BOOST.getDisplayName()))
 				{
-					Main.getTicketShop().openInventory(player);
+					Main.getBoostShop().openInventory(player);
 					e.setCancelled(true);
 					return;
 				}
-				//Open boost shop
-				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.AQUA + "" + ChatColor.BOLD + "" + "Boost!"))
+				//Open shop
+				if(rightClicked.getCustomName().equalsIgnoreCase(NPCType.SHOP.getDisplayName()))
 				{
 					Main.getTicketShop().openInventory(player);
 					e.setCancelled(true);
 					return;
 				}
 				//Open selection interface
-				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "" + "Select Hero"))
+				if(rightClicked.getCustomName().equalsIgnoreCase(NPCType.SELECTOR.getDisplayName()))
 				{
 					Main.getHeroSelectionMenu().openInventory(player);
 					e.setCancelled(true);

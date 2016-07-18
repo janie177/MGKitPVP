@@ -7,7 +7,6 @@ import net.minegusta.mglib.scoreboards.MGScore;
 import net.minegusta.mglib.scoreboards.ScoreBoardUtil;
 import net.minegusta.mglib.scoreboards.SideBarBoard;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 
 public class ScoreBoardManager {
 
