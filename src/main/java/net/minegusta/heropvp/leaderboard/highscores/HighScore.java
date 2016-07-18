@@ -28,7 +28,7 @@ public class HighScore {
 	public double getKDRatio()
 	{
 		if(deaths == 0) return kills;
-		return kills/deaths;
+		return (double) kills / (double) deaths;
 	}
 
 	public String getUUID()
