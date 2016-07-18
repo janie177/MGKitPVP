@@ -91,7 +91,7 @@ public class ElvenLord implements IHero {
 			//hand1
 			addItem(0, new ItemStack(Material.BOW){
 				{
-					addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 2);
+					addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 1);
 					addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
 					addUnsafeEnchantment(Enchantment.DURABILITY, 3);
 				}
@@ -99,14 +99,14 @@ public class ElvenLord implements IHero {
 			//hand2
 			addItem(1, new ItemStack(Material.WOOD_SWORD){
 				{
-					addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
+					addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
 				}
 			});
 			addItem(2, new ItemStack(Material.SPLASH_POTION, 1)
 			{
 				{
 					PotionMeta meta = (PotionMeta) getItemMeta();
-					meta.setBasePotionData(new PotionData(PotionType.REGEN, false, false));
+					meta.setBasePotionData(new PotionData(PotionType.SPEED, false, false));
 					setItemMeta(meta);
 				}
 			});

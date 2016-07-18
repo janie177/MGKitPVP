@@ -36,7 +36,6 @@ public class NormalBloodSpell extends MovingParticleWithAction {
 					EntityDamageByEntityEvent e = new EntityDamageByEntityEvent(caster, targetedEntity, EntityDamageEvent.DamageCause.CUSTOM, 5);
 					Bukkit.getPluginManager().callEvent(e);
 					if (!e.isCancelled()) {
-						PotionUtil.updatePotion(targetedEntity, PotionEffectType.SLOW, 1, 2);
 						targetedEntity.damage(e.getFinalDamage());
 					}
 

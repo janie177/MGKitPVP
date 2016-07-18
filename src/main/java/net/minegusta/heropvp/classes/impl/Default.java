@@ -18,6 +18,7 @@ public class Default implements IHero {
 	@Override
 	public void doUltimate(Player player) {
 		PotionUtil.updatePotion(player, PotionEffectType.REGENERATION, 1, ultimateDuration());
+		PotionUtil.updatePotion(player, PotionEffectType.DAMAGE_RESISTANCE, 0, ultimateDuration());
 	}
 
 	@Override
@@ -65,7 +66,7 @@ public class Default implements IHero {
 		return "Noobly";
 	}
 
-	private static String[] desc = new String[]{"The default hero!", "Gain tickets to unlock more.", "Ultimate heals you."};
+	private static String[] desc = new String[]{"The default hero!", "Gain tickets to unlock more.", "Ultimate heals you and", "reduces damage taken."};
 
 	@Override
 	public String[] getDescription() {

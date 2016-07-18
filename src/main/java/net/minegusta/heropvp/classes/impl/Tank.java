@@ -92,7 +92,7 @@ public class Tank implements IHero {
 			//Boots
 			addItem(36, new ItemStack(Material.IRON_BOOTS));
 			//hand1
-			addItem(0, new ItemStack(Material.IRON_SWORD));
+			addItem(0, new ItemStack(Material.STONE_SWORD));
 			//shield
 			addItem(1, new ItemStack(Material.SHIELD)
 			{

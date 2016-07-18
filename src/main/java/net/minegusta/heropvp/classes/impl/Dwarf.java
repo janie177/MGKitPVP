@@ -52,7 +52,7 @@ public class Dwarf implements IHero {
 
 	@Override
 	public int powerPerKill() {
-		return 100;
+		return 40;
 	}
 
 	@Override

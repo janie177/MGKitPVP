@@ -188,22 +188,6 @@ public class BloodMage implements IHero {
 					addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
 				}
 			});
-			addItem(3, new ItemStack(Material.SPLASH_POTION, 1)
-			{
-				{
-					PotionMeta meta = (PotionMeta) getItemMeta();
-					meta.setBasePotionData(new PotionData(PotionType.INSTANT_DAMAGE, false, true));
-					setItemMeta(meta);
-				}
-			});
-			addItem(4, new ItemStack(Material.POTION, 1)
-			{
-				{
-					PotionMeta meta = (PotionMeta) getItemMeta();
-					meta.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL, false, false));
-					setItemMeta(meta);
-				}
-			});
 		}
 	};
 

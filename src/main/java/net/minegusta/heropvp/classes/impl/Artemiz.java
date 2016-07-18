@@ -55,7 +55,7 @@ public class Artemiz implements IHero {
 
 	@Override
 	public int ultimateDuration() {
-		return 18;
+		return 10;
 	}
 
 	@Override
@@ -95,7 +95,6 @@ public class Artemiz implements IHero {
 			//hand2
 			addItem(1, new ItemStack(Material.WOOD_SWORD){
 				{
-					addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
 					addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
 				}
 			});

@@ -144,9 +144,9 @@ public class Explodo implements IHero {
 					ItemMeta meta = getItemMeta();
 					meta.setDisplayName(ChatColor.DARK_RED + "Explosion Stick");
 					meta.setLore(Lists.newArrayList(ChatColor.RED + "Right click to fire TNT."));
-					addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-					addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
-
+					addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
+					addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
+					setItemMeta(meta);
 				}
 			});
 		}
