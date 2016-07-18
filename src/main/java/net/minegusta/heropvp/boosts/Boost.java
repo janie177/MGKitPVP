@@ -8,11 +8,11 @@ import java.util.concurrent.ConcurrentMap;
 
 public enum Boost {
 
-	TICKETS30(0, "+30% Tickets", "Get 30% extra tickets.", 15, 250, Material.PAPER, 0),
+	TICKETS30(0, "+30% Tickets", "Get 30% extra tickets.", 15, 100, Material.PAPER, 0),
 	POWER35(4, "Starting Power", "Start with 35 power.", 6, 200, Material.EXP_BOTTLE, 0),
 	MARTYRDOME(6, "MartyrDome", "Drop TNT when you die.", 5, 180, Material.TNT, 0),
 	SWORDMASTER(8, "Sword Master", "Gain a diamond sword for 5 minutes.", 5, 500, Material.DIAMOND_SWORD, 0),
-	HEALTHPOT(2, "Healthy", "Get a health splash potion on spawn.", 12, 120, Material.INK_SACK, 1);
+	HEALTHPOT(2, "Healthy", "Get a health potion on spawn.", 12, 120, Material.INK_SACK, 1);
 
 	private int slot;
 	private String name;
