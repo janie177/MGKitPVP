@@ -329,7 +329,7 @@ public class MGPlayer extends MGPlayerModel {
 	{
 		if(hasBoost(boost))
 		{
-			long millis = System.currentTimeMillis() - boosts.get(boost);
+			long millis = boosts.get(boost) - System.currentTimeMillis();
 			if(millis < 60000) return 1;
 			return TimeUnit.MILLISECONDS.toMinutes(millis);
 		}
