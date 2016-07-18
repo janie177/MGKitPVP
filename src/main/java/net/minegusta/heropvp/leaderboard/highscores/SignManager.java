@@ -48,6 +48,7 @@ public class SignManager {
 						sign.setLine(1, ChatColor.GREEN + kills + "K");
 						sign.setLine(2, ChatColor.DARK_RED + deaths + "D");
 						sign.setLine(3, ChatColor.YELLOW + kd);
+						sign.update();
 					}
 				}
 			}

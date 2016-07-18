@@ -63,6 +63,7 @@ public class WinnerManager {
 			{
 				winners[i] = killer;
 				pkills[i] = largestKills;
+				added.add(killer);
 			}
 		}
 
@@ -76,7 +77,7 @@ public class WinnerManager {
 				try {
 					Player p = Bukkit.getPlayer(UUID.fromString(pName));
 					int tickets = 110 - i * 10;
-					DisplayMessageUtil.displayMapEndWinners(p, i, tickets, kills);
+					DisplayMessageUtil.displayMapEndWinners(p, i + 1, tickets, kills);
 				} catch (Exception ignored){}
 			}
 		}
