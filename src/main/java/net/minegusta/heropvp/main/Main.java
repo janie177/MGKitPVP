@@ -3,6 +3,7 @@ package net.minegusta.heropvp.main;
 import net.minegusta.heropvp.commands.AdminCommand;
 import net.minegusta.heropvp.commands.BreakCommand;
 import net.minegusta.heropvp.commands.HighscoreBoardCommand;
+import net.minegusta.heropvp.gui.BoostShop;
 import net.minegusta.heropvp.gui.HeroSelectionMenu;
 import net.minegusta.heropvp.gui.TicketShop;
 import net.minegusta.heropvp.leaderboard.config.HighScoreConfig;
@@ -31,6 +32,7 @@ public class Main extends JavaPlugin {
 	private static ConfigurationFileManager<HighScoreConfig> scoreConfigManager;
 	private static InventoryGUI ticketShop;
 	private static InventoryGUI heroSelectionMenu;
+	private static InventoryGUI boostShop;
 	private static Task heroPassiveTask = new Task();
 
 	private static Plugin plugin;
@@ -66,6 +68,7 @@ public class Main extends JavaPlugin {
 
 		//Load the inventory GUI menu.
 		ticketShop = new TicketShop(ChatColor.LIGHT_PURPLE + "Ticket Shop!", 5, "kitpvpticketshop");
+		boostShop = new BoostShop(ChatColor.DARK_AQUA + "Boost Shop!", 5, "kitpvpboostshop");
 		heroSelectionMenu = new HeroSelectionMenu(ChatColor.LIGHT_PURPLE + "Pick a Hero!", 5, "heroselectiongui");
 
 		//Load the scoreboards

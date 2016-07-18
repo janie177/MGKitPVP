@@ -2,6 +2,7 @@ package net.minegusta.heropvp.saving;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import net.minegusta.heropvp.boosts.Boost;
 import net.minegusta.heropvp.classes.Hero;
 import net.minegusta.heropvp.leaderboard.game.WinnerManager;
 import net.minegusta.heropvp.main.Main;
@@ -9,7 +10,6 @@ import net.minegusta.heropvp.mapmanager.SpawnManager;
 import net.minegusta.heropvp.scoreboards.ScoreBoardManager;
 import net.minegusta.heropvp.utils.DisplayMessageUtil;
 import net.minegusta.mglib.saving.mgplayer.MGPlayerModel;
-import net.minegusta.mglib.scoreboards.MGScore;
 import net.minegusta.mglib.utils.EffectUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -22,9 +22,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
 
 public class MGPlayer extends MGPlayerModel {
 
@@ -66,6 +68,22 @@ public class MGPlayer extends MGPlayerModel {
 		ScoreBoardManager.setToTicketBoard(this);
 		setActiveHero(hero);
 
+		if(fileConfiguration.isSet("boost"))
+		{
+			for(String s : fileConfiguration.getConfigurationSection("boost").getKeys(false))
+			{
+				try
+				{
+					Boost boost = Boost.valueOf(s);
+					long time = fileConfiguration.getLong("boost." + s);
+					if(time > System.currentTimeMillis())
+					{
+						boosts.put(boost, time);
+					}
+				} catch (Exception ignored){}
+			}
+		}
+
 		getPlayer().setCollidable(false);
 	}
 
@@ -78,6 +96,19 @@ public class MGPlayer extends MGPlayerModel {
 		fileConfiguration.set("hero", hero.name());
 		fileConfiguration.set("tickets", tickets);
 		fileConfiguration.set("assists", assists);
+
+		//Clear all old saved boosts
+		if(fileConfiguration.isSet("boost")) fileConfiguration.set("boost", null);
+
+		//Save all active boosts.
+		for(Boost boost : boosts.keySet())
+		{
+			long value  = boosts.get(boost);
+			if(value > System.currentTimeMillis())
+			{
+				fileConfiguration.set("boost." + boost.name(), boosts.get(boost));
+			}
+		}
 
 		List<String> heroes = Lists.newArrayList();
 		for(Hero h : unlocked)
@@ -218,7 +249,7 @@ public class MGPlayer extends MGPlayerModel {
 	public void addTickets(int ticketsToAdd, int messageDelay)
 	{
 		setTickets(getTickets() + ticketsToAdd);
-		DisplayMessageUtil.giveTickets(getPlayer(), ticketsToAdd, messageDelay);
+		if(messageDelay > -1) DisplayMessageUtil.giveTickets(getPlayer(), ticketsToAdd, messageDelay);
 	}
 
 	public void removeTickets(int ticketsToRemove, int messageDelay)
@@ -264,6 +295,44 @@ public class MGPlayer extends MGPlayerModel {
 				Main.getSaveManager().getMGPlayer(p.get()).onKillPlayer(getPlayer().getName());
 		}
 	}
+
+	//--// BOOSTS //--//
+
+	private Map<Boost, Long> boosts = Maps.newHashMap();
+
+	public boolean hasBoost(Boost boost)
+	{
+		if(boosts.containsKey(boost))
+		{
+			if(boosts.get(boost) > System.currentTimeMillis())
+			{
+				return true;
+			}
+			boosts.remove(boost);
+			return false;
+		}
+		return false;
+	}
+
+	public long getMinutesLeft(Boost boost)
+	{
+		if(hasBoost(boost))
+		{
+			long millis = System.currentTimeMillis() - boosts.get(boost);
+			if(millis < 60000) return 1;
+			return TimeUnit.MILLISECONDS.toMinutes(millis);
+		}
+		return 0;
+	}
+
+	public void addboostSeconds(Boost boost, int seconds)
+	{
+		boosts.put(boost, (long) seconds * 1000 + System.currentTimeMillis());
+	}
+
+	//--//========//--//
+
+
 
 	public void breakPlaying()
 	{

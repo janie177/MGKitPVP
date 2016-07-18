@@ -38,6 +38,9 @@ public class NPCManager {
 			case SHOP:
 				spawnShopNPC(location);
 				break;
+			case BOOST:
+				spawnBoostNPC(location);
+				break;
 		}
 	}
 
@@ -79,6 +82,22 @@ public class NPCManager {
 		selectClassNPC.setAI(false);
 		selectClassNPC.setMetadata("heropvpnpc", new FixedMetadataValue(Main.getPlugin(), true));
 		selectClassNPC.setSilent(true);
+	}
+
+	public static void spawnBoostNPC(Location location)
+	{
+		Witch boostNPC = (Witch) location.getWorld().spawnEntity(location, EntityType.WITCH);
+		boostNPC.setCustomNameVisible(true);
+		boostNPC.setRemoveWhenFarAway(false);
+		boostNPC.setCustomName(ChatColor.AQUA + "" + ChatColor.BOLD + "" + "Boost!");
+		boostNPC.getEquipment().setItemInMainHand(new ItemStack(Material.WATCH));
+		boostNPC.getEquipment().setItemInOffHand(new ItemStack(Material.DIAMOND));
+		boostNPC.setCollidable(false);
+		boostNPC.setGravity(false);
+		boostNPC.setInvulnerable(true);
+		boostNPC.setAI(false);
+		boostNPC.setMetadata("heropvpnpc", new FixedMetadataValue(Main.getPlugin(), true));
+		boostNPC.setSilent(true);
 	}
 
 	public static void spawnGameStartNPC(Location location)

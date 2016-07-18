@@ -2,6 +2,7 @@ package net.minegusta.heropvp.leaderboard.game;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.utils.DisplayMessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -80,6 +81,7 @@ public class WinnerManager {
 					Player p = Bukkit.getPlayer(UUID.fromString(pName));
 					int tickets = 110 - i * 10;
 					DisplayMessageUtil.displayMapEndWinners(p.getName(), i + 1, tickets, kills);
+					Main.getSaveManager().getMGPlayer(p).addTickets(tickets, -1);
 				} catch (Exception ignored){}
 			}
 		}
