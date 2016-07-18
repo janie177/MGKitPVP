@@ -38,7 +38,7 @@ public class SignManager {
 					String name = score.getName();
 					String kills = Integer.toString(score.getKills());
 					String deaths = Integer.toString(score.getDeaths());
-					String kd = Double.toString(score.getKDRatio()).substring(0, 3) + " K/D";
+					String kd = Double.toString(score.getKDRatio()).substring(0, 4) + " K/D";
 
 					Material m = l.getBlock().getType();
 					if(m == Material.WALL_SIGN || m == Material.SIGN_POST || m == Material.SIGN)

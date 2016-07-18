@@ -4,6 +4,9 @@ import net.minegusta.heropvp.leaderboard.game.WinnerManager;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.saving.MGPlayer;
 import net.minegusta.mglib.particles.ParticleEffect;
+import org.apache.commons.lang.ArrayUtils;
+
+import java.util.Arrays;
 
 public class HighScoreManager {
 
@@ -40,18 +43,21 @@ public class HighScoreManager {
 
 	private static void sortScores()
 	{
-		for(int i = 0; i < highScores.length; i++)
-		{
-			for(int i2 = 0; i2 < highScores.length - 1; i++)
-			{
-				if(highScores[i].getKills() > highScores[i2 + 1].getKills())
-				{
-					HighScore temp = highScores[i2 + 1];
-					highScores[i2 + 1] = highScores[i];
-					highScores[i] = temp;
+		HighScore temp;
+		int n = highScores.length;
+
+		for(int i=0; i < n; i++){
+			for(int j=1; j < (n-i); j++){
+
+				if(highScores[j-1].getKills() > highScores[j].getKills()){
+					temp = highScores[j-1];
+					highScores[j-1] = highScores[j];
+					highScores[j] = temp;
 				}
 			}
 		}
+
+		ArrayUtils.reverse(highScores);
 	}
 
 
@@ -93,9 +99,10 @@ public class HighScoreManager {
 					}
 				}
 
-
 			} catch (Exception ignored){}
 		}
+
+		sortScores();
 
 		//Save the config
 		Main.getScoreManager().saveConfig();

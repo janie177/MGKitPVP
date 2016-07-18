@@ -178,7 +178,7 @@ public class DisplayMessageUtil {
 
 	}
 
-	public static void displayMapEndWinners(Player player, int place, int tickets, int kills) {
+	public static void displayMapEndWinners(String name, int place, int tickets, int kills) {
 
 		ChatColor color = ChatColor.BLUE;
 
@@ -211,8 +211,11 @@ public class DisplayMessageUtil {
 		}
 
 		Title title = TitleUtil.createTitle(color + "" + ChatColor.BOLD + "You got " + ordinal + " place", ChatColor.YELLOW + "You earned " + tickets + " bonus tickets.", 20, 80, 20, true);
-		title.send(player);
-		Bukkit.broadcastMessage(ChatColor.YELLOW + player.getName() + color + "" + ChatColor.BOLD + " ended " + place + " with " + kills + " kills.");
+		try {
+			title.send(Bukkit.getPlayer(name));
+		} catch (Exception ignored){}
+
+		Bukkit.broadcastMessage(ChatColor.YELLOW + name + color + "" + ChatColor.BOLD + " ended " + ordinal + " with " + kills + " kills.");
 
 	}
 

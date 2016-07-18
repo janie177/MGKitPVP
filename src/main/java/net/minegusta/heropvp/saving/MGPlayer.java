@@ -199,7 +199,7 @@ public class MGPlayer extends MGPlayerModel {
 	public String getKD()
 	{
 		if(deaths == 0) return Integer.toString(kills);
-		return Double.toString(kills/deaths).substring(0, 2);
+		return Double.toString(kills/deaths).substring(0, 4);
 	}
 
 	public void setKillstreak(int killstreak) {
