@@ -56,7 +56,15 @@ public class HighScoreConfig extends ConfigurationModel {
 			fileConfiguration.set("players.place" + index + ".deaths", score.getDeaths());
 			try {
 				OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(score.getUUID()));
-				fileConfiguration.set("players.place" + index + ".name", player.getName());
+				String name = player.getName();
+				{
+					if(name != null)
+					{
+						fileConfiguration.set("players.place" + index + ".name", player.getName());
+					}
+					else fileConfiguration.set("players.place" + index + ".name", score.getName());
+				}
+
 			} catch (Exception ignored)
 			{
 				fileConfiguration.set("players.place" + index + ".name", score.getName());
