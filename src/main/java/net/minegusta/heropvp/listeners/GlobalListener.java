@@ -247,6 +247,13 @@ public class GlobalListener implements Listener {
 					e.setCancelled(true);
 					return;
 				}
+				//Open boost shop
+				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.AQUA + "" + ChatColor.BOLD + "" + "Boost!"))
+				{
+					Main.getTicketShop().openInventory(e.getPlayer());
+					e.setCancelled(true);
+					return;
+				}
 				//Open shop
 				if(rightClicked.getCustomName().equalsIgnoreCase(ChatColor.GOLD + "" + ChatColor.BOLD + "" + "Hero Shop"))
 				{
