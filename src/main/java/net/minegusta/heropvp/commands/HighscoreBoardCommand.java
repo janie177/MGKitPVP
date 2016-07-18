@@ -26,7 +26,7 @@ public class HighscoreBoardCommand implements CommandExecutor{
 		try
 		{
 			int index  = Integer.parseInt(arg1);
-			if(index > 18 || index < 0)
+			if(index > 18 || index < 1)
 			{
 				p.sendMessage(ChatColor.RED + "Index has to be between 1 and 18.");
 				return true;
@@ -39,7 +39,7 @@ public class HighscoreBoardCommand implements CommandExecutor{
 				return true;
 			}
 
-			SignManager.addSign(index, b.getLocation());
+			SignManager.addSign(index - 1, b.getLocation());
 			p.sendMessage(ChatColor.GREEN + "You added a sign with index " + index + ".");
 			Main.getScoreManager().saveConfig();
 			return true;
