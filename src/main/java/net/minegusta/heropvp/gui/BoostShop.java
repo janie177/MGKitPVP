@@ -8,6 +8,7 @@ import net.minegusta.heropvp.utils.DisplayMessageUtil;
 import net.minegusta.mglib.gui.InventoryGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -35,7 +36,7 @@ public class BoostShop extends InventoryGUI {
 			if(mgp.hasBoost(boost))
 			{
 				long left = mgp.getMinutesLeft(boost);
-				inv.setItem(boost.getSlot(), new ItemStack(boost.getMaterial(), (int) (left > 64 ? 64 : left), boost.getData())
+				inv.setItem(boost.getSlot(), new ItemStack(Material.WATCH, (int) (left > 64 ? 64 : left), boost.getData())
 				{
 					{
 						ItemMeta meta = getItemMeta();
