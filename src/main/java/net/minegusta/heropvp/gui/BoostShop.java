@@ -40,7 +40,7 @@ public class BoostShop extends InventoryGUI {
 					{
 						ItemMeta meta = getItemMeta();
 						meta.setDisplayName(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + boost.getName());
-						List<String> lore = Lists.newArrayList(ChatColor.YELLOW + "" + ChatColor.BOLD + "ACTIVE", ChatColor.GREEN + boost.getDescription(), ChatColor.GRAY + "Time Left: " + ChatColor.RED + boost.getDuration() + ChatColor.GRAY + " Minutes");
+						List<String> lore = Lists.newArrayList(ChatColor.YELLOW + "" + ChatColor.BOLD + "ACTIVE", ChatColor.GREEN + boost.getDescription(), ChatColor.GRAY + "Time Left: " + ChatColor.RED + left + ChatColor.GRAY + " Minutes");
 						meta.setLore(lore);
 						setItemMeta(meta);
 					}
@@ -88,6 +88,7 @@ public class BoostShop extends InventoryGUI {
 					mgp.removeTickets(cost, 60);
 					DisplayMessageUtil.unlockBoost(player, boost);
 					mgp.addboostSeconds(boost, boost.getDuration() * 60);
+					player.closeInventory();
 				}
 
 			}
