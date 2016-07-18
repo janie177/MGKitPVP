@@ -195,7 +195,7 @@ public class GlobalListener implements Listener {
 		DisplayMessageUtil.addPlayerToBar(e.getPlayer());
 		MGPlayer mgp = Main.getSaveManager().getMGPlayer(e.getPlayer());
 		mgp.breakPlaying();
-		ScoreBoardManager.getTicketBoard().addPlayer(e.getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", mgp.getTickets()));
+		ScoreBoardManager.setToTicketBoard(mgp);
 		e.getPlayer().setCollidable(false);
 		//Remove fly perms if stuck from previous scout.
 		PEXUtil.removePermission(e.getPlayer(),"nocheatplus.checks.moving.survivalfly");

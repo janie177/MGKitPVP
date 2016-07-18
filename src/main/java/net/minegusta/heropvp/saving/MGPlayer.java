@@ -63,7 +63,7 @@ public class MGPlayer extends MGPlayerModel {
 				} catch (Exception ignored){}
 			}
 		}
-		ScoreBoardManager.getTicketBoard().updatePlayer(getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", tickets));
+		ScoreBoardManager.setToTicketBoard(this);
 		setActiveHero(hero);
 
 		getPlayer().setCollidable(false);
@@ -196,6 +196,12 @@ public class MGPlayer extends MGPlayerModel {
 		return killstreak;
 	}
 
+	public String getKD()
+	{
+		if(deaths == 0) return Integer.toString(kills);
+		return Double.toString(kills/deaths).substring(0, 2);
+	}
+
 	public void setKillstreak(int killstreak) {
 		this.killstreak = killstreak;
 		getPlayer().setLevel(killstreak);
@@ -212,7 +218,7 @@ public class MGPlayer extends MGPlayerModel {
 
 	public void setTickets(int tickets) {
 		this.tickets = tickets;
-		ScoreBoardManager.getTicketBoard().updatePlayer(getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", tickets));
+		ScoreBoardManager.setToTicketBoard(this);
 	}
 
 	public void addTickets(int ticketsToAdd, int messageDelay)
@@ -230,7 +236,7 @@ public class MGPlayer extends MGPlayerModel {
 	public void onDeath()
 	{
 		ScoreBoardManager.getHeroTagsBoard().removePlayer(getPlayer());
-		ScoreBoardManager.getTicketBoard().updatePlayer(getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", tickets));
+		ScoreBoardManager.setToTicketBoard(this);
 		setPlaying(false);
 		EffectUtil.playParticle(getPlayer().getLocation(), Effect.CLOUD, 1, 1, 1, 0.1F, 40, 40);
 		setPower(0);
@@ -268,7 +274,7 @@ public class MGPlayer extends MGPlayerModel {
 	public void breakPlaying()
 	{
 		ScoreBoardManager.getHeroTagsBoard().removePlayer(getPlayer());
-		ScoreBoardManager.getTicketBoard().updatePlayer(getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", tickets));
+		ScoreBoardManager.setToTicketBoard(this);
 		setPlaying(false);
 		EffectUtil.playParticle(getPlayer().getLocation(), Effect.CLOUD, 1, 1, 1, 0.1F, 40, 40);
 		setPower(0);
@@ -292,7 +298,7 @@ public class MGPlayer extends MGPlayerModel {
 
 		getPlayer().getInventory().clear();
 		getPlayer().setCollidable(false);
-		ScoreBoardManager.getTicketBoard().addPlayer(getPlayer(), new MGScore(ChatColor.GREEN + "Tickets:", tickets));
+		ScoreBoardManager.setToTicketBoard(this);
 	}
 
 	public void onSpawn()

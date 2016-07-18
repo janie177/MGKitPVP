@@ -2,6 +2,7 @@ package net.minegusta.heropvp.main;
 
 import net.minegusta.heropvp.commands.AdminCommand;
 import net.minegusta.heropvp.commands.BreakCommand;
+import net.minegusta.heropvp.commands.HighscoreBoardCommand;
 import net.minegusta.heropvp.gui.HeroSelectionMenu;
 import net.minegusta.heropvp.gui.TicketShop;
 import net.minegusta.heropvp.leaderboard.config.HighScoreConfig;
@@ -61,6 +62,7 @@ public class Main extends JavaPlugin {
 		//Register the commands
 		getCommand("heropvp").setExecutor(new AdminCommand());
 		getCommand("break").setExecutor(new BreakCommand());
+		getCommand("hsb").setExecutor(new HighscoreBoardCommand());
 
 		//Load the inventory GUI menu.
 		ticketShop = new TicketShop(ChatColor.LIGHT_PURPLE + "Ticket Shop!", 5, "kitpvpticketshop");

@@ -12,3 +12,6 @@ commands:
     usage: /Break
     description: take a break!
     aliases: [suicide, spawn, hub, out, surrender]
+  hsb:
+    usage: /hsb
+    description: Admin command for setting highscore boards.
