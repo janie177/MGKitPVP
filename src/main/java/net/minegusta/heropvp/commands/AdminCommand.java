@@ -19,7 +19,7 @@ import java.util.List;
 
 public class AdminCommand implements CommandExecutor {
 
-	private static List<String> help = Lists.newArrayList("/heropvp help - Show this menu.", "/heropvp addarena <name> - Add arena with current location as spawn.", "/heropvp removearena <name> - Remove arena.", "/heropvp addspawn <arena> - Add current location as a spawn to given arena.", "/heropvp removespawn <arena> <index> - Remove given index from arena spawns.", "/heropvp list - List all arenas.", "/heropvp listspawns <arena> - List all spawn locations for arena.", "/heropvp addNPC <name> <shop/spawn/selector> - Spawn an NPC with the given role.", "/heropvp npclist - List all NPC's.", "/heropvp removeNPC <name> - Remove the given NPC.", "/heropvp resetNPCS - Reset all NPC's.", "/heropvp addtickets <name> <amount> - Add tickets to someone.");
+	private static List<String> help = Lists.newArrayList("/heropvp help - Show this menu.", "/heropvp addarena <name> - Add arena with current location as spawn.", "/heropvp removearena <name> - Remove arena.", "/heropvp addspawn <arena> - Add current location as a spawn to given arena.", "/heropvp removespawn <arena> <index> - Remove given index from arena spawns.", "/heropvp list - List all arenas.", "/heropvp listspawns <arena> - List all spawn locations for arena.", "/heropvp addNPC <name> <shop/spawn/selector/boost> - Spawn an NPC with the given role.", "/heropvp npclist - List all NPC's.", "/heropvp removeNPC <name> - Remove the given NPC.", "/heropvp resetNPCS - Reset all NPC's.", "/heropvp addtickets <name> <amount> - Add tickets to someone.");
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -102,6 +102,12 @@ public class AdminCommand implements CommandExecutor {
 				{
 					p.sendMessage(ChatColor.GREEN + "You spawned a shop NPC.");
 					NPCConfiguration.addNPC(name, p.getLocation(), NPCType.SHOP);
+				}
+				break;
+				case "boost":
+				{
+					p.sendMessage(ChatColor.GREEN + "You spawned a boost NPC.");
+					NPCConfiguration.addNPC(name, p.getLocation(), NPCType.BOOST);
 				}
 				break;
 			}
