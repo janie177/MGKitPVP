@@ -268,11 +268,11 @@ public class MGPlayer extends MGPlayerModel {
 	public void onDeath()
 	{
 		//Remove wolves.
-		for(Wolf w : wolves)
+		for(Wolf w : wolves.keySet())
 		{
 			if(w.isValid()) w.remove();
-			wolves.clear();
 		}
+		wolves.clear();
 
 		Player player = getPlayer();
 		if(isPlaying() && hasBoost(Boost.MARTYRDOME))
@@ -378,19 +378,19 @@ public class MGPlayer extends MGPlayerModel {
 		ScoreBoardManager.setToTicketBoard(this);
 	}
 	
-	private List<Wolf> wolves = Lists.newArrayList();
+	private ConcurrentMap<Wolf, Boolean> wolves = Maps.newConcurrentMap();
 
 	public void onSpawn()
 	{
 		//Remove old wolves.
-		for(Wolf w : wolves)
+		for(Wolf w : wolves.keySet())
 		{
 			if(w.isValid())
 			{
 				w.remove();
 			}
-			wolves.clear();
 		}
+		wolves.clear();
 
 		Player player = getPlayer();
 		setPlaying(true);
@@ -439,10 +439,10 @@ public class MGPlayer extends MGPlayerModel {
 			wolf.setAdult();
 			wolf.setBreed(false);
 			wolf.setCustomNameVisible(true);
-			wolf.setCustomName(ChatColor.RED + player.getName() + "'s Wolf");
+			wolf.setCustomName(ChatColor.RED + player.getPlayerListName() + "'s Wolf");
 			if(RandomUtil.chance(10)) wolf.setCustomName(ChatColor.LIGHT_PURPLE + "Lassie");
 
-			wolves.add(wolf);
+			wolves.put(wolf, true);
 		}
 		
 	}
