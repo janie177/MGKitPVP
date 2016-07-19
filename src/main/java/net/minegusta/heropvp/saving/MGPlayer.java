@@ -439,7 +439,7 @@ public class MGPlayer extends MGPlayerModel {
 			wolf.setAdult();
 			wolf.setBreed(false);
 			wolf.setCustomNameVisible(true);
-			wolf.setCustomName(ChatColor.RED + player.getPlayerListName() + "'s Wolf");
+			wolf.setCustomName(ChatColor.RED + player.getDisplayName() + "'s Wolf");
 			if(RandomUtil.chance(10)) wolf.setCustomName(ChatColor.LIGHT_PURPLE + "Lassie");
 
 			wolves.put(wolf, true);
