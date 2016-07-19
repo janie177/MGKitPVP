@@ -14,6 +14,9 @@ import net.minegusta.mglib.utils.TitleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Wolf;
 
 import java.util.List;
 import java.util.Optional;
@@ -61,6 +64,12 @@ public class SpawnManager {
 
 				//Update the highscores for all players in the map.
 				HighScoreManager.update();
+
+				//Remove all wolves from the map
+				for(World w : Bukkit.getWorlds())
+				{
+					w.getLivingEntities().stream().filter(le -> le instanceof Wolf).forEach(LivingEntity::remove);
+				}
 
 				//Reset the winners for the next map
 				WinnerManager.reset();
