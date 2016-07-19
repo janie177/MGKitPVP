@@ -36,7 +36,7 @@ public class BoostShop extends InventoryGUI {
 			if(mgp.hasBoost(boost))
 			{
 				long left = mgp.getMinutesLeft(boost);
-				inv.setItem(boost.getSlot(), new ItemStack(Material.WATCH, (int) (left > 64 ? 64 : left), (byte)0)
+				inv.setItem(boost.getSlot() + 9, new ItemStack(Material.WATCH, (int) (left > 64 ? 64 : left), (byte)0)
 				{
 					{
 						ItemMeta meta = getItemMeta();

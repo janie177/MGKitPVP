@@ -1,13 +1,17 @@
 package net.minegusta.heropvp.listeners;
 
 import com.google.common.collect.Lists;
+import net.minegusta.heropvp.boosts.Boost;
 import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.npcs.NPCType;
 import net.minegusta.heropvp.saving.MGPlayer;
 import net.minegusta.heropvp.scoreboards.ScoreBoardManager;
 import net.minegusta.heropvp.utils.DisplayMessageUtil;
 import net.minegusta.mglib.permissionsex.PEXUtil;
+import net.minegusta.mglib.utils.EffectUtil;
+import net.minegusta.mglib.utils.ItemUtil;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -68,6 +72,24 @@ public class GlobalListener implements Listener {
 				 * Player attacked directly by another player.
 				 */
 
+				if(damagerMGP.hasBoost(Boost.FEROCITY))
+				{
+					e.setDamage(e.getDamage() + 1);
+				}
+				if(targetMGP.hasBoost(Boost.TANK))
+				{
+					e.setDamage(e.getDamage() - 1);
+				}
+
+				if(damagerMGP.hasBoost(Boost.FIRESWORD) && ItemUtil.isSword(((Player) e.getDamager()).getInventory().getItemInMainHand().getType()))
+				{
+					if(target.getFireTicks() == 0)
+					{
+						target.setFireTicks(20);
+					}
+					EffectUtil.playParticle(target.getLocation(), Effect.MOBSPAWNER_FLAMES);
+				}
+
 				//On death
 				if(target.getHealth() - e.getFinalDamage() <= 0)
 				{
@@ -104,6 +126,15 @@ public class GlobalListener implements Listener {
 				 * Projectile damage
 				 */
 				if(!damager.getUniqueId().toString().equalsIgnoreCase(target.getUniqueId().toString())) targetMGP.addDamage(damager, e.getFinalDamage());
+
+				if(damagerMGP.hasBoost(Boost.FEROCITY))
+				{
+					e.setDamage(e.getDamage() + 1);
+				}
+				if(targetMGP.hasBoost(Boost.TANK))
+				{
+					e.setDamage(e.getDamage() - 1);
+				}
 
 				//On death
 				if(target.getHealth() - e.getFinalDamage() <= 0)

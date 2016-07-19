@@ -67,7 +67,7 @@ public class Main extends JavaPlugin {
 
 		//Load the inventory GUI menu.
 		ticketShop = new TicketShop(ChatColor.LIGHT_PURPLE + "Ticket Shop!", 5, "kitpvpticketshop");
-		boostShop = new BoostShop(ChatColor.DARK_AQUA + "Boost Shop!", 1, "kitpvpboostshop");
+		boostShop = new BoostShop(ChatColor.DARK_AQUA + "Boost Shop!", 2, "kitpvpboostshop");
 		heroSelectionMenu = new HeroSelectionMenu(ChatColor.LIGHT_PURPLE + "Pick a Hero!", 5, "heroselectiongui");
 
 		//Load the scoreboards

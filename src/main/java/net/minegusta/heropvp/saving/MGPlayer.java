@@ -11,14 +11,10 @@ import net.minegusta.heropvp.utils.DisplayMessageUtil;
 import net.minegusta.mglib.saving.mgplayer.MGPlayerModel;
 import net.minegusta.mglib.utils.EffectUtil;
 import net.minegusta.mglib.utils.PotionUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.Material;
+import net.minegusta.mglib.utils.RandomUtil;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.TNTPrimed;
+import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -271,11 +267,18 @@ public class MGPlayer extends MGPlayerModel {
 
 	public void onDeath()
 	{
+		//Remove wolves.
+		for(Wolf w : wolves)
+		{
+			if(w.isValid()) w.remove();
+			wolves.clear();
+		}
+
 		Player player = getPlayer();
 		if(isPlaying() && hasBoost(Boost.MARTYRDOME))
 		{
 			TNTPrimed tnt = (TNTPrimed) player.getWorld().spawnEntity(player.getLocation(), EntityType.PRIMED_TNT);
-			tnt.setFuseTicks(30);
+			tnt.setFuseTicks(60);
 		}
 		
 		ScoreBoardManager.getHeroTagsBoard().removePlayer(player);
@@ -374,20 +377,33 @@ public class MGPlayer extends MGPlayerModel {
 		getPlayer().setCollidable(false);
 		ScoreBoardManager.setToTicketBoard(this);
 	}
+	
+	private List<Wolf> wolves = Lists.newArrayList();
 
 	public void onSpawn()
 	{
+		//Remove old wolves.
+		for(Wolf w : wolves)
+		{
+			if(w.isValid())
+			{
+				w.remove();
+			}
+			wolves.clear();
+		}
+
+		Player player = getPlayer();
 		setPlaying(true);
-		getPlayer().teleport(SpawnManager.getCurrentArena().getRandomSpawn());
-		getPlayer().setHealth(getPlayer().getMaxHealth());
-		getPlayer().setFoodLevel(20);
-		getPlayer().getInventory().clear();
+		player.teleport(SpawnManager.getCurrentArena().getRandomSpawn());
+		player.setHealth(player.getMaxHealth());
+		player.setFoodLevel(20);
+		player.getInventory().clear();
 		applyInventory();
-		getPlayer().getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 64));
-		DisplayMessageUtil.onSpawn(getPlayer(), hero);
-		ScoreBoardManager.getTicketBoard().removePlayer(getPlayer());
-		ScoreBoardManager.getHeroTagsBoard().addPlayer(getPlayer(), hero.name());
-		getPlayer().setCollidable(true);
+		player.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 64));
+		DisplayMessageUtil.onSpawn(player, hero);
+		ScoreBoardManager.getTicketBoard().removePlayer(player);
+		ScoreBoardManager.getHeroTagsBoard().addPlayer(player, hero.name());
+		player.setCollidable(true);
 
 		if(hasBoost(Boost.POWER35))
 		{
@@ -397,22 +413,38 @@ public class MGPlayer extends MGPlayerModel {
 
 		if(hasBoost(Boost.SWORDMASTER))
 		{
-			getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND_SWORD));
+			player.getInventory().addItem(new ItemStack(Material.DIAMOND_SWORD));
 		}
 
 
 		if(hasBoost(Boost.HEALTHPOT))
 		{
-			getPlayer().getInventory().addItem(new ItemStack(Material.POTION, 1)
+			player.getInventory().addItem(new ItemStack(Material.POTION, 1)
 			{
 				{
 					PotionMeta meta = (PotionMeta) getItemMeta();
 					meta.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL, false, true));
-
 					setItemMeta(meta);
 				}
 			});
 		}
+		
+		if(hasBoost(Boost.BATTLEPET))
+		{
+			Wolf wolf = (Wolf) player.getWorld().spawnEntity(player.getLocation(), EntityType.WOLF);
+			wolf.setTamed(true);
+			wolf.setOwner(player);
+			wolf.setCollarColor(DyeColor.MAGENTA);
+			wolf.setSitting(false);
+			wolf.setAdult();
+			wolf.setBreed(false);
+			wolf.setCustomNameVisible(true);
+			wolf.setCustomName(ChatColor.RED + player.getName() + "'s Wolf");
+			if(RandomUtil.chance(10)) wolf.setCustomName(ChatColor.LIGHT_PURPLE + "Lassie");
+
+			wolves.add(wolf);
+		}
+		
 	}
 
 	public void onKillPlayer(String killedName)
