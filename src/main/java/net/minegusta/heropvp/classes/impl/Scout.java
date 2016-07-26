@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
@@ -65,7 +66,7 @@ public class Scout implements IHero {
 		return "Scout";
 	}
 
-	private static String[] desc = new String[]{"The scout is fast.", "They can double jump too!", "Ultimate gives extra speed.", "All fall damage is removed."};
+	private static String[] desc = new String[]{"The scout is fast.", "They can double jump too!", "Ultimate gives extra speed.", "Ultimate also causes", "knock-back when jumping.", "All fall damage is removed."};
 
 	@Override
 	public String[] getDescription() {
@@ -88,7 +89,12 @@ public class Scout implements IHero {
 			//Boots
 			addItem(36, new ItemStack(Material.LEATHER_BOOTS));
 			//hand1
-			addItem(0, new ItemStack(Material.IRON_SWORD));
+			addItem(0, new ItemStack(Material.IRON_SWORD)
+			{
+				{
+					addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+				}
+			});
 		}
 	};
 
@@ -129,6 +135,6 @@ public class Scout implements IHero {
 
 	@Override
 	public String ultimateBarMessage() {
-		return "Gotta go fast(er)!";
+		return "Gotta go fast(er)! Knock-back active!";
 	}
 }

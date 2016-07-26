@@ -106,6 +106,8 @@ public class Mimic implements IHero {
 					addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
 				}
 			});
+			//hand2
+			addItem(1, new ItemStack(Material.ENDER_PEARL));
 		}
 	};
 

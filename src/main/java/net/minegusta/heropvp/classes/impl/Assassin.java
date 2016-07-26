@@ -135,11 +135,7 @@ public class Assassin implements IHero {
 					}
 				}});
 			//hand1
-			addItem(0, new ItemStack(Material.IRON_SWORD){
-				{
-					addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
-				}
-			});
+			addItem(0, new ItemStack(Material.IRON_SWORD));
 			addItem(1, new ItemStack(Material.ENDER_PEARL, 3));
 		}
 	};

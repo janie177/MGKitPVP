@@ -54,6 +54,10 @@ public class Slowmobius implements IHero {
 					{
 						ent.setVelocity(ent.getVelocity().multiply(0.2));
 					}
+					else if(ent instanceof LivingEntity && ent.getUniqueId().equals(uuid))
+					{
+						PotionUtil.updatePotion((LivingEntity) ent, PotionEffectType.DAMAGE_RESISTANCE, 0, 5);
+					}
 				});
 			}, i * 4);
 		}
@@ -97,7 +101,7 @@ public class Slowmobius implements IHero {
 
 	@Override
 	public int ultimateDuration() {
-		return 12;
+		return 9;
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import net.minegusta.mglib.utils.EffectUtil;
 import net.minegusta.mglib.utils.Title;
 import net.minegusta.mglib.utils.TitleUtil;
 import org.bukkit.*;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.entity.TippedArrow;
@@ -109,9 +110,9 @@ public class HeroListener implements Listener {
 			{
 				if(Math.abs(attacker.getLocation().getYaw() - victim.getLocation().getYaw()) < 50)
 				{
-					TitleUtil.createTitle("", ChatColor.RED + "" + ChatColor.ITALIC + "Backstab! " + ChatColor.DARK_PURPLE + "1.5x damage dealt", 5, 15, 5, true).send(attacker);
+					TitleUtil.createTitle("", ChatColor.RED + "" + ChatColor.ITALIC + "Backstab! " + ChatColor.DARK_PURPLE + "1.8x damage dealt", 5, 15, 5, true).send(attacker);
 					TitleUtil.createTitle("", ChatColor.RED + "" + ChatColor.ITALIC + "You got backstabbed!", 5, 10, 5, true).send(victim);
-					e.setDamage(e.getDamage() * 1.5);
+					e.setDamage(e.getDamage() * 1.8);
 				}
 			}
 		}
@@ -145,6 +146,18 @@ public class HeroListener implements Listener {
 				CooldownUtil.newCoolDown("jumpscout",  uuid, 1);
 				EffectUtil.playSound(player.getLocation(), Sound.BLOCK_SLIME_FALL);
 				EffectUtil.playParticle(player, Effect.TILE_DUST);
+
+				//Knockback effect for double jump
+				if(mgp.isUltimateActive())
+				{
+					player.getWorld().getLivingEntities().stream().filter(le -> le.getLocation().distance(player.getEyeLocation()) < 4).forEach(le -> {
+						le.setVelocity(le.getLocation().toVector().subtract(player.getLocation().toVector()).normalize().multiply(1.2));
+						if(le instanceof Player)
+						{
+							le.sendMessage(ChatColor.YELLOW + "A scout jump knocks you back!");
+						}
+					});
+				}
 			}
 		}
 	}
@@ -221,8 +234,8 @@ public class HeroListener implements Listener {
 					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), ()->
 					{
 						if(!player.isOnline()) return;
-						player.getWorld().spawnArrow(player.getLocation().add(player.getLocation().getDirection().normalize()).add(0, 1.4F, 0), player.getLocation().getDirection(), 2.2F, 0.1F);
-
+						Arrow arrow = player.getWorld().spawnArrow(player.getLocation().add(player.getLocation().getDirection().normalize()).add(0, 1.4F, 0), player.getLocation().getDirection(), 2.2F, 0.1F);
+						arrow.setShooter(player);
 					}, i);
 				}
 			}

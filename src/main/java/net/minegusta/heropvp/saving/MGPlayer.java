@@ -451,7 +451,7 @@ public class MGPlayer extends MGPlayerModel {
 	{
 		addPower(hero.getPowerPerKill());
 		//Heal player on killing someone.
-		PotionUtil.updatePotion(getPlayer(), PotionEffectType.REGENERATION, 0, 3);
+		PotionUtil.updatePotion(getPlayer(), PotionEffectType.REGENERATION, 3, 2);
 		addKill();
 		addKillStreakKill();
 		DisplayMessageUtil.onKill(hero, getPlayer(), killstreak, killedName);

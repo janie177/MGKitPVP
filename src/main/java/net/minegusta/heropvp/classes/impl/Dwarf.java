@@ -57,7 +57,7 @@ public class Dwarf implements IHero {
 
 	@Override
 	public int ultimateDuration() {
-		return 6;
+		return 10;
 	}
 
 	@Override

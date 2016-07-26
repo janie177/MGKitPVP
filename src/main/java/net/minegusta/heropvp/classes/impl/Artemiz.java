@@ -88,13 +88,8 @@ public class Artemiz implements IHero {
 			//hand1
 			addItem(0, new ItemStack(Material.BOW){
 				{
-					addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 2);
 					addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
-				}
-			});
-			//hand2
-			addItem(1, new ItemStack(Material.WOOD_SWORD){
-				{
+					addUnsafeEnchantment(Enchantment.ARROW_FIRE, 1);
 					addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
 				}
 			});

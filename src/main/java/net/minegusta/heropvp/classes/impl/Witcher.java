@@ -54,7 +54,7 @@ public class Witcher implements IHero {
 
 	@Override
 	public int powerPerKill() {
-		return 25;
+		return 34;
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class Witcher implements IHero {
 			//hand1
 			addItem(0, new ItemStack(Material.IRON_SWORD){
 				{
-					addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
+					addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
 				}
 			});
 			//hand2
