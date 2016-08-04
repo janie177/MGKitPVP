@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import net.minegusta.heropvp.boosts.Boost;
 import net.minegusta.heropvp.classes.Hero;
 import net.minegusta.heropvp.leaderboard.game.WinnerManager;
+import net.minegusta.heropvp.main.Main;
 import net.minegusta.heropvp.mapmanager.SpawnManager;
 import net.minegusta.heropvp.scoreboards.ScoreBoardManager;
 import net.minegusta.heropvp.utils.DisplayMessageUtil;
@@ -143,12 +144,19 @@ public class MGPlayer extends MGPlayerModel {
 
 	public void setActiveHero(Hero hero)
 	{
-		DisplayMessageUtil.selectHero(getPlayer(), hero);
+		Player p = getPlayer();
+
+		for(PotionEffect e : p.getActivePotionEffects())
+		{
+			p.removePotionEffect(e.getType());
+		}
+
+		DisplayMessageUtil.selectHero(p, hero);
 		setPower(0);
 		setKillstreak(0);
 		this.hero = hero;
-		hero.onSelect(getPlayer());
-		hero.applyInventory(getPlayer().getInventory());
+		hero.onSelect(p);
+		hero.applyInventory(p.getInventory());
 	}
 
 	public Hero getActiveHero()
@@ -265,6 +273,22 @@ public class MGPlayer extends MGPlayerModel {
 		DisplayMessageUtil.takeTickets(getPlayer(), ticketsToRemove, messageDelay);
 	}
 
+	public void removeDamage(String uuid)
+	{
+		damagers.remove(uuid);
+	}
+
+	public boolean wasDamagedBy(String uuid)
+	{
+		return damagers.containsKey(uuid);
+	}
+
+	public void resetDamageDone()
+	{
+		String uuid = getUuid().toString();
+		Main.getSaveManager().getAllPlayers().stream().filter(mgp -> mgp.wasDamagedBy(uuid)).forEach(mgp -> mgp.removeDamage(uuid));
+	}
+
 	public void onDeath()
 	{
 		//Remove wolves.
@@ -289,6 +313,7 @@ public class MGPlayer extends MGPlayerModel {
 		DisplayMessageUtil.onDeath(player, killstreak);
 		player.setHealth(player.getMaxHealth());
 		player.setFoodLevel(20);
+		resetDamageDone();
 		player.teleport(player.getWorld().getSpawnLocation());
 		int ticketsToAdd = killstreak * 10 + (killstreak * (killstreak / 2));
 		if(ticketsToAdd > 0)
@@ -366,6 +391,7 @@ public class MGPlayer extends MGPlayerModel {
 		damagers.clear();
 		setKillstreak(0);
 		setAssists(0);
+		resetDamageDone();
 
 		Player player = getPlayer();
 		for(PotionEffect effect : getPlayer().getActivePotionEffects())
